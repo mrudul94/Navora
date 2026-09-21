@@ -42,6 +42,15 @@ Aim for 200–400 KB per image; nothing here needs to be larger.
 | `category-produce.webp` | Mixed vegetables and fruit | 1:1 | 900 |
 | `og-default.jpg` | Social share card — the hero image works well | 1.91:1 | 1200 |
 
+### Commissioning a photographer instead
+
+If real photography is being commissioned rather than sourced from stock, give
+the photographer **[PHOTOGRAPHY-BRIEF.md](PHOTOGRAPHY-BRIEF.md)** instead of
+this file. It covers the same 12 images with art direction, composition notes,
+crop guidance, delivery specs and the permissions Navora needs. Real photography
+is preferred for every shot, and required for the three that imply Navora's
+own supplier network.
+
 ### Where to find them
 
 Both of these allow free commercial use without attribution, though crediting
