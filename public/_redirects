@@ -1,0 +1,18 @@
+# Cloudflare Pages redirects. Rules are matched top to bottom and the first
+# match wins, so the SPA fallback MUST stay last.
+#
+# /api/* is handled by functions/ and is excluded from this file by
+# _routes.json, so the fallback below never intercepts the enquiry endpoint.
+
+# Legacy paths from the previous site.
+/sustainability     /responsible-sourcing   301
+/wholesale          /for-business           301
+/privacy-policy     /privacy-notice         301
+/terms-conditions   /website-terms          301
+
+# The blank route reported before handover.
+/c                  /                       301
+
+# SPA fallback — every other path is served index.html so React Router can
+# resolve it. Keep this last.
+/*                  /index.html             200

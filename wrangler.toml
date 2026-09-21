@@ -1,0 +1,24 @@
+# Cloudflare Pages configuration.
+#
+# Build:  npm run build   (regenerates the sitemap, then Vite builds to dist/)
+# Deploy: npm run deploy  (or connect the repo in the Cloudflare dashboard)
+
+name = "navora-global"
+compatibility_date = "2026-09-21"
+pages_build_output_dir = "dist"
+
+# Enquiries submitted through /api/enquiry are written here. Created with:
+#   npx wrangler d1 create navora-enquiries
+# Schema lives in migrations/ and is applied with:
+#   npx wrangler d1 migrations apply navora-enquiries --remote
+[[d1_databases]]
+binding = "DB"
+database_name = "navora-enquiries"
+database_id = "71685dfe-9d04-4a7c-ade3-2d6e33060783"
+
+[vars]
+# Where enquiry notifications are sent once email is switched on.
+# NOTIFY_EMAIL is safe to keep here; RESEND_API_KEY is a secret and must be set
+# with `npx wrangler pages secret put RESEND_API_KEY` instead.
+NOTIFY_EMAIL = ""
+NOTIFY_FROM = ""
