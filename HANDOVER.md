@@ -167,6 +167,68 @@ npm run deploy          # verify, then deploy
 npm run enquiries       # list the 50 most recent enquiries
 ```
 
+### How updates reach the site
+
+Deployment is **manual, by design** for now:
+
+```bash
+npm run deploy
+```
+
+That runs lint → audit → smoke tests → build, and only uploads if all of them
+pass. A reintroduced false claim or a broken build stops the deploy rather than
+shipping.
+
+The code is on GitHub at `github.com/mrudul94/Navora`, but **pushing does not
+deploy**. Git is version control and backup; `npm run deploy` is the deploy.
+
+Two consequences worth knowing:
+
+- Deploys depend on this machine and this Cloudflare login. Nobody else can
+  currently publish a change.
+- Each deploy gets its own permanent URL, and the live address always points at
+  the newest. Rolling back is a click in the Cloudflare dashboard.
+
+### Later: automatic deploys from Git
+
+Worth doing at launch, not before — see the account note below. A Cloudflare
+Pages project created by direct upload (which this one was) **cannot be
+converted** to Git-connected, so this means creating a new project:
+
+1. Cloudflare dashboard → Workers & Pages → Create → Pages → Connect to Git
+2. Select the `Navora` repository
+3. Build command: **`npm run verify`** — not `npm run build`. Verify builds as
+   its last step anyway, and using it means the claim audit and smoke tests
+   gate every deploy. Given that false claims are why this site was rebuilt,
+   that guard belongs in CI rather than only on a developer's machine.
+4. Output directory: `dist`
+5. Environment variable: `VITE_SANITY_PROJECT_ID`
+6. Settings → Bindings → add D1: variable `DB` → database `navora-enquiries`
+
+The `.pages.dev` address will differ from the current one, which stops
+mattering once the real domain is attached.
+
+### Who owns the hosting
+
+The site currently runs on a **personal** Cloudflare account
+(`mrudulp2002@gmail.com`). Navora's own content pack asks you to:
+
+> Confirm that Navora owns and controls the domain, hosting account, CMS
+> project, source code and business email accounts.
+
+As it stands Navora controls none of the hosting, and enquiries from real
+buyers would be stored under a personal login.
+
+**Move before the first real enquiry arrives.** D1 databases cannot be
+transferred between Cloudflare accounts. While the table is empty, recreating
+it on a Navora-owned account is one command (`npm run db:migrate`). Once it
+holds buyers' personal data it becomes an export, an import and a data
+protection conversation.
+
+The natural moment is when Navora's business email exists — already a blocking
+item above. Doing the account move, the Git-connected project and the domain
+connection together means setting up once instead of three times.
+
 ### Turning on email notification
 
 Enquiries are stored whether or not email is configured, so this is optional
