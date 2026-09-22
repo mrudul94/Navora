@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import SmartImage from "../common/SmartImage";
+import Img from "../common/Img";
 import Icon from "../common/Icon";
 import StatusBadge from "../common/StatusBadge";
 
@@ -9,7 +9,7 @@ function ProductCard({ product }) {
 
   return (
     <article className="product-card">
-      <SmartImage
+      <Img
         src={imageUrl}
         alt={imageAlt || name}
         ratio="4-3"

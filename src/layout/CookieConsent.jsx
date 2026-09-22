@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useId, useRef, useState, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "../components/common/Button";
 import Icon from "../components/common/Icon";
@@ -9,7 +9,6 @@ import {
   getConsent,
   grantedConsent,
   needsConsentChoice,
-  onConsentChange,
   onOpenPreferences,
   setConsent,
 } from "../lib/consent";
@@ -22,20 +21,9 @@ import {
  * restyle one to lead the other.
  */
 function CookieConsent() {
-  /**
-   * Whether a choice is still needed, read as external state.
-   *
-   * The server snapshot is always false, so the prerendered HTML never
-   * contains the banner and hydration cannot mismatch. On the client the
-   * snapshot reads storage, and the consent store itself is the subscription —
-   * so saving a choice hides the banner without any extra state.
-   */
-  const needsChoice = useSyncExternalStore(
-    onConsentChange,
-    needsConsentChoice,
-    () => false
-  );
-
+  // Read storage once during initialisation rather than in an effect, so the
+  // banner never flashes in and out on first paint.
+  const [showBanner, setShowBanner] = useState(() => needsConsentChoice());
   const [dialogOpen, setDialogOpen] = useState(false);
   const [draft, setDraft] = useState(deniedConsent);
 
@@ -57,6 +45,7 @@ function CookieConsent() {
 
   const commit = (prefs) => {
     setConsent(prefs);
+    setShowBanner(false);
     setDialogOpen(false);
   };
 
@@ -67,7 +56,7 @@ function CookieConsent() {
 
   return (
     <>
-      {needsChoice && !dialogOpen && (
+      {showBanner && !dialogOpen && (
         <div
           className="cookie-banner"
           role="region"

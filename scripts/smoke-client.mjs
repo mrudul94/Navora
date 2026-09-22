@@ -113,26 +113,20 @@ try {
   // --- Products page: loads and filters -------------------------------
   {
     const page = await mount("/products");
-    // Skeletons share the .product-card class, so match only real cards.
-    await page.waitFor((c) => c.querySelectorAll(".product-card:not(.product-card--skeleton)").length > 0);
-    const cards = page.$$(".product-card:not(.product-card--skeleton)");
+    await page.waitFor((c) => c.querySelectorAll(".product-card").length > 0);
+    const cards = page.$$(".product-card");
     check("Products page renders product cards", cards.length === 8, `${cards.length} cards`);
     check(
       "Products page is not stuck loading",
       !page.text().includes("Loading products"),
       ""
     );
-    check(
-      "Navora's own product is listed first",
-      page.$$(".product-card:not(.product-card--skeleton)")[0]?.textContent.includes("Navora Honey Shot"),
-      page.$$(".product-card:not(.product-card--skeleton)")[0]?.querySelector(".product-card__name")?.textContent ?? ""
-    );
 
     const spiceChip = page
       .$$(".filter-chip")
       .find((b) => b.textContent.trim() === "Spices");
     await page.click(spiceChip);
-    const filtered = page.$$(".product-card:not(.product-card--skeleton)");
+    const filtered = page.$$(".product-card");
     check(
       "Spices filter narrows to ginger and cardamom",
       filtered.length === 2,
@@ -149,8 +143,8 @@ try {
     await page.click(brandChip);
     check(
       "Navora Brand filter matches on ownership",
-      page.$$(".product-card:not(.product-card--skeleton)").length === 1,
-      `${page.$$(".product-card:not(.product-card--skeleton)").length} found`
+      page.$$(".product-card").length === 1,
+      `${page.$$(".product-card").length} found`
     );
 
     await page.unmount();

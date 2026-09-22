@@ -3,7 +3,7 @@
 export const hero = {
   heading: "Build your next food partnership with Navora",
   text: "We work with businesses looking to source food products from India and with Indian producers or brands seeking suitable international opportunities. Every enquiry begins with a conversation about the product, market, volume and commercial objective.",
-  image: "/images/business-trade.jpg",
+  image: "/images/business-trade.webp",
   imageAlt: "Cartons prepared for export",
   illustrative: true,
 };

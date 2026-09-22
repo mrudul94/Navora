@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import Seo from "../components/common/Seo";
 import LegalLayout from "../components/common/LegalLayout";
-
+import ConfirmValue from "../components/common/ConfirmValue";
 import { pageSeo } from "../content/seo";
-import { site, isSet, mailHref } from "../config/site";
+import { site } from "../config/site";
 
 const sections = [
   { id: "about", title: "About these terms" },
@@ -33,11 +33,11 @@ function WebsiteTerms() {
         <section id="about">
           <h2>About these terms</h2>
           <p>
-            This website is operated by {site.companyName}, a company registered
-            in {site.jurisdiction}
-            {isSet(site.companyNumber) && <> (company number {site.companyNumber})</>}
-            . By using this website you accept these terms. If you do not accept
-            them, please do not use the site.
+            This website is operated by {site.legalName}, a company registered in{" "}
+            {site.jurisdiction} (company number{" "}
+            <ConfirmValue value={site.companyNumber} />). By using this website
+            you accept these terms. If you do not accept them, please do not use
+            the site.
           </p>
         </section>
 
@@ -176,12 +176,8 @@ function WebsiteTerms() {
             courts of England and Wales have exclusive jurisdiction.
           </p>
           <p>
-            If you have any questions about these terms, please get in touch
-            through our <Link to="/contact">contact page</Link>
-            {isSet(site.email) && (
-              <> or at <a href={mailHref(site.email)}>{site.email}</a></>
-            )}
-            .
+            If you have any questions about these terms, contact us at{" "}
+            <ConfirmValue value={site.email} as="email" />.
           </p>
         </section>
       </LegalLayout>

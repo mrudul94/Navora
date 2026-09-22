@@ -25,14 +25,7 @@ import {
   LuUsers,
   LuUtensils,
   LuX,
-  LuMapPin,
-  LuPhone,
-  LuMail,
-  LuClock,
-  LuArrowUpRight,
-  LuBadgeCheck as LuVerified,
 } from "react-icons/lu";
-import { FaLinkedinIn, FaWhatsapp } from "react-icons/fa6";
 
 /**
  * Named icon map, so content files can reference an icon by a semantic name
@@ -72,16 +65,6 @@ const icons = {
   image: LuImage,
   emptyProducts: LuPackageSearch,
   company: LuBuilding2,
-
-  // Contact + social
-  pin: LuMapPin,
-  phone: LuPhone,
-  mail: LuMail,
-  clock: LuClock,
-  external: LuArrowUpRight,
-  linkedin: FaLinkedinIn,
-  whatsapp: FaWhatsapp,
-  assured: LuVerified,
 };
 
 function Icon({ name, className, ...rest }) {

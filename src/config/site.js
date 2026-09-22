@@ -1,121 +1,55 @@
 /**
- * Single source of truth for Navora's business details.
+ * Single source of truth for Navora's business facts.
  *
- * HOW THIS WORKS
- * Any value still starting with `REPLACE_` is treated as unset and is hidden
- * from the UI entirely — no "to confirm" text ever reaches a visitor. Replace
- * the string here and the line appears everywhere it belongs.
- *
- * Nothing else in the codebase should hard-code a contact detail.
+ * Values beginning with `TODO_CONFIRM_` have not yet been supplied by the
+ * client. They are rendered on the site as a visible amber placeholder chip
+ * rather than silently shown as real data. See HANDOVER.md.
  */
 
-const UNSET_PREFIX = "REPLACE_";
+export const TODO_PREFIX = "TODO_CONFIRM_";
 
 export const site = {
-  companyName: "Navora Global Limited",
+  legalName: "Navora Global Limited",
   shortName: "Navora Global",
   wordmark: "NAVORA",
   wordmarkSub: "GLOBAL LIMITED",
 
   // --- Contact -------------------------------------------------------------
-  email: "REPLACE_EMAIL",
-  phoneUK: "REPLACE_UK_PHONE",
-  phoneIndia: "REPLACE_INDIA_PHONE",
-  whatsapp: "REPLACE_WHATSAPP", // digits only, for wa.me
-  businessHours: "REPLACE_HOURS",
+  email: "TODO_CONFIRM_PRIMARY_BUSINESS_EMAIL",
+  telephone: "TODO_CONFIRM_BUSINESS_TELEPHONE",
+  businessHours: "TODO_CONFIRM_BUSINESS_HOURS",
 
   // --- Registration --------------------------------------------------------
-  registeredOffice: "REPLACE_UK_ADDRESS",
-  companyNumber: "REPLACE_COMPANY_NUMBER",
+  companyNumber: "TODO_CONFIRM_COMPANY_NUMBER",
   jurisdiction: "England and Wales",
+  registeredOffice: "TODO_CONFIRM_REGISTERED_OFFICE",
 
-  // --- Kerala operating partner -------------------------------------------
-  partnerCompany: {
-    name: "REPLACE_PARTNER_NAME",
-    address: "REPLACE_KERALA_ADDRESS",
-  },
-
-  // --- Social --------------------------------------------------------------
-  linkedin: "REPLACE_COMPANY_LINKEDIN",
+  // --- Operating partner ---------------------------------------------------
+  // Do not publish the partner's name until they have confirmed permission.
+  keralaPartner: "TODO_CONFIRM_PARTNER_COMPANY_NAME",
+  keralaPartnerLocation: "Kerala, India",
 
   // --- Web -----------------------------------------------------------------
-  domain: "REPLACE_DOMAIN",
-  origin: "https://navora-global.pages.dev",
+  domain: "TODO_CONFIRM_DOMAIN",
+  origin: "https://www.navoraglobal.co.uk",
 
   // --- Legal ---------------------------------------------------------------
-  legalLastReviewed: "22 September 2026",
+  legalLastReviewed: "21 September 2026",
   copyrightYear: 2026,
 };
 
-/** True when a value has not been supplied yet. */
-export function isUnset(value) {
-  // Non-strings (numbers, booleans) are always considered supplied.
-  if (typeof value !== "string") return value === null || value === undefined;
-  return value.trim() === "" || value.startsWith(UNSET_PREFIX);
+/** True when a value is still an unconfirmed placeholder. */
+export function isPlaceholder(value) {
+  return typeof value === "string" && value.startsWith(TODO_PREFIX);
 }
 
-/** True when a value is ready to show. */
-export function isSet(value) {
-  return !isUnset(value);
+/** Human-readable label for an unconfirmed value, e.g. "PRIMARY BUSINESS EMAIL". */
+export function placeholderLabel(value) {
+  if (!isPlaceholder(value)) return "";
+  return value.slice(TODO_PREFIX.length).replace(/_/g, " ");
 }
 
-/** Returns the value if set, otherwise `fallback` (default null). */
-export function valueOf(value, fallback = null) {
-  return isSet(value) ? value : fallback;
-}
-
-/** `tel:` href with punctuation stripped. */
-export function telHref(value) {
-  return isSet(value) ? `tel:${value.replace(/[^+\d]/g, "")}` : null;
-}
-
-/** `mailto:` href. */
-export function mailHref(value) {
-  return isSet(value) ? `mailto:${value}` : null;
-}
-
-/** wa.me link from a digits-only number. */
-export function whatsappHref(value) {
-  return isSet(value) ? `https://wa.me/${value.replace(/\D/g, "")}` : null;
-}
-
-/** Company registration line, or null when the number is not yet supplied. */
-export function registrationLine() {
-  if (isUnset(site.companyNumber)) return null;
-  return `Registered in ${site.jurisdiction}, Company No. ${site.companyNumber}`;
-}
-
-/**
- * Lists every value still awaiting real data. Used by the dev-time warning
- * below and by `npm run audit`, so an unfilled detail is visible to the team
- * without ever being visible to a visitor.
- */
-export function unsetKeys() {
-  const missing = [];
-
-  const walk = (object, prefix = "") => {
-    for (const [key, value] of Object.entries(object)) {
-      const path = prefix ? `${prefix}.${key}` : key;
-      if (value && typeof value === "object" && !Array.isArray(value)) {
-        walk(value, path);
-      } else if (isUnset(value)) {
-        missing.push(path);
-      }
-    }
-  };
-
-  walk(site);
-  return missing;
-}
-
-// Dev-time reminder. Never runs in production.
-if (import.meta.env?.DEV) {
-  const missing = unsetKeys();
-  if (missing.length > 0) {
-    console.warn(
-      `[Navora] ${missing.length} business detail(s) still unset and hidden from the UI:\n  ` +
-        missing.join("\n  ") +
-        "\n\nFill them in src/config/site.js — see HANDOVER.md."
-    );
-  }
+/** Returns the value, or `fallback` when it is still a placeholder. */
+export function resolved(value, fallback = null) {
+  return isPlaceholder(value) ? fallback : value;
 }

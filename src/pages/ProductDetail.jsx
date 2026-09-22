@@ -2,13 +2,12 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Seo from "../components/common/Seo";
 import Button from "../components/common/Button";
-import SmartImage from "../components/common/SmartImage";
+import Img from "../components/common/Img";
 import Icon from "../components/common/Icon";
 import StatusBadge from "../components/common/StatusBadge";
 import EmptyState from "../components/common/EmptyState";
 import SectionHeading from "../components/common/SectionHeading";
 import { getProductBySlug } from "../lib/sanity";
-import { getPrefetchedProduct } from "../lib/prefetch";
 import { site } from "../config/site";
 import { ctaLabels } from "../content/site";
 import { detailCopy, ownershipLabels, specLabels } from "../content/products";
@@ -43,15 +42,14 @@ function SpecRow({ label, value }) {
 
 function ProductDetail() {
   const { slug } = useParams();
-  // undefined = loading. Seeded from build-time data when prerendered.
-  const [product, setProduct] = useState(() => getPrefetchedProduct(slug));
+  const [product, setProduct] = useState(undefined); // undefined = loading
 
   // Reset to the loading state during render when the slug changes, so a
   // previous product is never shown briefly under a new URL.
   const [renderedSlug, setRenderedSlug] = useState(slug);
   if (slug !== renderedSlug) {
     setRenderedSlug(slug);
-    setProduct(getPrefetchedProduct(slug));
+    setProduct(undefined);
   }
 
   useEffect(() => {
@@ -131,11 +129,6 @@ function ProductDetail() {
     documentation,
   } = product;
 
-  // Deep-links the contact form with the enquiry type and product preselected.
-  const enquiryHref = `/contact?type=${encodeURIComponent(
-    ownership === "navora-brand" ? "Navora product enquiry" : "Buying or sourcing enquiry"
-  )}&product=${encodeURIComponent(name)}`;
-
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -171,18 +164,18 @@ function ProductDetail() {
 
           <div className="product-detail__top">
             <div className="product-detail__gallery">
-              <SmartImage
+              <Img
                 src={imageUrl}
                 alt={imageAlt || name}
                 ratio="4-3"
                 illustrative={imageIsIllustrative}
-                priority
+                loading="eager"
                 sizes="(max-width: 900px) 100vw, 42vw"
               />
 
               {Array.isArray(gallery) &&
                 gallery.filter(Boolean).map((item) => (
-                  <SmartImage
+                  <Img
                     key={item.url}
                     src={item.url}
                     alt={item.alt || name}
@@ -226,7 +219,7 @@ function ProductDetail() {
               </dl>
 
               <div className="btn-row">
-                <Button to={enquiryHref} variant="primary" size="lg">
+                <Button to="/contact" variant="primary" size="lg">
                   {ctaLabels.requestProductInfo}
                 </Button>
                 <Button to="/for-business" variant="secondary" size="lg">
@@ -300,7 +293,7 @@ function ProductDetail() {
             <p>{detailCopy.enquiryText}</p>
           </div>
           <div className="btn-row">
-            <Button to={enquiryHref} variant="gold" size="lg">
+            <Button to="/contact" variant="onDark" size="lg">
               {ctaLabels.requestProductInfo}
             </Button>
           </div>
@@ -313,7 +306,7 @@ function ProductDetail() {
             heading={`${ownershipLabels[ownership] || "Product"} — what that means`}
             lead={
               ownership === "navora-brand"
-                ? `${name} is developed and marketed under the Navora brand by ${site.companyName}.`
+                ? `${name} is developed and marketed under the Navora brand by ${site.legalName}.`
                 : ownership === "supplier-product"
                   ? `${name} is sourced through Navora's supplier relationships in India. Navora is not the manufacturer.`
                   : ownership === "coming-soon"

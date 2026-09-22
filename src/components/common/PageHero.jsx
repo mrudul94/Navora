@@ -1,4 +1,4 @@
-import SmartImage from "./SmartImage";
+import Img from "./Img";
 
 /**
  * Standard page header: label, H1, lead, optional CTAs and optional media.
@@ -10,7 +10,7 @@ function PageHero({ label, heading, text, image, imageAlt, illustrative, childre
   return (
     <section className={`page-hero ${hasMedia ? "" : "page-hero--noMedia"}`.trim()}>
       <div className="container page-hero__inner">
-        <div className="page-hero__copy">
+        <div>
           {label && <span className="page-hero__label">{label}</span>}
           <h1>{heading}</h1>
           {text && <p className="page-hero__text">{text}</p>}
@@ -18,14 +18,14 @@ function PageHero({ label, heading, text, image, imageAlt, illustrative, childre
         </div>
 
         {hasMedia && (
-          <div className="page-hero__media framed">
-            <SmartImage
+          <div className="page-hero__media">
+            <Img
               src={image}
               alt={imageAlt}
               ratio="4-3"
               illustrative={illustrative}
-              priority
-              sizes="(max-width: 860px) 100vw, 46vw"
+              loading="eager"
+              sizes="(max-width: 860px) 100vw, 45vw"
             />
           </div>
         )}

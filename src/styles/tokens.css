@@ -1,17 +1,13 @@
 /* ==========================================================================
    Navora design tokens + reset
-   Warm cream + deep forest green, honey-gold accent.
-
-   GOLD RULE: --gold (#D4A24C) is 2.18:1 on cream — decorative only.
-   For gold TEXT use --gold-text on light surfaces, --gold-on-dark on green.
+   Light editorial B2B: warm paper, deep forest green, amber accent.
    ========================================================================== */
 
 :root {
   /* --- Surfaces --------------------------------------------------------- */
-  --paper: #faf8f4;          /* cream — page default */
-  --surface: #ffffff;        /* white — cards, alternating sections */
-  --sage: #edf1ea;           /* soft sage tint — alternating sections */
-  --surface-alt: #f2efe8;    /* warm tint */
+  --paper: #faf8f4;
+  --surface: #ffffff;
+  --surface-alt: #f2efe8;
   --surface-sunken: #ece7dc;
 
   /* --- Ink -------------------------------------------------------------- */
@@ -19,24 +15,20 @@
   --ink-2: #3f4b44;
   --muted: #5c6d63;
 
-  /* --- Brand: green ----------------------------------------------------- */
-  --green: #1b4332;          /* primary */
-  --green-600: #2d6a4f;      /* hover / links on light */
+  /* --- Brand ------------------------------------------------------------ */
+  --green: #1b4332;
+  --green-600: #2d6a4f;
   --green-700: #163a2b;
-  --green-deep: #10291f;     /* dark sections */
   --green-50: #e6efe9;
 
-  /* --- Brand: gold ------------------------------------------------------ */
-  --gold: #d4a24c;           /* DECORATIVE ONLY: rules, dividers, fills */
-  --gold-text: #8f6114;      /* gold text on cream/white — 5.09:1 */
-  --gold-on-dark: #d4a24c;   /* gold text on green/deep — 6.68:1 */
-  --gold-soft: #faf1df;      /* tinted background */
-  --gold-line: rgba(212, 162, 76, 0.45);
+  --amber: #c98a25;        /* decorative fills and rules only */
+  --amber-600: #8f5f12;    /* amber TEXT on light surfaces (AA) */
+  --amber-on-dark: #e0b055; /* amber text on deep green (AA) */
+  --amber-50: #faf1df;
 
   /* --- Lines ------------------------------------------------------------ */
   --border: #e4dfd5;
   --border-strong: #d2cabb;
-  --border-dark: rgba(255, 255, 255, 0.14);
 
   /* --- Feedback --------------------------------------------------------- */
   --danger: #a4331f;
@@ -48,14 +40,12 @@
   --r-sm: 6px;
   --r-md: 12px;
   --r-lg: 20px;
-  --r-xl: 28px;
   --r-pill: 999px;
 
   /* --- Elevation -------------------------------------------------------- */
   --shadow-1: 0 1px 2px rgba(20, 32, 26, 0.06);
   --shadow-2: 0 12px 32px rgba(20, 32, 26, 0.08);
   --shadow-3: 0 24px 60px rgba(20, 32, 26, 0.12);
-  --shadow-lift: 0 18px 44px rgba(20, 32, 26, 0.14);
 
   /* --- Type ------------------------------------------------------------- */
   --font-sans: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, -apple-system,
@@ -70,7 +60,6 @@
   --fs-xl: clamp(1.5rem, 1vw + 1.25rem, 1.875rem);
   --fs-2xl: clamp(1.875rem, 2vw + 1.35rem, 2.625rem);
   --fs-3xl: clamp(2.25rem, 3.2vw + 1.4rem, 3.75rem);
-  --fs-hero: clamp(2.5rem, 4.5vw + 1.4rem, 4.5rem);
 
   /* --- Spacing (8px scale) ---------------------------------------------- */
   --sp-1: 4px;
@@ -84,11 +73,10 @@
   --sp-9: 96px;
   --sp-10: 128px;
 
-  --section-y: clamp(64px, 8vw, 120px);
+  --section-y: clamp(56px, 7vw, 104px);
 
   /* --- Layout ----------------------------------------------------------- */
   --container: 1180px;
-  --container-wide: 1320px;
   --container-narrow: 760px;
   --gutter: clamp(16px, 4vw, 32px);
 
@@ -122,7 +110,6 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
 }
 
 h1,
@@ -185,13 +172,7 @@ table {
   border-radius: var(--r-sm);
 }
 
-/* Focus ring needs to be visible on dark sections too. */
-.section--dark :focus-visible,
-.site-footer :focus-visible,
-.home-hero :focus-visible {
-  outline-color: var(--gold);
-}
-
+/* Reduced motion: strip transitions and reveal everything immediately. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

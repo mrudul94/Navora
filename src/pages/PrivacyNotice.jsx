@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import Seo from "../components/common/Seo";
 import LegalLayout from "../components/common/LegalLayout";
-
+import ConfirmValue from "../components/common/ConfirmValue";
 import { pageSeo } from "../content/seo";
-import { site, isSet, mailHref } from "../config/site";
+import { site } from "../config/site";
 
 const sections = [
   { id: "who-we-are", title: "Who we are" },
@@ -33,24 +33,18 @@ function PrivacyNotice() {
         <section id="who-we-are">
           <h2>Who we are</h2>
           <p>
-            {site.companyName} is a company registered in {site.jurisdiction}. We
+            {site.legalName} is a company registered in {site.jurisdiction}. We
             are the controller of the personal information described in this
             notice.
           </p>
-          <ul>
-            {isSet(site.registeredOffice) && (
-              <li>Registered office: {site.registeredOffice}</li>
-            )}
-            {isSet(site.companyNumber) && (
-              <li>Company number: {site.companyNumber}</li>
-            )}
-            {isSet(site.email) && (
-              <li>
-                Contact for privacy matters:{" "}
-                <a href={mailHref(site.email)}>{site.email}</a>
-              </li>
-            )}
-          </ul>
+          <p>
+            Registered office: <ConfirmValue value={site.registeredOffice} />
+            <br />
+            Company number: <ConfirmValue value={site.companyNumber} />
+            <br />
+            Contact for privacy matters:{" "}
+            <ConfirmValue value={site.email} as="email" />
+          </p>
         </section>
 
         <section id="what-we-collect">
@@ -129,8 +123,8 @@ function PrivacyNotice() {
           </p>
           <ul>
             <li>
-              our operating partner in Kerala, India, and relevant suppliers,
-              where this is needed to answer your enquiry;
+              our operating partner in {site.keralaPartnerLocation}, and relevant
+              suppliers, where this is needed to answer your enquiry;
             </li>
             <li>
               our service providers, who process information on our instructions:
@@ -192,13 +186,8 @@ function PrivacyNotice() {
             <li>withdraw consent where we rely on it.</li>
           </ul>
           <p>
-            To exercise any of these rights, please contact us
-            {isSet(site.email) ? (
-              <> at <a href={mailHref(site.email)}>{site.email}</a></>
-            ) : (
-              <> through our <Link to="/contact">contact page</Link></>
-            )}
-            . You also have the
+            To exercise any of these rights, contact us at{" "}
+            <ConfirmValue value={site.email} as="email" />. You also have the
             right to complain to the Information Commissioner&apos;s Office, the
             UK supervisory authority, at{" "}
             <a href="https://ico.org.uk" target="_blank" rel="noopener noreferrer">
@@ -247,12 +236,9 @@ function PrivacyNotice() {
           </p>
           <p>
             If you have any questions about this notice or how we handle your
-            information, please get in touch through our{" "}
-            <Link to="/contact">contact page</Link>
-            {isSet(site.email) && (
-              <> or at <a href={mailHref(site.email)}>{site.email}</a></>
-            )}
-            .
+            information, contact us at{" "}
+            <ConfirmValue value={site.email} as="email" /> or through our{" "}
+            <Link to="/contact">contact page</Link>.
           </p>
         </section>
       </LegalLayout>

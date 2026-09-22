@@ -15,7 +15,7 @@ import { consentStatement } from "../../content/contact";
 
 const ENDPOINT = "/api/enquiry";
 
-function EnquiryForm({ config, initialValues }) {
+function EnquiryForm({ config }) {
   const {
     formName,
     fields,
@@ -26,9 +26,7 @@ function EnquiryForm({ config, initialValues }) {
   } = config;
 
   const uid = useId();
-  // Seeded from query params so "Request Samples" arrives with the enquiry
-  // type and product already chosen.
-  const [values, setValues] = useState(() => initialValues ?? {});
+  const [values, setValues] = useState({});
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState("idle"); // idle | submitting | success | error
   const [serverError, setServerError] = useState(null);

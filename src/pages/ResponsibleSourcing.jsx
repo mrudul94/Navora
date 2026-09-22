@@ -1,6 +1,6 @@
 import Seo from "../components/common/Seo";
 import Button from "../components/common/Button";
-import SmartImage from "../components/common/SmartImage";
+import Img from "../components/common/Img";
 import PageHero from "../components/common/PageHero";
 import SectionHeading from "../components/common/SectionHeading";
 import FeatureCard from "../components/cards/FeatureCard";
@@ -56,7 +56,7 @@ function ResponsibleSourcing() {
           </div>
 
           <div className="split__media">
-            <SmartImage
+            <Img
               src={inspection.image}
               alt={inspection.imageAlt}
               ratio="4-3"
