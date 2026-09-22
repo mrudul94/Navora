@@ -1,21 +1,22 @@
+import { Link } from "react-router-dom";
 import Seo from "../components/common/Seo";
 import Button from "../components/common/Button";
 import SmartImage from "../components/common/SmartImage";
 import SectionHeading from "../components/common/SectionHeading";
-import FeatureCard from "../components/cards/FeatureCard";
-import { Grain, Divider } from "../components/common/Texture";
-import TrustStrip from "../components/sections/TrustStrip";
-import HowWeWork from "../components/sections/HowWeWork";
+import Icon from "../components/common/Icon";
 import CategoryGallery from "../components/sections/CategoryGallery";
 import { pageSeo } from "../content/seo";
 import { ctaLabels } from "../content/site";
 import { site } from "../config/site";
 import {
+  capabilityIntro,
+  capabilityMeta,
   hero,
-  howWeWork,
+  heroFacts,
+  heroPanel,
   partnership,
   productCategories,
-  trustStrip,
+  values,
   whatWeOffer,
   whoWeAre,
 } from "../content/home";
@@ -41,128 +42,183 @@ function Home() {
     <>
       <Seo {...pageSeo.home} jsonLd={organizationJsonLd} />
 
-      {/* --- Hero ------------------------------------------------------------
-          The hero photograph is busy edge to edge, so the copy sits on a clean
-          ground beside it rather than on top of it. The image bleeds off the
-          right and overlaps the trust strip below. */}
-      <section className="hero has-grain">
-        <Grain opacity={0.35} />
-
+      {/* --- Hero --- */}
+      <section className="hero">
         <div className="container hero__inner">
-          <div className="hero__copy">
-            <span className="hero__label">{hero.label}</span>
-            <h1 className="hero__title">{hero.heading}</h1>
+          <div>
+            <span className="tag-pill hero__label">{hero.label}</span>
+
+            <h1 className="hero__title">
+              Connecting Indian <span className="accent">food producers</span> with
+              global markets
+            </h1>
+
             <p className="hero__text">{hero.text}</p>
 
             <div className="btn-row">
               <Button to="/products" variant="primary" size="lg">
                 {ctaLabels.exploreProducts}
+                <Icon name="arrowRight" />
               </Button>
               <Button to="/for-business" variant="secondary" size="lg">
                 {ctaLabels.becomePartner}
               </Button>
             </div>
-          </div>
 
-          <div className="hero__media">
-            <SmartImage
-              src={hero.image}
-              alt={hero.imageAlt}
-              ratio="4-3"
-              sizes="(max-width: 960px) 100vw, 52vw"
-              priority
-              illustrative={hero.illustrative}
-            />
-          </div>
-        </div>
-      </section>
-
-      <TrustStrip items={trustStrip} />
-
-      {/* --- Who we are --- */}
-      <section className="section reveal">
-        <div className="container split">
-          <div>
-            <SectionHeading kicker={whoWeAre.kicker} heading={whoWeAre.heading} />
-            <p className="lead">{whoWeAre.text}</p>
-            <div className="btn-row">
-              <Button to="/about" variant="secondary">
-                {ctaLabels.aboutNavora}
-              </Button>
+            <div className="hero__facts">
+              {heroFacts.map((fact) => (
+                <div key={fact.label}>
+                  <span className="hero__fact-value">{fact.value}</span>
+                  <span className="hero__fact-label">{fact.label}</span>
+                </div>
+              ))}
             </div>
           </div>
 
-          <div className="split__media framed">
+          <div className="hero__panel">
+            <p className="hero__panel-caption">
+              <Icon name="pin" />
+              <span>{heroPanel.caption}</span>
+            </p>
+
             <SmartImage
-              src={whoWeAre.image}
-              alt={whoWeAre.imageAlt}
+              src={heroPanel.image}
+              alt={heroPanel.imageAlt}
               ratio="4-3"
-              sizes="(max-width: 860px) 100vw, 48vw"
-              illustrative={whoWeAre.illustrative}
+              sizes="(max-width: 960px) 100vw, 44vw"
+              priority
             />
+
+            <div className="hero__panel-grid">
+              {heroPanel.items.map((item) => (
+                <div className="hero__panel-item" key={item.label}>
+                  <Icon name={item.icon} />
+                  <span>{item.label}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      <div className="container">
-        <Divider />
-      </div>
+      {/* --- Who we are + the five values --- */}
+      <section className="section section--warm reveal">
+        <div className="container value-layout">
+          <div>
+            <SectionHeading
+              kicker={values.kicker}
+              heading={whoWeAre.heading}
+              lead={whoWeAre.text}
+            />
+            <Link className="btn btn--ghost" to="/about">
+              {ctaLabels.aboutNavora}
+              <Icon name="arrowRight" />
+            </Link>
+          </div>
 
-      {/* --- What we offer --- */}
-      <section className="section section--surface reveal">
-        <div className="container">
-          <SectionHeading
-            kicker={whatWeOffer.kicker}
-            heading={whatWeOffer.heading}
-            center
-          />
-          <div className="grid grid--4">
-            {whatWeOffer.cards.map((card) => (
-              <FeatureCard key={card.heading} {...card} />
+          <div className="value-grid">
+            {values.items.map((value) => (
+              <article className="value-card" key={value.name}>
+                <span className="value-card__icon">
+                  <Icon name={value.icon} />
+                </span>
+                <h3 className="value-card__name">{value.name}</h3>
+                <p className="value-card__text">{value.text}</p>
+                <p className="value-card__code">
+                  <span className="code">{value.code}</span>
+                </p>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* --- How we work --- */}
-      <HowWeWork {...howWeWork} />
-
-      {/* --- Product categories --- */}
+      {/* --- What we offer --- */}
       <section className="section reveal">
         <div className="container">
+          <div className="capability-head">
+            <SectionHeading
+              kicker="Commercial capabilities"
+              heading={whatWeOffer.heading}
+            />
+            <p className="capability-head__note">{capabilityIntro}</p>
+          </div>
+
+          <div className="capability-grid">
+            {whatWeOffer.cards.map((card, index) => (
+              <article className="capability" key={card.heading}>
+                <div className="capability__head">
+                  <span className="capability__icon">
+                    <Icon name={card.icon} />
+                  </span>
+                  <span className="code">{capabilityMeta[index]?.code}</span>
+                </div>
+
+                <h3 className="capability__name">{card.heading}</h3>
+                <p className="capability__text">{card.text}</p>
+
+                <p className="capability__foot">
+                  <span className="code">{capabilityMeta[index]?.foot}</span>
+                </p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* --- Product categories --- */}
+      <section className="section section--warm reveal">
+        <div className="container">
           <SectionHeading
-            kicker={productCategories.kicker}
+            kicker="Origin portfolio"
             heading={productCategories.heading}
             lead={productCategories.text}
-            center
           />
 
           <CategoryGallery categories={productCategories.labels} />
 
-          <div className="btn-row btn-row--center">
+          <div className="btn-row">
             <Button to="/products" variant="primary">
               {ctaLabels.exploreProducts}
+              <Icon name="arrowRight" />
             </Button>
           </div>
         </div>
       </section>
 
       {/* --- Partnership --- */}
-      <section className="section cta-band has-grain reveal">
-        <Grain opacity={0.18} />
-        <div className="container cta-band__inner">
-          <div className="cta-band__copy">
-            <h2>{partnership.heading}</h2>
-            <p>{partnership.text}</p>
-          </div>
+      <section className="section reveal">
+        <div className="container">
+          <div className="cta-band">
+            <div className="cta-band__inner">
+              <span className="tag-pill">Direct trade gateway</span>
+              <h2>{partnership.heading}</h2>
+              <p>{partnership.text}</p>
 
-          <div className="btn-row">
-            <Button to="/contact" variant="gold" size="lg">
-              {ctaLabels.discussRequirements}
-            </Button>
-            <Button to="/for-business" variant="onDarkOutline" size="lg">
-              {ctaLabels.introduceBrand}
-            </Button>
+              <div className="btn-row">
+                <Button to="/contact" variant="onDark" size="lg">
+                  {ctaLabels.discussRequirements}
+                </Button>
+                <Button to="/for-business" variant="onDarkOutline" size="lg">
+                  {ctaLabels.introduceBrand}
+                </Button>
+              </div>
+
+              <div className="cta-band__notes">
+                <span className="cta-band__note">
+                  <Icon name="check" />
+                  Importers, distributors and retailers
+                </span>
+                <span className="cta-band__note">
+                  <Icon name="check" />
+                  Food-service buyers
+                </span>
+                <span className="cta-band__note">
+                  <Icon name="check" />
+                  Producers and emerging brands
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </section>

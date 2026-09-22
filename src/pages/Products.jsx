@@ -1,21 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import Seo from "../components/common/Seo";
 import Button from "../components/common/Button";
-import PageHero from "../components/common/PageHero";
 import SectionHeading from "../components/common/SectionHeading";
 import EmptyState from "../components/common/EmptyState";
+import Icon from "../components/common/Icon";
 import ProductCard from "../components/cards/ProductCard";
 import ProductCardSkeleton from "../components/cards/ProductCardSkeleton";
 import { getProducts } from "../lib/sanity";
 import { pageSeo } from "../content/seo";
 import { ctaLabels } from "../content/site";
-import {
-  catalogueCta,
-  emptyState,
-  filters,
-  hero,
-} from "../content/products";
+import { catalogueCta, emptyState, filters, hero } from "../content/products";
 
 const validFilters = new Set(filters.map((f) => f.id));
 
@@ -30,8 +25,6 @@ function Products() {
   const [products, setProducts] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // The filter lives in the URL so a category tile on the home page lands
-  // pre-filtered, and the view can be shared or bookmarked.
   const requested = searchParams.get("category");
   const activeFilter = requested && validFilters.has(requested) ? requested : "all";
 
@@ -44,11 +37,9 @@ function Products() {
 
   useEffect(() => {
     let cancelled = false;
-
     getProducts().then((data) => {
       if (!cancelled) setProducts(data);
     });
-
     return () => {
       cancelled = true;
     };
@@ -67,42 +58,70 @@ function Products() {
   }, [products, activeFilter]);
 
   const loading = products === null;
+  const total = products?.length ?? 0;
 
   return (
     <>
       <Seo {...pageSeo.products} />
 
-      <PageHero heading={hero.heading} text={hero.text} />
-
-      <section className="section">
+      {/* --- Page header --- */}
+      <section className="section section--tight">
         <div className="container">
-          <div className="filters" role="group" aria-label="Filter products">
-            {filters.map((filter) => (
-              <button
-                key={filter.id}
-                type="button"
-                className="filter-chip"
-                aria-pressed={activeFilter === filter.id}
-                onClick={() => setActiveFilter(filter.id)}
-              >
-                {filter.label}
-              </button>
-            ))}
+          <nav className="breadcrumb" aria-label="Breadcrumb">
+            <Link to="/">Home</Link>
+            <Icon name="chevronRight" />
+            <span aria-current="page">Products</span>
+          </nav>
+
+          <span className="tag-pill">B2B sourcing &amp; brand portfolio</span>
+
+          <div className="page-head">
+            <h1>{hero.heading}</h1>
+            <p className="lead">{hero.text}</p>
           </div>
 
-          <p className="products-count" role="status" aria-live="polite">
-            {loading
-              ? "Loading products…"
-              : `${visible.length} ${visible.length === 1 ? "product" : "products"}${
-                  activeFilter === "all"
-                    ? ""
-                    : ` in ${filters.find((f) => f.id === activeFilter)?.label}`
-                }`}
-          </p>
+          {/* Verbatim from the Content Pack: what is provided, without
+              claiming any certification Navora has not evidenced. */}
+          <div className="notice">
+            <Icon name="evidence" />
+            <p>
+              Product specifications, formats, quantities, certifications and
+              availability vary by supplier and destination. Documentation is
+              provided according to the product and destination market.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* --- Catalogue --- */}
+      <section className="section section--warm">
+        <div className="container">
+          <div className="catalogue-bar">
+            <div className="filters" role="group" aria-label="Filter products by category">
+              {filters.map((filter) => (
+                <button
+                  key={filter.id}
+                  type="button"
+                  className="filter-chip"
+                  aria-pressed={activeFilter === filter.id}
+                  onClick={() => setActiveFilter(filter.id)}
+                >
+                  {filter.label}
+                  {filter.id === "all" && !loading ? ` (${total})` : ""}
+                </button>
+              ))}
+            </div>
+
+            <p className="catalogue-bar__count" role="status" aria-live="polite">
+              {loading
+                ? "Loading products…"
+                : `${visible.length} ${visible.length === 1 ? "product" : "products"}`}
+            </p>
+          </div>
 
           {loading && (
             <div className="products-grid">
-              {Array.from({ length: 6 }, (_, i) => (
+              {Array.from({ length: 8 }, (_, i) => (
                 <ProductCardSkeleton key={i} />
               ))}
             </div>
@@ -131,27 +150,72 @@ function Products() {
         </div>
       </section>
 
-      {/* --- Catalogue CTA --- */}
-      <section className="section section--tight cta-band">
-        <div className="container cta-band__inner">
-          <div className="cta-band__copy">
-            <h2>{catalogueCta.heading}</h2>
-            <p>{catalogueCta.text}</p>
+      {/* --- What Navora can actually say about assurance --- */}
+      <section className="section section--tight">
+        <div className="container assurance">
+          <div className="assurance__item">
+            <h2 className="assurance__title">
+              <Icon name="evidence" />
+              Documentation on request
+            </h2>
+            <p className="assurance__text">
+              Where relevant, we request available specifications, test reports,
+              certifications and business documents for review.
+            </p>
           </div>
-          <div className="btn-row">
-            <Button to="/contact" variant="gold" size="lg">
-              {ctaLabels.requestProductInfo}
-            </Button>
+
+          <div className="assurance__item">
+            <h2 className="assurance__title">
+              <Icon name="source" />
+              Known source
+            </h2>
+            <p className="assurance__text">
+              We aim to understand who supplies each product, where it comes from
+              and what information is available about its production and handling.
+            </p>
+          </div>
+
+          <div className="assurance__item">
+            <h2 className="assurance__title">
+              <Icon name="company" />
+              UK-registered counterparty
+            </h2>
+            <p className="assurance__text">
+              Navora Global Limited is registered in England and Wales and works
+              with an operating partner in Kerala, India.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* --- Assurance note --- */}
+      {/* --- Catalogue CTA --- */}
+      <section className="section section--tight">
+        <div className="container">
+          <div className="cta-band">
+            <div className="cta-band__inner">
+              <span className="tag-pill">B2B commercial engagement</span>
+              <h2>{catalogueCta.heading}</h2>
+              <p>{catalogueCta.text}</p>
+
+              <div className="btn-row">
+                <Button to="/contact" variant="onDark" size="lg">
+                  {ctaLabels.requestProductInfo}
+                </Button>
+                <Button to="/for-business" variant="onDarkOutline" size="lg">
+                  {ctaLabels.discussRequirements}
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* --- Accuracy note --- */}
       <section className="section section--tight">
         <div className="container-narrow">
           <SectionHeading
             heading="Specifications and documentation"
-            lead="Product specifications, formats, quantities, certifications and availability vary by supplier and destination. Certification and farming-method claims are published only where Navora holds current evidence relevant to the named product and supplier."
+            lead="Certification, farming-method and similar claims are published only where Navora holds current evidence relevant to the named product and supplier."
             center
           />
         </div>

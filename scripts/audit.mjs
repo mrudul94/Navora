@@ -240,25 +240,27 @@ section("Colour contrast (WCAG AA, 4.5:1)");
 
   const W = "#ffffff";
   const pairs = [
-    ["body text on rice", t.pepper, t.rice],
-    ["body text on jute", t.pepper, t.jute],
-    ["body text on jute-soft", t.pepper, t["jute-soft"]],
-    ["secondary text on rice", t["ink-2"], t.rice],
-    ["secondary text on jute", t["ink-2"], t.jute],
-    ["muted on rice", t.muted, t.rice],
-    ["eyebrow (turmeric-text) on rice", t["turmeric-text"], t.rice],
-    ["eyebrow (turmeric-text) on jute", t["turmeric-text"], t.jute],
-    ["terracotta text on rice", t["terracotta-text"], t.rice],
-    ["cardamom heading on rice", t.cardamom, t.rice],
-    ["link on rice", t["cardamom-600"], t.rice],
-    ["white on cardamom", W, t.cardamom],
-    ["white on cardamom-deep", W, t["cardamom-deep"]],
-    ["gold on cardamom", t["gold-on-dark"], t.cardamom],
-    ["gold on cardamom-deep", t["gold-on-dark"], t["cardamom-deep"]],
-    ["gold button label", "#1e1405", t.turmeric],
-    ["step number", t["turmeric-text"], t.jute],
-    ["error text", t.danger, t["danger-50"]],
-    ["success text", t.success, t["success-50"]],
+    ["heading on cream", t.ink, t.cream],
+    ["heading on cream-warm", t.ink, t["cream-warm"]],
+    ["heading on card", t.ink, t.card],
+    ["body on cream", t["ink-2"], t.cream],
+    ["body on cream-warm", t["ink-2"], t["cream-warm"]],
+    ["body on cream-deep", t["ink-2"], t["cream-deep"]],
+    ["muted on cream", t.muted, t.cream],
+    ["muted on cream-warm", t.muted, t["cream-warm"]],
+    ["eyebrow (gold-text) on cream", t["gold-text"], t.cream],
+    ["orange text on cream", t["orange-text"], t.cream],
+    ["orange text on cream-warm", t["orange-text"], t["cream-warm"]],
+    ["orange text on orange-soft", t["orange-text"], t["orange-soft"]],
+    ["green text on cream", t.green, t.cream],
+    ["white on green", W, t.green],
+    ["white on orange button", W, t.orange],
+    ["white on footer", W, t.footer],
+    ["footer body text", t["footer-text"], t.footer],
+    ["footer heading (orange)", t["orange-on-dark"], t.footer],
+    ["gold on footer", t["gold-on-dark"], t.footer],
+    ["error text", t.danger, t["danger-soft"]],
+    ["success text", t.success, t["success-soft"]],
   ];
 
   let worst = Infinity;
@@ -274,12 +276,13 @@ section("Colour contrast (WCAG AA, 4.5:1)");
   if (!bad) pass(`${pairs.length} text pairs pass, lowest ${worst.toFixed(2)}:1`);
 
   // --- Decorative-only guard ---------------------------------------------
-  // --turmeric is 2.76:1 on rice and --brass is 3.47:1 on cardamom. Both are
-  // fills and rules, never type. This is the trap the previous redesign fell
-  // into, so it is asserted rather than left to review.
+  // --orange is 4.19:1 on cream and --gold is below AA too. Both are fills
+  // and rules, never type; --orange-text and --gold-text exist for that.
+  // Asserted rather than left to review, because an accent colour that reads
+  // fine as a button silently fails as body copy.
   const decorative = [
-    ["--turmeric", t.turmeric, t.rice],
-    ["--brass", t.brass, t.cardamom],
+    ["--orange", t.orange, t.cream],
+    ["--gold", t.gold, t.cream],
   ];
 
   for (const [name, colour, ground] of decorative) {
@@ -290,7 +293,7 @@ section("Colour contrast (WCAG AA, 4.5:1)");
 
   const cssFiles = walk("src/styles", (f) => f.endsWith(".css"));
   const misuse = [];
-  const DECORATIVE = ["var(--turmeric)", "var(--brass)"];
+  const DECORATIVE = ["var(--orange)", "var(--gold)"];
 
   for (const file of cssFiles) {
     for (const rawLine of read(file).split(String.fromCharCode(10))) {
@@ -306,7 +309,7 @@ section("Colour contrast (WCAG AA, 4.5:1)");
   if (misuse.length) {
     for (const m of misuse) fail(`decorative colour used as text — ${m}`);
   } else {
-    pass("--turmeric and --brass are never used as a text colour");
+    pass("--orange and --gold are never used as a text colour");
   }
 }
 

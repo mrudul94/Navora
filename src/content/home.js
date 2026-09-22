@@ -89,31 +89,93 @@ export const partnership = {
 };
 
 /* ===========================================================================
-   Spice House redesign — new section data.
-   Copy below is either verbatim from the Content Pack or a plain restatement
-   of a fact already published on the site. Nothing here is a new claim.
+   Trade-house theme — supporting data.
+
+   Everything below is either verbatim Content Pack copy or a neutral design
+   label. No new claim about certification, testing, volumes or performance is
+   introduced here. See the note in README under "Content rules".
    =========================================================================== */
 
-/** Four facts under the hero. Each one is verifiable. */
-export const trustStrip = [
-  { icon: "company", label: "UK Registered Company" },
-  { icon: "sourcing", label: "Kerala Sourcing Partner" },
-  { icon: "product", label: "Six Product Lines" },
-  { icon: "partnership", label: "Bulk, Retail & Private Label" },
-];
+/** Thin bar above the header. Both lines are Content Pack wording. */
+export const announcement = {
+  primary: "UK-registered food trading & market access",
+  secondary:
+    "Connecting trusted Indian farmers & emerging brands with international buyers",
+};
 
 /**
- * The Content Pack's "How we work" sequence (p. 5), promoted to the home page.
- * Headings and text are verbatim.
+ * Three facts beneath the hero buttons.
+ *
+ * Deliberately NOT metrics. The Content Pack forbids invented statistics, so
+ * these state only what is already published elsewhere on the site: the
+ * company is UK-registered, the operating partner is in Kerala, and the
+ * catalogue currently spans six product lines.
  */
-export const howWeWork = {
-  kicker: "How we work",
-  heading: "From first enquiry to long-term supply",
-  steps: [
-    { step: "01", heading: "Understand", text: "We learn about the required product, specification, volume, market and intended use." },
-    { step: "02", heading: "Identify", text: "We discuss suitable options with our partner and supplier network in India." },
-    { step: "03", heading: "Verify", text: "We gather the available product information, samples and documentation for buyer review." },
-    { step: "04", heading: "Connect", text: "We support direct commercial discussions on pricing, quantities, packaging and delivery." },
-    { step: "05", heading: "Develop", text: "Where there is a strong fit, we work towards a longer-term supply or market partnership." },
+export const heroFacts = [
+  { value: "UK", label: "Registered company" },
+  { value: "Kerala", label: "Operating partner" },
+  { value: "Six", label: "Product lines" },
+];
+
+/** Small panel beside the hero. Labels only, no claims. */
+export const heroPanel = {
+  caption: "Kerala, India · Malabar Coast",
+  image: "/images/sourcing-farm.webp",
+  imageAlt: "Farmland in Kerala",
+  items: [
+    { icon: "source", label: "Known origin" },
+    { icon: "partnership", label: "Direct network" },
+    { icon: "company", label: "UK registered" },
   ],
 };
+
+/**
+ * The Content Pack's five values (p. 2), shown as a card grid.
+ * Names and descriptions are verbatim; the icon and sequence label are design.
+ */
+export const values = {
+  kicker: "Cross-continental trade architecture",
+  items: [
+    {
+      name: "Trust",
+      icon: "verified",
+      code: "01 / Foundation",
+      text: "We communicate clearly about products, origin, documentation, availability and commercial terms.",
+    },
+    {
+      name: "Quality",
+      icon: "spec",
+      code: "02 / Standard",
+      text: "We work with suppliers who can meet agreed product specifications and buyer requirements.",
+    },
+    {
+      name: "Partnership",
+      icon: "partnership",
+      code: "03 / Synergy",
+      text: "We aim to build lasting relationships with farmers, producers, brands and buyers.",
+    },
+    {
+      name: "Access",
+      icon: "market",
+      code: "04 / Route",
+      text: "We help smaller and medium-scale businesses reach opportunities that may otherwise be difficult to enter.",
+    },
+    {
+      name: "Responsible growth",
+      icon: "improve",
+      code: "05 / Stewardship",
+      text: "We expand carefully and avoid claims or commitments that cannot be supported.",
+    },
+  ],
+};
+
+/** Sequence labels and footer tags for the pack's four "What we offer" cards. */
+export const capabilityMeta = [
+  { code: "01 / Origin", foot: "Direct supplier relationships" },
+  { code: "02 / Bridge", foot: "Buyer introductions" },
+  { code: "03 / Branded", foot: "Honey Shot & confectionery" },
+  { code: "04 / Scale", foot: "Bulk, retail & private label" },
+];
+
+export const capabilityIntro =
+  "Sourcing, market introductions, Navora-branded products and flexible partnership routes — from first enquiry through to commercial discussion.";

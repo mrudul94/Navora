@@ -1,90 +1,95 @@
 /* ==========================================================================
-   Navora design tokens — "Spice House"
+   Navora design tokens — trade-house theme
 
-   Every colour is named after something Navora actually sells, and sampled
-   from the photography in public/images so the UI and the images sit together.
+   Warm cream grounds, burnt-orange accent, deep green, near-black footer.
+   Every value below is contrast-checked; the numbers in the comments are the
+   measured ratio, and scripts/audit.mjs re-checks them on every run.
 
-   GOLD RULE — the trap this palette is built to avoid:
-     --turmeric is 2.76:1 on paper. It is a DECORATIVE colour: fills, rules,
-     dividers, icon grounds. It must never be used for text.
-     For gold TYPE use --turmeric-text on light, --gold-on-dark on green.
-     --brass is likewise rules only, never text.
-   scripts/audit.mjs asserts this on every run.
+   ACCENT RULE
+     --orange (#C1521C) is 4.19:1 on cream — it is a FILL colour (buttons,
+     bands, rules). For orange TYPE on a light ground use --orange-text.
+     On the dark footer use --orange-on-dark.
    ========================================================================== */
 
 :root {
-  /* --- Surfaces: rice, jute, paper ---------------------------------------- */
-  --rice: #faf6ee;          /* warm paper — page default */
-  --jute: #e8dcc8;          /* sack tan — alternating sections */
-  --jute-soft: #f2eade;     /* half-strength jute */
-  --surface: #fffdf9;       /* cards, raised panels */
+  /* --- Grounds ------------------------------------------------------------ */
+  --cream: #f7f2e9;         /* page default */
+  --cream-warm: #fbf3ec;    /* alternating sections, slightly pinker */
+  --cream-deep: #f1e9db;    /* sunken panels, filter rows */
+  --card: #fffcf7;          /* cards and raised panels */
 
-  /* --- Ink: pepper -------------------------------------------------------- */
-  --pepper: #171310;        /* body text — 17.13:1 on rice */
-  --ink-2: #3f382f;         /* secondary text — 10.72:1 on rice */
-  --muted: #6b6055;         /* tertiary */
+  /* --- Ink ---------------------------------------------------------------- */
+  --ink: #231a14;           /* headings — 15.32:1 on cream */
+  --ink-2: #4d4038;         /* body — 8.94:1 on cream */
+  --muted: #6f6154;         /* metadata — 5.36:1 on cream */
 
-  /* --- Cardamom green (grounding) ----------------------------------------- */
-  --cardamom: #1b4332;
-  --cardamom-600: #2d6a4f;
-  --cardamom-deep: #12301f; /* darkest bands */
-  --cardamom-50: #e7efe9;
+  /* --- Orange (primary accent) -------------------------------------------- */
+  --orange: #c1521c;        /* FILLS ONLY — 4.19:1 on cream */
+  --orange-text: #a8461a;   /* orange TYPE on light — 5.30:1 on cream */
+  --orange-on-dark: #e0783f;/* orange TYPE on the footer — 5.53:1 */
+  --orange-deep: #a8461a;   /* button hover */
+  --orange-soft: #fbeade;   /* tinted ground */
 
-  /* --- Turmeric (lead accent) --------------------------------------------- */
-  --turmeric: #c8892a;      /* DECORATIVE ONLY — 2.76:1 on rice */
-  --turmeric-text: #7d520e; /* gold TYPE on light — 6.31 rice / 5.02 jute */
-  --gold-on-dark: #e0b055;  /* gold TYPE on green — 5.55 on cardamom */
-  --turmeric-soft: #f7ecd8; /* tinted ground */
+  /* --- Green -------------------------------------------------------------- */
+  --green: #1f4a2c;         /* 9.08:1 as text on cream, 10.12:1 white on it */
+  --green-deep: #173a22;
+  --green-soft: #e8efe8;
 
-  /* --- Terracotta (secondary accent) --------------------------------------- */
-  --terracotta: #9c4a2f;
-  --terracotta-text: #8c4229; /* 6.66 rice / 5.30 jute */
-  --terracotta-soft: #f6e6df;
+  /* --- Gold (fine detailing) ---------------------------------------------- */
+  --gold: #b8935a;          /* RULES AND FILLS ONLY */
+  --gold-text: #8a6828;     /* gold TYPE on light — 4.60:1 on cream */
+  --gold-on-dark: #c9a86a;  /* gold TYPE on the footer — 7.42:1 */
 
-  /* --- Brass (metal detailing) --------------------------------------------- */
-  --brass: #b08a46;         /* HAIRLINES AND RULES ONLY — never text */
-  --brass-line: rgba(176, 138, 70, 0.42);
+  /* --- Footer ------------------------------------------------------------- */
+  --footer: #241c16;        /* 16.76:1 for white text */
+  --footer-2: #2f251d;      /* raised panels inside the footer */
+  --footer-text: #b3a595;   /* 6.97:1 on footer */
 
-  /* --- Lines --------------------------------------------------------------- */
-  --border: #e4dbcb;
-  --border-strong: #d3c6ae;
-  --border-dark: rgba(255, 255, 255, 0.14);
+  /* --- Lines -------------------------------------------------------------- */
+  --line: #e5dcc9;
+  --line-strong: #d4c7ad;
+  --line-dark: rgba(255, 255, 255, 0.12);
 
-  /* --- Feedback ------------------------------------------------------------ */
+  /* --- Feedback ----------------------------------------------------------- */
   --danger: #9d3320;
-  --danger-50: #fbeee9;
+  --danger-soft: #fbeee9;
   --success: #1f6b4a;
-  --success-50: #e8f3ed;
+  --success-soft: #e8f3ed;
 
-  /* --- Radii --------------------------------------------------------------- */
-  --r-sm: 6px;
-  --r-md: 12px;
-  --r-lg: 20px;
-  --r-xl: 28px;
+  /* --- Radii — squared off, as in the reference --------------------------- */
+  --r-sm: 2px;
+  --r-md: 4px;
+  --r-lg: 6px;
+  --r-xl: 10px;
   --r-pill: 999px;
 
-  /* --- Elevation ----------------------------------------------------------- */
-  --shadow-1: 0 1px 2px rgba(23, 19, 16, 0.06);
-  --shadow-2: 0 14px 34px rgba(23, 19, 16, 0.09);
-  --shadow-3: 0 26px 64px rgba(23, 19, 16, 0.14);
-  --shadow-lift: 0 20px 46px rgba(23, 19, 16, 0.15);
+  /* --- Elevation ---------------------------------------------------------- */
+  --shadow-1: 0 1px 2px rgba(35, 26, 20, 0.05);
+  --shadow-2: 0 10px 28px rgba(35, 26, 20, 0.07);
+  --shadow-3: 0 22px 52px rgba(35, 26, 20, 0.1);
 
-  /* --- Type ---------------------------------------------------------------- */
+  /* --- Type --------------------------------------------------------------- */
   --font-sans: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-display: "Fraunces Variable", Georgia, "Times New Roman", serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 
+  --fs-2xs: 0.6875rem;
   --fs-xs: 0.75rem;
   --fs-sm: 0.875rem;
   --fs-base: 1rem;
-  --fs-md: clamp(1.0625rem, 0.25vw + 1rem, 1.1875rem);
-  --fs-lg: clamp(1.25rem, 0.6vw + 1.05rem, 1.5rem);
-  --fs-xl: clamp(1.5rem, 1.1vw + 1.2rem, 2rem);
-  --fs-2xl: clamp(1.9rem, 2.2vw + 1.3rem, 2.875rem);
-  --fs-3xl: clamp(2.35rem, 3.4vw + 1.4rem, 4rem);
-  --fs-hero: clamp(2.6rem, 4vw + 1.5rem, 4.5rem);
+  --fs-md: clamp(1.0625rem, 0.25vw + 1rem, 1.125rem);
+  --fs-lg: clamp(1.1875rem, 0.5vw + 1.05rem, 1.375rem);
+  --fs-xl: clamp(1.4375rem, 1vw + 1.15rem, 1.875rem);
+  --fs-2xl: clamp(1.75rem, 2vw + 1.2rem, 2.625rem);
+  --fs-3xl: clamp(2.125rem, 3vw + 1.35rem, 3.5rem);
+  --fs-hero: clamp(2.35rem, 3.6vw + 1.4rem, 4rem);
 
-  /* --- Spacing ------------------------------------------------------------- */
+  /* Letterspaced metadata labels are a signature of this theme. */
+  --track-label: 0.16em;
+  --track-meta: 0.11em;
+
+  /* --- Spacing ------------------------------------------------------------ */
   --sp-1: 4px;
   --sp-2: 8px;
   --sp-3: 12px;
@@ -96,19 +101,19 @@
   --sp-9: 96px;
   --sp-10: 128px;
 
-  --section-y: clamp(64px, 8vw, 118px);
+  --section-y: clamp(56px, 6.5vw, 100px);
 
-  /* --- Layout -------------------------------------------------------------- */
-  --container: 1180px;
-  --container-wide: 1340px;
+  /* --- Layout ------------------------------------------------------------- */
+  --container: 1200px;
   --container-narrow: 720px;
   --gutter: clamp(16px, 4vw, 32px);
 
-  --header-h: 78px;
+  --announce-h: 34px;
+  --header-h: 72px;
 
-  /* --- Motion -------------------------------------------------------------- */
+  /* --- Motion ------------------------------------------------------------- */
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
-  --dur: 0.45s;
+  --dur: 0.35s;
 }
 
 /* --- Reset ---------------------------------------------------------------- */
@@ -127,8 +132,8 @@ html {
 
 body {
   margin: 0;
-  background: var(--rice);
-  color: var(--pepper);
+  background: var(--cream);
+  color: var(--ink-2);
   font-family: var(--font-sans);
   font-size: var(--fs-base);
   line-height: 1.65;
@@ -192,16 +197,14 @@ table {
 }
 
 :focus-visible {
-  outline: 2px solid var(--cardamom-600);
-  outline-offset: 3px;
+  outline: 2px solid var(--orange);
+  outline-offset: 2px;
   border-radius: var(--r-sm);
 }
 
-/* Focus must stay visible on the dark green bands too. */
-.section--dark :focus-visible,
 .site-footer :focus-visible,
 .cta-band :focus-visible {
-  outline-color: var(--gold-on-dark);
+  outline-color: var(--orange-on-dark);
 }
 
 @media (prefers-reduced-motion: reduce) {

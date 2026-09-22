@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
+import LogoMark from "../components/common/LogoMark";
 import ConfirmValue from "../components/common/ConfirmValue";
+import Icon from "../components/common/Icon";
 import { footer } from "../content/site";
 import { site, isPlaceholder } from "../config/site";
 import { openPreferences } from "../lib/consent";
@@ -11,8 +13,13 @@ function Footer() {
         <div className="site-footer__grid">
           <div>
             <span className="brand">
-              <span className="brand__name">{site.wordmark}</span>
-              <span className="brand__sub">{site.wordmarkSub}</span>
+              <LogoMark size={38} tone="dark" />
+              <span className="brand__text">
+                <span className="brand__name">{site.wordmark}</span>
+                <span className="brand__sub">
+                  Indian origins &middot; Global opportunities
+                </span>
+              </span>
             </span>
 
             <p className="site-footer__blurb">{footer.description}</p>
@@ -22,6 +29,19 @@ function Footer() {
               {!isPlaceholder(site.telephone) && (
                 <ConfirmValue value={site.telephone} as="tel" />
               )}
+            </div>
+
+            {/* States only what the Content Pack establishes: a UK-registered
+                company working with an operating partner in Kerala. */}
+            <div className="footer-panel">
+              <p className="footer-panel__title">
+                <Icon name="company" />
+                <span>Trade &amp; origin</span>
+              </p>
+              <p className="footer-panel__text">
+                UK-registered company with an operating partner and supplier
+                relationships in Kerala and India.
+              </p>
             </div>
           </div>
 
@@ -35,7 +55,7 @@ function Footer() {
                   </Link>
                 ))}
 
-                {/* Required by the content pack: a way to reopen cookie
+                {/* Required by the Content Pack: a way to reopen cookie
                     preferences after the banner has been dismissed. */}
                 {column.heading === "Legal" && (
                   <button type="button" onClick={openPreferences}>
@@ -54,9 +74,7 @@ function Footer() {
               Registered in {site.jurisdiction}
               {!isPlaceholder(site.companyNumber) && ` · No. ${site.companyNumber}`}
             </span>
-            {!isPlaceholder(site.registeredOffice) && (
-              <span>{site.registeredOffice}</span>
-            )}
+            <span>Operating partner in {site.keralaPartnerLocation}</span>
           </div>
 
           <span>

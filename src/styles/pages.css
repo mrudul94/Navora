@@ -13,8 +13,8 @@
       rgba(45, 106, 79, 0.1),
       transparent 60%
     ),
-    linear-gradient(180deg, var(--jute-soft), var(--rice));
-  border-bottom: 1px solid var(--border);
+    linear-gradient(180deg, var(--cream-warm), var(--cream));
+  border-bottom: 1px solid var(--line);
   overflow: hidden;
 }
 
@@ -29,13 +29,13 @@
   display: inline-block;
   margin-bottom: var(--sp-5);
   padding: 6px var(--sp-4);
-  border: 1px solid var(--border-strong);
+  border: 1px solid var(--line-strong);
   border-radius: var(--r-pill);
-  background: var(--surface);
+  background: var(--card);
   font-size: var(--fs-xs);
   font-weight: 700;
   letter-spacing: 0.1em;
-  color: var(--cardamom);
+  color: var(--green);
 }
 
 .home-hero__text {
@@ -64,8 +64,8 @@
   display: block;
   border-radius: var(--r-md);
   overflow: hidden;
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: var(--card);
+  border: 1px solid var(--line);
 }
 
 .category-tile .img {
@@ -76,7 +76,7 @@
   padding: var(--sp-4);
   font-size: var(--fs-sm);
   font-weight: 700;
-  color: var(--pepper);
+  color: var(--ink);
   text-align: center;
 }
 
@@ -138,7 +138,7 @@
 .spec-list {
   display: grid;
   gap: 0;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--line);
 }
 
 .spec-row {
@@ -146,13 +146,13 @@
   grid-template-columns: minmax(150px, 220px) 1fr;
   gap: var(--sp-5);
   padding-block: var(--sp-4);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--line);
   font-size: var(--fs-sm);
 }
 
 .spec-row__label {
   font-weight: 700;
-  color: var(--pepper);
+  color: var(--ink);
 }
 
 .spec-row__value {
@@ -174,11 +174,11 @@
 
 .tag {
   padding: 3px var(--sp-3);
-  background: var(--cardamom-50);
+  background: var(--green-soft);
   border-radius: var(--r-sm);
   font-size: var(--fs-xs);
   font-weight: 600;
-  color: var(--cardamom);
+  color: var(--green);
 }
 
 /* --- Contact -------------------------------------------------------------- */
@@ -192,8 +192,8 @@
 
 .contact-panel {
   padding: clamp(var(--sp-5), 4vw, var(--sp-6));
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: var(--card);
+  border: 1px solid var(--line);
   border-radius: var(--r-lg);
 }
 
@@ -201,7 +201,7 @@
   display: grid;
   gap: var(--sp-1);
   padding-block: var(--sp-4);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--line);
 }
 
 .contact-detail:last-child {
@@ -219,12 +219,12 @@
 
 .contact-detail__value {
   font-size: var(--fs-base);
-  color: var(--pepper);
+  color: var(--ink);
   word-break: break-word;
 }
 
 .contact-detail__value a {
-  color: var(--cardamom-600);
+  color: var(--green);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -251,8 +251,8 @@
   flex-direction: column;
   gap: var(--sp-2);
   padding: var(--sp-5);
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: var(--card);
+  border: 1px solid var(--line);
   border-radius: var(--r-md);
 }
 
@@ -273,7 +273,7 @@
 }
 
 .legal-toc a:hover {
-  color: var(--cardamom);
+  color: var(--green);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -315,5 +315,5 @@
   font-size: clamp(3.5rem, 12vw, 7rem);
   font-weight: 600;
   line-height: 1;
-  color: var(--cardamom-50);
+  color: var(--green-soft);
 }

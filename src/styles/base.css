@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Base typography, layout primitives and section rhythm
+   Typography, layout primitives and section rhythm
    ========================================================================== */
 
 /* --- Headings ------------------------------------------------------------- */
@@ -9,9 +9,10 @@ h2,
 h3 {
   font-family: var(--font-display);
   font-weight: 600;
-  line-height: 1.12;
-  letter-spacing: -0.02em;
-  color: var(--pepper);
+  line-height: 1.1;
+  letter-spacing: -0.018em;
+  color: var(--ink);
+  font-variation-settings: "SOFT" 12, "WONK" 0;
   text-wrap: balance;
 }
 
@@ -33,11 +34,13 @@ h6 {
   font-family: var(--font-sans);
   font-weight: 600;
   line-height: 1.3;
-  color: var(--pepper);
+  color: var(--ink);
 }
 
-h4 {
-  font-size: var(--fs-md);
+/* An italic accent word inside a display heading. */
+.accent {
+  font-style: italic;
+  color: var(--orange-text);
 }
 
 p {
@@ -65,53 +68,85 @@ strong {
   padding-block: var(--section-y);
 }
 
-.section--alt {
-  background: var(--jute-soft);
-}
-
-.section--sunken {
-  background: var(--jute);
-}
-
-.section--green {
-  background: var(--cardamom);
-  color: var(--cardamom-50);
-}
-
-.section--green h2,
-.section--green h3 {
-  color: #ffffff;
-}
-
 .section--tight {
-  padding-block: clamp(40px, 5vw, 64px);
+  padding-block: clamp(40px, 4.5vw, 64px);
 }
 
-/* --- Shared text helpers -------------------------------------------------- */
+.section--warm {
+  background: var(--cream-warm);
+}
 
+.section--deep {
+  background: var(--cream-deep);
+}
+
+.section--card {
+  background: var(--card);
+}
+
+/* --- Metadata labels — the signature of this theme ------------------------ */
+
+/* Small letterspaced caps, used for eyebrows and category tags. */
+.label {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--gold-text);
+}
+
+/* Eyebrow above a section heading. */
 .kicker {
   display: block;
-  font-family: var(--font-sans);
-  font-size: var(--fs-xs);
+  font-size: var(--fs-2xs);
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: var(--track-label);
   text-transform: uppercase;
-  color: var(--cardamom-600);
+  color: var(--gold-text);
   margin-bottom: var(--sp-3);
 }
 
-.section--green .kicker {
-  color: var(--gold-on-dark);
+/* A pill-shaped tag with a leading dot. */
+.tag-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: 6px var(--sp-4);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-pill);
+  background: var(--card);
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: var(--track-meta);
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+.tag-pill::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--orange);
+  flex: none;
+}
+
+/* Sequence marker, e.g. 01 / FOUNDATION */
+.code {
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
 }
 
 .lead {
   font-size: var(--fs-md);
   color: var(--ink-2);
-  max-width: 68ch;
-}
-
-.section--green .lead {
-  color: rgba(255, 255, 255, 0.82);
+  max-width: 66ch;
+  line-height: 1.75;
 }
 
 .muted {
@@ -137,16 +172,34 @@ strong {
   transform: translate(-50%, -150%);
   z-index: 2000;
   padding: var(--sp-3) var(--sp-5);
-  background: var(--cardamom);
+  background: var(--green);
   color: #ffffff;
   font-size: var(--fs-sm);
   font-weight: 600;
-  border-radius: 0 0 var(--r-md) var(--r-md);
   transition: transform 0.2s var(--ease);
 }
 
 .skip-link:focus-visible {
   transform: translate(-50%, 0);
+}
+
+/* --- Section heading block ------------------------------------------------ */
+
+.section-heading {
+  max-width: 62ch;
+  margin-bottom: var(--sp-7);
+}
+
+.section-heading--center {
+  margin-inline: auto;
+  text-align: center;
+}
+
+.section-heading__lead {
+  margin-top: var(--sp-4);
+  font-size: var(--fs-md);
+  color: var(--ink-2);
+  line-height: 1.75;
 }
 
 /* --- Prose (legal pages) -------------------------------------------------- */
@@ -185,21 +238,61 @@ strong {
 }
 
 .prose a {
-  color: var(--cardamom-600);
+  color: var(--orange-text);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
 .prose a:hover {
-  color: var(--cardamom);
+  color: var(--ink);
+}
+
+/* --- Grids ---------------------------------------------------------------- */
+
+.grid {
+  display: grid;
+  gap: var(--sp-5);
+}
+
+.grid--2 {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.grid--3 {
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+}
+
+.grid--4 {
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+}
+
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(var(--sp-6), 5vw, var(--sp-8));
+  align-items: center;
+}
+
+.split--reverse .split__media {
+  order: -1;
+}
+
+@media (max-width: 860px) {
+  .split {
+    grid-template-columns: 1fr;
+  }
+
+  .split--reverse .split__media {
+    order: 0;
+  }
 }
 
 /* --- Scroll reveal -------------------------------------------------------- */
 
 .reveal {
   opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  transform: translateY(16px);
+  transition: opacity 0.65s var(--ease), transform 0.65s var(--ease);
 }
 
 .reveal.is-visible {
@@ -212,135 +305,4 @@ strong {
     opacity: 1;
     transform: none;
   }
-}
-
-/* ==========================================================================
-   Spice House additions
-   ========================================================================== */
-
-/* --- Section grounds (the alternating rhythm) ----------------------------- */
-
-.section--jute {
-  background: var(--jute);
-}
-
-.section--jute-soft {
-  background: var(--jute-soft);
-}
-
-.section--surface {
-  background: var(--surface);
-}
-
-.section--dark {
-  background: var(--cardamom-deep);
-  color: rgba(255, 255, 255, 0.84);
-}
-
-.section--dark h2,
-.section--dark h3 {
-  color: #ffffff;
-}
-
-/* --- Eyebrow: small caps, wide tracking, brass rule beside it ------------- */
-
-.kicker {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--sp-3);
-  font-family: var(--font-sans);
-  font-size: var(--fs-xs);
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--turmeric-text);
-  margin-bottom: var(--sp-4);
-}
-
-.kicker::after {
-  content: "";
-  width: 34px;
-  height: 1px;
-  background: var(--brass);
-  flex: none;
-}
-
-.section-heading--center .kicker {
-  justify-content: center;
-}
-
-.section-heading--center .kicker::before {
-  content: "";
-  width: 34px;
-  height: 1px;
-  background: var(--brass);
-  flex: none;
-}
-
-.section--dark .kicker,
-.cta-band .kicker {
-  color: var(--gold-on-dark);
-}
-
-/* --- Display type --------------------------------------------------------- */
-
-h1,
-h2,
-h3 {
-  font-variation-settings: "SOFT" 20, "WONK" 1;
-  letter-spacing: -0.021em;
-  line-height: 1.08;
-}
-
-.lead {
-  max-width: 68ch;
-  line-height: 1.75;
-}
-
-/* --- Paper grain ---------------------------------------------------------- */
-/* Applied by <Texture />. Sits above the background, below all content. */
-
-.grain {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.4;
-  mix-blend-mode: multiply;
-  z-index: 0;
-}
-
-.has-grain {
-  position: relative;
-  isolation: isolate;
-}
-
-.has-grain > *:not(.grain) {
-  position: relative;
-  z-index: 1;
-}
-
-/* --- Brass divider -------------------------------------------------------- */
-
-.divider {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--sp-4);
-  padding-block: var(--sp-7);
-}
-
-.divider__rule {
-  height: 1px;
-  width: min(180px, 22vw);
-  background: linear-gradient(90deg, transparent, var(--brass));
-}
-
-.divider__rule + .divider__rule {
-  background: linear-gradient(90deg, var(--brass), transparent);
-}
-
-.divider__glyph {
-  width: 22px;
-  height: 22px;
-  flex: none;
 }

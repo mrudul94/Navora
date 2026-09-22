@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
+import AnnounceBar from "./AnnounceBar";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import CookieConsent from "./CookieConsent";
@@ -18,6 +19,7 @@ function MainLayout() {
       <a className="skip-link" href="#main">
         Skip to main content
       </a>
+      <AnnounceBar />
       <Navbar />
       <main id="main">
         <Outlet />

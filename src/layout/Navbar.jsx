@@ -2,15 +2,24 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import Button from "../components/common/Button";
 import Icon from "../components/common/Icon";
+import LogoMark from "../components/common/LogoMark";
 import { useFocusTrap } from "../lib/useFocusTrap";
 import { headerCta, navItems } from "../content/site";
 import { site } from "../config/site";
 
-function Wordmark({ onClick }) {
+function Brand({ onClick, tone }) {
   return (
-    <Link to="/" className="brand" onClick={onClick} aria-label={`${site.legalName} home`}>
-      <span className="brand__name">{site.wordmark}</span>
-      <span className="brand__sub">{site.wordmarkSub}</span>
+    <Link
+      to="/"
+      className="brand"
+      onClick={onClick}
+      aria-label={`${site.legalName} home`}
+    >
+      <LogoMark size={36} tone={tone} />
+      <span className="brand__text">
+        <span className="brand__name">{site.wordmark}</span>
+        <span className="brand__sub">Indian origins &middot; Global opportunities</span>
+      </span>
     </Link>
   );
 }
@@ -22,9 +31,8 @@ function Navbar() {
 
   const close = useCallback(() => setOpen(false), []);
 
-  // Close the drawer whenever the route changes. Adjusting state during render
-  // (rather than in an effect) avoids a frame where the drawer is still open
-  // over the new page.
+  // Close the drawer on navigation. Adjusting during render avoids a frame
+  // where the drawer is still open over the new page.
   const [renderedPath, setRenderedPath] = useState(pathname);
   if (pathname !== renderedPath) {
     setRenderedPath(pathname);
@@ -33,8 +41,7 @@ function Navbar() {
 
   useFocusTrap(drawerRef, open, close);
 
-  // Solid background and a brass hairline once scrolled, so the dark trust
-  // strip and green bands cannot show through the sticky header.
+  // A hairline and shadow once scrolled, so content cannot bleed through.
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -46,7 +53,7 @@ function Navbar() {
   return (
     <header className={`site-header ${scrolled ? "is-scrolled" : ""}`.trim()}>
       <div className="container site-header__row">
-        <Wordmark />
+        <Brand />
 
         <nav className="site-nav" aria-label="Main">
           {navItems.map((item) => (
@@ -62,6 +69,10 @@ function Navbar() {
             </NavLink>
           ))}
         </nav>
+
+        {/* Both halves are factual: the company is UK-registered and works
+            with an operating partner in Kerala. */}
+        <span className="header-pill">UK Registered &middot; Kerala Partnered</span>
 
         <div className="site-header__cta">
           <Button to={headerCta.path} variant="primary" size="sm">
@@ -93,10 +104,10 @@ function Navbar() {
           tabIndex={-1}
         >
           <div className="nav-drawer__head">
-            <Wordmark onClick={close} />
+            <Brand onClick={close} />
             <button
               type="button"
-              className="cookie-dialog__close"
+              className="drawer-close"
               onClick={close}
               aria-label="Close navigation menu"
             >
