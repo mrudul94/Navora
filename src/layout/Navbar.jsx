@@ -1,16 +1,20 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import Button from "../components/common/Button";
 import Icon from "../components/common/Icon";
+import LogoMark from "../components/common/LogoMark";
 import { useFocusTrap } from "../lib/useFocusTrap";
 import { headerCta, navItems } from "../content/site";
 import { site } from "../config/site";
 
 function Wordmark({ onClick }) {
   return (
-    <Link to="/" className="brand" onClick={onClick} aria-label={`${site.legalName} home`}>
-      <span className="brand__name">{site.wordmark}</span>
-      <span className="brand__sub">{site.wordmarkSub}</span>
+    <Link to="/" className="brand" onClick={onClick} aria-label={`${site.companyName} home`}>
+      <LogoMark size={36} />
+      <span className="brand__text">
+        <span className="brand__name">{site.wordmark}</span>
+        <span className="brand__sub">{site.wordmarkSub}</span>
+      </span>
     </Link>
   );
 }
@@ -33,8 +37,18 @@ function Navbar() {
 
   useFocusTrap(drawerRef, open, close);
 
+  // A thin border and a firmer background once the page scrolls, so dark
+  // sections never bleed through the sticky header.
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <header className="site-header">
+    <header className={`site-header ${scrolled ? "is-scrolled" : ""}`.trim()}>
       <div className="container site-header__row">
         <Wordmark />
 

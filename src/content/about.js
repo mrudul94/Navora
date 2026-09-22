@@ -3,7 +3,7 @@
 export const hero = {
   heading: "Built in the UK and connected to India",
   text: "Navora Global Limited was established in the United Kingdom to create stronger commercial links between Indian food producers and international buyers. Our partner company in Kerala provides local market understanding and helps us build relationships with farmers, suppliers and food brands.",
-  image: "/images/about-partnership.webp",
+  image: "/images/about-origin.jpg",
   imageAlt: "Produce being reviewed ahead of a commercial discussion",
   illustrative: true,
 };
@@ -16,7 +16,7 @@ export const story = {
     "Navora was created to help close that gap. We combine a UK business presence with on-the-ground relationships in Kerala and India. This allows us to listen to buyer requirements, explore suitable supply options and create direct conversations with producers and brands.",
     "We are building the company carefully. Our current focus includes ginger, cardamom, honey, Honey Shot, millets and rice. Over time, we intend to add selected vegetables, fruits and other products where quality, supply and market demand are aligned.",
   ],
-  image: "/images/sourcing-farm.webp",
+  image: "/images/sourcing-farm.jpg",
   imageAlt: "Smallholder farming in India",
   illustrative: true,
 };

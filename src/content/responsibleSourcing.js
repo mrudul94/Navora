@@ -3,7 +3,7 @@
 export const hero = {
   heading: "Building responsible supply relationships",
   text: "Navora is developing a supply network that values product quality, clear information and respectful business relationships. We want growth to create opportunities for farmers, producers, brands and buyers without making promises that the available evidence cannot support.",
-  image: "/images/sourcing-farm.webp",
+  image: "/images/sourcing-farm.jpg",
   imageAlt: "Smallholder farming in India",
   illustrative: true,
 };
@@ -56,7 +56,7 @@ export const callToAction = {
 };
 
 export const inspection = {
-  image: "/images/sourcing-inspection.webp",
+  image: "/images/sourcing-inspection.jpg",
   imageAlt: "Produce being graded and inspected",
   illustrative: true,
 };

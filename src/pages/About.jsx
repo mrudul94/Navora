@@ -1,10 +1,12 @@
 import Seo from "../components/common/Seo";
 import Button from "../components/common/Button";
-import Img from "../components/common/Img";
+import SmartImage from "../components/common/SmartImage";
 import PageHero from "../components/common/PageHero";
 import SectionHeading from "../components/common/SectionHeading";
 import Checklist from "../components/common/Checklist";
 import Stepper from "../components/common/Stepper";
+import Icon from "../components/common/Icon";
+import FoundersSection from "../components/sections/FoundersSection";
 import { pageSeo } from "../content/seo";
 import { ctaLabels } from "../content/site";
 import {
@@ -47,7 +49,7 @@ function About() {
           </div>
 
           <div className="split__media">
-            <Img
+            <SmartImage
               src={story.image}
               alt={story.imageAlt}
               ratio="4-3"
@@ -59,15 +61,16 @@ function About() {
       </section>
 
       {/* --- Mission and vision --- */}
-      <section className="section section--alt reveal">
+      <section className="section section--white reveal">
         <div className="container">
           <div className="grid grid--2">
-            {missionVision.map((item) => (
-              <article className="card" key={item.heading}>
-                <h2 className="card__title" style={{ fontSize: "var(--fs-lg)" }}>
-                  {item.heading}
-                </h2>
-                <p className="card__text">{item.text}</p>
+            {missionVision.map((item, index) => (
+              <article className="pillar" key={item.heading}>
+                <span className="pillar__icon">
+                  <Icon name={index === 0 ? "sourcing" : "market"} />
+                </span>
+                <h2 className="pillar__title">{item.heading}</h2>
+                <p className="pillar__text">{item.text}</p>
               </article>
             ))}
           </div>
@@ -90,7 +93,7 @@ function About() {
       </section>
 
       {/* --- Values --- */}
-      <section className="section section--alt reveal">
+      <section className="section section--sage reveal">
         <div className="container">
           <SectionHeading kicker={values.kicker} heading={values.heading} />
 
@@ -113,6 +116,9 @@ function About() {
         </div>
       </section>
 
+      {/* --- Founders --- */}
+      <FoundersSection id="founders" />
+
       {/* --- CTA --- */}
       <section className="section section--tight cta-band reveal">
         <div className="container cta-band__inner">
@@ -124,7 +130,7 @@ function About() {
             </p>
           </div>
           <div className="btn-row">
-            <Button to="/contact" variant="onDark" size="lg">
+            <Button to="/contact" variant="gold" size="lg">
               {ctaLabels.discussRequirements}
             </Button>
           </div>

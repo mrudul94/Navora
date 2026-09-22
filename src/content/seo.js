@@ -7,7 +7,7 @@ export const defaultSeo = {
   title: "Navora Global Limited | Indian Food Products and Partnerships",
   description:
     "Navora connects Indian farmers, food producers and brands with importers, distributors and business buyers in the UK and international markets.",
-  image: "/images/og-default.jpg",
+  image: "/images/brand/og-default.jpg",
 };
 
 export const pageSeo = {

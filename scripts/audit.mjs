@@ -152,9 +152,10 @@ section("Internal links");
     for (const m of content.matchAll(/\bpath:\s*"(\/[^"]*)"/g)) targets.add(m[1]);
   }
 
-  const dead = [...targets].filter(
-    (t) => !routes.has(t) && !t.startsWith("/products/")
-  );
+  const dead = [...targets].filter((t) => {
+    const path = t.split("#")[0].split("?")[0]; // ignore fragments and queries
+    return !routes.has(path) && !path.startsWith("/products/");
+  });
 
   if (dead.length) fail(`dead internal links: ${dead.join(", ")}`);
   else pass(`${targets.size} link targets all resolve to a route`);
@@ -163,17 +164,22 @@ section("Internal links");
 // --- 4. Images -------------------------------------------------------------
 section("Images");
 {
+  // Matches quoted paths and paths inside template literals alike.
   const referenced = new Set();
   for (const file of sourceFiles) {
-    for (const m of read(file).matchAll(/["'](\/images\/[^"']+)["']/g)) {
-      referenced.add(m[1]);
+    for (const m of read(file).matchAll(
+      /\/images\/(?:[a-z0-9-]+\/)*[a-z0-9-]+\.(?:webp|jpg|jpeg|png|svg)/gi
+    )) {
+      referenced.add(m[0]);
     }
   }
 
   const manifest = new Set(
-    [...read("docs/IMAGES.md").matchAll(/`([a-z0-9-]+\.(?:webp|jpg|png))`/g)].map(
-      (m) => `/images/${m[1]}`
-    )
+    [
+      ...read("public/images/README.md").matchAll(
+        /`((?:[a-z0-9-]+\/)*[a-z0-9-]+\.(?:webp|jpg|png|svg))`/g
+      ),
+    ].map((m) => `/images/${m[1]}`)
   );
 
   const undocumented = [...referenced].filter((r) => !manifest.has(r));
@@ -182,7 +188,7 @@ section("Images");
   if (undocumented.length) fail(`referenced but not documented: ${undocumented.join(", ")}`);
   if (unused.length) fail(`documented but unused: ${unused.join(", ")}`);
   if (!undocumented.length && !unused.length) {
-    pass(`${referenced.size} images referenced, all documented in docs/IMAGES.md`);
+    pass(`${referenced.size} images referenced, all documented in public/images/README.md`);
   }
 
   const missing = [...referenced].filter(
@@ -201,21 +207,71 @@ section("Images");
 section("Business facts");
 {
   const config = read("src/config/site.js");
-  const todos = [...config.matchAll(/(\w+):\s*"TODO_CONFIRM_([A-Z_]+)"/g)].map((m) => m[1]);
+  const founderConfig = read("src/config/founders.js");
+  const unset = [...config.matchAll(/(\w+):\s*"REPLACE_[A-Z_]+"/g)].map((m) => m[1]);
+  const founderUnset = [
+    ...new Set([...founderConfig.matchAll(/(\w+):\s*"REPLACE_[A-Z_]+"/g)].map((m) => m[1])),
+  ];
+
+  // `featuresToConfirm` in home.js holds claims awaiting verification. They are
+  // data only — nothing renders them — so the file is allowed to contain them.
+  const allowedFiles = new Set([
+    "src/config/site.js",
+    "src/config/founders.js",
+    "src/content/home.js",
+  ]);
 
   const leaked = sourceFiles
-    .filter((f) => f !== "src/config/site.js" && f !== "src/components/common/ConfirmValue.jsx")
-    .filter((f) => read(f).includes("TODO_CONFIRM_"));
+    .filter((f) => !allowedFiles.has(f))
+    .filter((f) => /REPLACE_[A-Z]/.test(read(f)));
 
-  if (leaked.length) fail(`TODO_CONFIRM hard-coded outside config: ${leaked.join(", ")}`);
-  else pass("all unconfirmed facts are confined to src/config/site.js");
+  if (leaked.length) fail(`REPLACE_ placeholder outside the config files: ${leaked.join(", ")}`);
+  else pass("placeholders are confined to the config files");
 
-  if (todos.length) {
+  if (unset.length) {
     console.log(
-      `  note  ${todos.length} unconfirmed: ${todos.join(", ")} — shown as visible "To confirm" chips`
+      `  note  ${unset.length} business detail(s) unset and HIDDEN from the UI: ${unset.join(", ")}`
     );
   } else {
-    pass("every business fact is confirmed");
+    pass("every business fact is supplied");
+  }
+
+  if (founderUnset.length) {
+    console.log(`  note  founder fields unset and hidden: ${founderUnset.join(", ")}`);
+  }
+}
+
+// --- 5b. Nothing unfinished in the built output ----------------------------
+section("Built output");
+{
+  const distIndex = resolve(root, "dist/index.html");
+  if (!existsSync(distIndex)) {
+    console.log("  note  dist/ not built yet — run npm run build, then re-audit");
+  } else {
+    const pages = walk("dist", (f) => f.endsWith(".html"));
+    const banned = [/IMAGE TO FOLLOW/i, /To confirm:/i, /REPLACE_[A-Z]/];
+    const offenders = [];
+
+    for (const page of pages) {
+      const html = read(page);
+      for (const pattern of banned) {
+        if (pattern.test(html)) offenders.push(`${page} (${pattern})`);
+      }
+    }
+
+    if (offenders.length) {
+      for (const offender of offenders) fail(`placeholder text in ${offender}`);
+    } else {
+      pass(`${pages.length} prerendered pages contain no placeholder text`);
+    }
+
+    // Prerendering must actually have produced content.
+    const thin = pages.filter((page) => {
+      const text = read(page).replace(/<[^>]+>/g, " ").replace(/s+/g, " ").trim();
+      return text.length < 500;
+    });
+    if (thin.length) fail(`${thin.length} page(s) prerendered with almost no text: ${thin.join(", ")}`);
+    else pass(`all ${pages.length} pages prerendered with real content`);
   }
 }
 
@@ -245,16 +301,24 @@ section("Colour contrast (WCAG AA, 4.5:1)");
     ["muted on paper", t.muted, t.paper],
     ["muted on surface-alt", t.muted, t["surface-alt"]],
     ["kicker on paper", t["green-600"], t.paper],
-    ["kicker on surface-alt", t["green-600"], t["surface-alt"]],
+    ["kicker on sage", t["green-600"], t.sage],
+    ["body on sage", t.ink, t.sage],
+    ["muted on sage", t.muted, t.sage],
+    ["gold text on paper", t["gold-text"], t.paper],
+    ["gold text on white", t["gold-text"], t.surface],
+    ["gold text on gold-soft", t["gold-text"], t["gold-soft"]],
+    ["gold on deep green", t["gold-on-dark"], t["green-deep"]],
+    ["white on deep green", W, t["green-deep"]],
+    ["gold button label", "#20180a", t.gold],
     ["primary button", W, t.green],
     ["primary button hover", W, t["green-600"]],
     ["link on white", t["green-600"], t.surface],
     ["footer text on green", W, t.green],
-    ["footer heading on green", t["amber-on-dark"], t.green],
+    ["footer heading on deep green", t["gold-on-dark"], t["green-deep"]],
     ["badge supplier", t.green, t["green-50"]],
-    ["badge coming-soon", t["amber-600"], t["amber-50"]],
+    ["badge coming-soon", t["gold-text"], t["gold-soft"]],
     ["badge future-category", t["ink-2"], t["surface-sunken"]],
-    ["step number", t["amber-600"], t.paper],
+    ["step marker on green", t["gold-on-dark"], t.green],
     ["error text", t.danger, t["danger-50"]],
     ["success text", t.success, t["success-50"]],
   ];
@@ -288,9 +352,12 @@ section("Housekeeping");
     ["D1 binding is configured", /binding\s*=\s*"DB"/.test(wrangler) && /database_id\s*=\s*"[0-9a-f-]{36}"/.test(wrangler)],
     ["_redirects exists", Boolean(redirects)],
     [
-      "_redirects puts the SPA fallback last",
-      redirects.lastIndexOf("/*") > redirects.lastIndexOf("301"),
+      // Routes are prerendered to their own index.html; a catch-all would
+      // shadow them and serve the home page for every URL.
+      "_redirects has no SPA catch-all (would shadow prerendered routes)",
+      !redirects.split("\n").some((line) => line.trim().startsWith("/*")),
     ],
+    ["404.html prerendered", has("dist/404.html") || !has("dist")],
     ["_headers exists", has("public/_headers")],
     ["_routes.json limits the Function to /api/*", /"include":\s*\[\s*"\/api\/\*"\s*\]/.test(routes)],
     ["D1 migration exists", has("migrations/0001_create_enquiries.sql")],

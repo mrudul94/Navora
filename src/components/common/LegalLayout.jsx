@@ -17,7 +17,7 @@ function LegalLayout({ title, intro, sections, children }) {
             {intro && <p className="page-hero__text">{intro}</p>}
             <div className="legal-meta">
               <span>Last reviewed: {site.legalLastReviewed}</span>
-              <span>{site.legalName}</span>
+              <span>{site.companyName}</span>
             </div>
           </div>
         </div>

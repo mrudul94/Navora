@@ -23,7 +23,7 @@ function Seo({ title, description, path, image, noIndex = false, jsonLd }) {
       {noIndex && <meta name="robots" content="noindex, follow" />}
 
       <meta property="og:type" content="website" />
-      <meta property="og:site_name" content={site.legalName} />
+      <meta property="og:site_name" content={site.companyName} />
       <meta property="og:title" content={resolvedTitle} />
       <meta property="og:description" content={resolvedDescription} />
       <meta property="og:image" content={imageUrl} />

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "prebuild": "node scripts/generate-sitemap.mjs",
-    "build": "vite build",
+    "build": "vite build && node scripts/prerender.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "sitemap": "node scripts/generate-sitemap.mjs",
@@ -20,7 +20,9 @@
     "db:migrate:local": "wrangler d1 migrations apply navora-enquiries --local",
     "enquiries": "wrangler d1 execute navora-enquiries --remote --command \"SELECT submitted_at, form, name, company, email, country FROM enquiries ORDER BY submitted_at DESC LIMIT 50\"",
     "deploy": "npm run verify && wrangler pages deploy dist --project-name navora-global --branch main --commit-dirty=true",
-    "cf:dev": "wrangler pages dev dist"
+    "cf:dev": "wrangler pages dev dist",
+    "images": "node scripts/generate-image-variants.mjs",
+    "prerender": "node scripts/prerender.mjs"
   },
   "dependencies": {
     "@fontsource-variable/fraunces": "^5.3.0",
