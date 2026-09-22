@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import Seo from "../components/common/Seo";
 import Button from "../components/common/Button";
 import PageHero from "../components/common/PageHero";
 import SectionHeading from "../components/common/SectionHeading";
 import EmptyState from "../components/common/EmptyState";
 import ProductCard from "../components/cards/ProductCard";
+import ProductCardSkeleton from "../components/cards/ProductCardSkeleton";
 import { getProducts } from "../lib/sanity";
 import { pageSeo } from "../content/seo";
 import { ctaLabels } from "../content/site";
@@ -15,9 +17,30 @@ import {
   hero,
 } from "../content/products";
 
+const validFilters = new Set(filters.map((f) => f.id));
+
+/** Navora's own products lead, then CMS display order. */
+function ownBrandFirst(a, b) {
+  const rank = (p) => (p.ownership === "navora-brand" ? 0 : 1);
+  if (rank(a) !== rank(b)) return rank(a) - rank(b);
+  return (a.displayOrder ?? 99) - (b.displayOrder ?? 99);
+}
+
 function Products() {
   const [products, setProducts] = useState(null);
-  const [activeFilter, setActiveFilter] = useState("all");
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // The filter lives in the URL so a category tile on the home page lands
+  // pre-filtered, and the view can be shared or bookmarked.
+  const requested = searchParams.get("category");
+  const activeFilter = requested && validFilters.has(requested) ? requested : "all";
+
+  const setActiveFilter = (id) => {
+    const next = new URLSearchParams(searchParams);
+    if (id === "all") next.delete("category");
+    else next.set("category", id);
+    setSearchParams(next, { replace: true });
+  };
 
   useEffect(() => {
     let cancelled = false;
@@ -33,15 +56,14 @@ function Products() {
 
   const visible = useMemo(() => {
     if (!products) return [];
-    if (activeFilter === "all") return products;
+    const sorted = [...products].sort(ownBrandFirst);
+    if (activeFilter === "all") return sorted;
 
     const filter = filters.find((item) => item.id === activeFilter);
-
     if (filter?.matches === "ownership") {
-      return products.filter((product) => product.ownership === activeFilter);
+      return sorted.filter((product) => product.ownership === activeFilter);
     }
-
-    return products.filter((product) => product.category === activeFilter);
+    return sorted.filter((product) => product.category === activeFilter);
   }, [products, activeFilter]);
 
   const loading = products === null;
@@ -68,19 +90,34 @@ function Products() {
             ))}
           </div>
 
-          <p className="products-count" role="status">
+          <p className="products-count" role="status" aria-live="polite">
             {loading
               ? "Loading products…"
-              : `Showing ${visible.length} ${
-                  visible.length === 1 ? "product" : "products"
+              : `${visible.length} ${visible.length === 1 ? "product" : "products"}${
+                  activeFilter === "all"
+                    ? ""
+                    : ` in ${filters.find((f) => f.id === activeFilter)?.label}`
                 }`}
           </p>
 
+          {loading && (
+            <div className="products-grid">
+              {Array.from({ length: 6 }, (_, i) => (
+                <ProductCardSkeleton key={i} />
+              ))}
+            </div>
+          )}
+
           {!loading && visible.length === 0 && (
             <EmptyState heading={emptyState.heading} text={emptyState.text}>
-              <Button to="/contact" variant="primary">
-                {ctaLabels.requestProductInfo}
-              </Button>
+              <div className="btn-row" style={{ marginTop: 0 }}>
+                <Button variant="secondary" onClick={() => setActiveFilter("all")}>
+                  Show all products
+                </Button>
+                <Button to="/contact" variant="primary">
+                  {ctaLabels.requestProductInfo}
+                </Button>
+              </div>
             </EmptyState>
           )}
 
@@ -102,7 +139,7 @@ function Products() {
             <p>{catalogueCta.text}</p>
           </div>
           <div className="btn-row">
-            <Button to="/contact" variant="onDark" size="lg">
+            <Button to="/contact" variant="gold" size="lg">
               {ctaLabels.requestProductInfo}
             </Button>
           </div>

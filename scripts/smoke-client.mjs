@@ -113,8 +113,8 @@ try {
   // --- Products page: loads and filters -------------------------------
   {
     const page = await mount("/products");
-    await page.waitFor((c) => c.querySelectorAll(".product-card").length > 0);
-    const cards = page.$$(".product-card");
+    await page.waitFor((c) => c.querySelectorAll(".product-card:not(.product-card--skeleton)").length > 0);
+    const cards = page.$$(".product-card:not(.product-card--skeleton)");
     check("Products page renders product cards", cards.length === 8, `${cards.length} cards`);
     check(
       "Products page is not stuck loading",
@@ -126,7 +126,7 @@ try {
       .$$(".filter-chip")
       .find((b) => b.textContent.trim() === "Spices");
     await page.click(spiceChip);
-    const filtered = page.$$(".product-card");
+    const filtered = page.$$(".product-card:not(.product-card--skeleton)");
     check(
       "Spices filter narrows to ginger and cardamom",
       filtered.length === 2,
@@ -143,8 +143,8 @@ try {
     await page.click(brandChip);
     check(
       "Navora Brand filter matches on ownership",
-      page.$$(".product-card").length === 1,
-      `${page.$$(".product-card").length} found`
+      page.$$(".product-card:not(.product-card--skeleton)").length === 1,
+      `${page.$$(".product-card:not(.product-card--skeleton)").length} found`
     );
 
     await page.unmount();

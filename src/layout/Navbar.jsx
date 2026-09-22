@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import Button from "../components/common/Button";
 import Icon from "../components/common/Icon";
@@ -33,8 +33,18 @@ function Navbar() {
 
   useFocusTrap(drawerRef, open, close);
 
+  // Solid background and a brass hairline once scrolled, so the dark trust
+  // strip and green bands cannot show through the sticky header.
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <header className="site-header">
+    <header className={`site-header ${scrolled ? "is-scrolled" : ""}`.trim()}>
       <div className="container site-header__row">
         <Wordmark />
 

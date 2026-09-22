@@ -1,0 +1,396 @@
+/* ==========================================================================
+   Spice House — hero, trust strip, steps, category gallery, imagery
+   ========================================================================== */
+
+/* --- SmartImage ----------------------------------------------------------- */
+
+.smart-image {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--r-lg);
+  background: linear-gradient(135deg, var(--jute-soft), var(--turmeric-soft));
+}
+
+.smart-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1s var(--ease);
+}
+
+.smart-image__empty {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--jute), var(--turmeric-soft));
+}
+
+.smart-image__figure {
+  margin: 0;
+}
+
+.smart-image__caption {
+  margin-top: var(--sp-2);
+  font-size: var(--fs-xs);
+  color: var(--muted);
+  letter-spacing: 0.03em;
+}
+
+/* Offset brass corner rule — used on the section images. */
+.framed {
+  position: relative;
+}
+
+.framed::after {
+  content: "";
+  position: absolute;
+  inset: auto -16px -16px auto;
+  width: 58%;
+  height: 58%;
+  border-right: 2px solid var(--brass);
+  border-bottom: 2px solid var(--brass);
+  border-bottom-right-radius: var(--r-lg);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+@media (max-width: 860px) {
+  .framed::after {
+    display: none;
+  }
+}
+
+/* --- Hero ----------------------------------------------------------------- */
+/* Asymmetric: copy on a clean ground, photograph bleeding off the right. */
+
+.hero {
+  position: relative;
+  padding-block: clamp(48px, 7vw, 92px) clamp(80px, 9vw, 128px);
+  background:
+    radial-gradient(900px 520px at 92% 8%, var(--turmeric-soft), transparent 62%),
+    linear-gradient(180deg, var(--jute-soft) 0%, var(--rice) 68%);
+  overflow: hidden;
+}
+
+.hero__inner {
+  display: grid;
+  grid-template-columns: 1fr 1.12fr;
+  gap: clamp(var(--sp-6), 5vw, var(--sp-9));
+  align-items: center;
+}
+
+.hero__label {
+  display: inline-block;
+  margin-bottom: var(--sp-5);
+  padding: 7px var(--sp-4);
+  border: 1px solid var(--brass-line);
+  border-radius: var(--r-pill);
+  background: var(--surface);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--turmeric-text);
+}
+
+.hero__title {
+  font-size: var(--fs-hero);
+  max-width: 15ch;
+  margin-bottom: var(--sp-5);
+}
+
+.hero__text {
+  font-size: var(--fs-md);
+  color: var(--ink-2);
+  max-width: 54ch;
+  line-height: 1.75;
+}
+
+.hero .btn-row {
+  margin-top: var(--sp-6);
+}
+
+/* The photograph bleeds past the container edge on wide screens. */
+.hero__media {
+  position: relative;
+  margin-right: calc(var(--gutter) * -1);
+}
+
+.hero__media .smart-image {
+  border-radius: var(--r-xl) 0 0 var(--r-xl);
+  box-shadow: var(--shadow-3);
+}
+
+@media (min-width: 1400px) {
+  .hero__media {
+    margin-right: calc((100vw - var(--container)) / -2);
+  }
+}
+
+@media (max-width: 960px) {
+  .hero__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .hero__media {
+    margin-right: 0;
+  }
+
+  .hero__media .smart-image {
+    border-radius: var(--r-lg);
+  }
+
+  .hero__title {
+    max-width: 20ch;
+  }
+}
+
+/* --- Trust strip ---------------------------------------------------------- */
+
+.trust-strip {
+  position: relative;
+  z-index: 2;
+  margin-top: calc(var(--sp-8) * -1);
+  background: var(--cardamom);
+  border-top: 3px solid var(--turmeric);
+}
+
+.trust-strip__inner {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sp-4);
+  padding-block: var(--sp-5);
+}
+
+.trust-strip__item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.trust-strip__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  flex: none;
+  border-radius: var(--r-md);
+  background: rgba(224, 176, 85, 0.16);
+  color: var(--gold-on-dark);
+}
+
+.trust-strip__icon svg {
+  width: 19px;
+  height: 19px;
+}
+
+.trust-strip__label {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 1.3;
+}
+
+@media (max-width: 900px) {
+  .trust-strip {
+    margin-top: 0;
+  }
+
+  .trust-strip__inner {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-4) var(--sp-3);
+  }
+}
+
+/* --- How we work ---------------------------------------------------------- */
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: var(--sp-5);
+}
+
+.step-card {
+  position: relative;
+  padding: var(--sp-6) var(--sp-5) var(--sp-5);
+  background: var(--rice);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--turmeric);
+  border-radius: var(--r-md);
+}
+
+.step-card__number {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  font-weight: 600;
+  color: var(--turmeric-text);
+  line-height: 1;
+  margin-bottom: var(--sp-4);
+}
+
+.step-card__title {
+  font-family: var(--font-sans);
+  font-size: var(--fs-md);
+  font-weight: 700;
+  margin-bottom: var(--sp-2);
+}
+
+.step-card__text {
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+  margin: 0;
+}
+
+/* --- Category gallery ----------------------------------------------------- */
+
+.category-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: var(--sp-4);
+}
+
+.category-card {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: var(--r-md);
+  border: 1px solid var(--border);
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+
+.category-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-2);
+}
+
+.category-card .smart-image {
+  border-radius: 0;
+}
+
+.category-card:hover .smart-image img {
+  transform: scale(1.06);
+}
+
+.category-card__name {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: var(--sp-8) var(--sp-4) var(--sp-4);
+  background: linear-gradient(180deg, transparent, rgba(18, 48, 31, 0.92));
+  color: #ffffff;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  line-height: 1.3;
+  text-align: center;
+}
+
+/* --- Shared helpers ------------------------------------------------------- */
+
+.btn-row--center {
+  justify-content: center;
+}
+
+.cta-band {
+  position: relative;
+  background: var(--cardamom-deep);
+  color: rgba(255, 255, 255, 0.84);
+  overflow: hidden;
+}
+
+.cta-band h2 {
+  color: #ffffff;
+}
+
+.cta-band p {
+  margin-top: var(--sp-4);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* --- Mission / vision pillars --------------------------------------------- */
+
+.pillar {
+  padding: clamp(var(--sp-6), 4vw, var(--sp-7));
+  background: var(--rice);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--turmeric);
+  border-radius: var(--r-lg);
+}
+
+.pillar__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  margin-bottom: var(--sp-5);
+  border-radius: var(--r-md);
+  background: var(--cardamom);
+  color: var(--gold-on-dark);
+}
+
+.pillar__icon svg {
+  width: 25px;
+  height: 25px;
+}
+
+.pillar__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  margin-bottom: var(--sp-3);
+}
+
+.pillar__text {
+  color: var(--ink-2);
+}
+
+/* --- Skeletons ------------------------------------------------------------ */
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--jute-soft) 25%,
+    var(--jute) 37%,
+    var(--jute-soft) 63%
+  );
+  background-size: 400% 100%;
+  animation: skeleton 1.4s ease infinite;
+  border-radius: var(--r-sm);
+}
+
+@keyframes skeleton {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+
+.skeleton--media {
+  aspect-ratio: 4 / 3;
+  border-radius: 0;
+}
+
+.skeleton--line {
+  height: 12px;
+  margin-bottom: var(--sp-3);
+}
+
+.skeleton--title {
+  height: 20px;
+  width: 65%;
+}
+
+.skeleton--short {
+  width: 40%;
+  margin-bottom: 0;
+}
+
+.product-card--skeleton {
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
+}

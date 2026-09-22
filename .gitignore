@@ -29,3 +29,6 @@ dist-ssr
 
 # Cloudflare / wrangler local state
 .wrangler
+
+# Generated responsive image variants (npm run images)
+public/images/**/*-[0-9]*.webp

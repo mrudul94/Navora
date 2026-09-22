@@ -13,7 +13,7 @@
       rgba(45, 106, 79, 0.1),
       transparent 60%
     ),
-    linear-gradient(180deg, var(--surface-alt), var(--paper));
+    linear-gradient(180deg, var(--jute-soft), var(--rice));
   border-bottom: 1px solid var(--border);
   overflow: hidden;
 }
@@ -35,7 +35,7 @@
   font-size: var(--fs-xs);
   font-weight: 700;
   letter-spacing: 0.1em;
-  color: var(--green);
+  color: var(--cardamom);
 }
 
 .home-hero__text {
@@ -76,7 +76,7 @@
   padding: var(--sp-4);
   font-size: var(--fs-sm);
   font-weight: 700;
-  color: var(--ink);
+  color: var(--pepper);
   text-align: center;
 }
 
@@ -152,7 +152,7 @@
 
 .spec-row__label {
   font-weight: 700;
-  color: var(--ink);
+  color: var(--pepper);
 }
 
 .spec-row__value {
@@ -174,11 +174,11 @@
 
 .tag {
   padding: 3px var(--sp-3);
-  background: var(--green-50);
+  background: var(--cardamom-50);
   border-radius: var(--r-sm);
   font-size: var(--fs-xs);
   font-weight: 600;
-  color: var(--green);
+  color: var(--cardamom);
 }
 
 /* --- Contact -------------------------------------------------------------- */
@@ -219,12 +219,12 @@
 
 .contact-detail__value {
   font-size: var(--fs-base);
-  color: var(--ink);
+  color: var(--pepper);
   word-break: break-word;
 }
 
 .contact-detail__value a {
-  color: var(--green-600);
+  color: var(--cardamom-600);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -273,7 +273,7 @@
 }
 
 .legal-toc a:hover {
-  color: var(--green);
+  color: var(--cardamom);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -315,5 +315,5 @@
   font-size: clamp(3.5rem, 12vw, 7rem);
   font-weight: 600;
   line-height: 1;
-  color: var(--green-50);
+  color: var(--cardamom-50);
 }

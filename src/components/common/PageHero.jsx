@@ -1,4 +1,4 @@
-import Img from "./Img";
+import SmartImage from "./SmartImage";
 
 /**
  * Standard page header: label, H1, lead, optional CTAs and optional media.
@@ -19,12 +19,12 @@ function PageHero({ label, heading, text, image, imageAlt, illustrative, childre
 
         {hasMedia && (
           <div className="page-hero__media">
-            <Img
+            <SmartImage
               src={image}
               alt={imageAlt}
               ratio="4-3"
               illustrative={illustrative}
-              loading="eager"
+              priority
               sizes="(max-width: 860px) 100vw, 45vw"
             />
           </div>

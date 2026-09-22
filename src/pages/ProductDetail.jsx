@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Seo from "../components/common/Seo";
 import Button from "../components/common/Button";
-import Img from "../components/common/Img";
+import SmartImage from "../components/common/SmartImage";
 import Icon from "../components/common/Icon";
 import StatusBadge from "../components/common/StatusBadge";
 import EmptyState from "../components/common/EmptyState";
@@ -164,18 +164,18 @@ function ProductDetail() {
 
           <div className="product-detail__top">
             <div className="product-detail__gallery">
-              <Img
+              <SmartImage
                 src={imageUrl}
                 alt={imageAlt || name}
                 ratio="4-3"
                 illustrative={imageIsIllustrative}
-                loading="eager"
+              priority
                 sizes="(max-width: 900px) 100vw, 42vw"
               />
 
               {Array.isArray(gallery) &&
                 gallery.filter(Boolean).map((item) => (
-                  <Img
+                  <SmartImage
                     key={item.url}
                     src={item.url}
                     alt={item.alt || name}

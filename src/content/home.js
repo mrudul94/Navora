@@ -52,26 +52,31 @@ export const productCategories = {
   labels: [
     {
       name: "Spices",
+      slug: "spices",
       image: "/images/category-spices.webp",
       alt: "Ginger and cardamom",
     },
     {
       name: "Honey and honey products",
+      slug: "honey-products",
       image: "/images/category-honey.webp",
       alt: "Honey",
     },
     {
       name: "Millets and grains",
+      slug: "millets-grains",
       image: "/images/category-millets.webp",
       alt: "Millets",
     },
     {
       name: "Rice",
+      slug: "rice",
       image: "/images/category-rice.webp",
       alt: "Rice grains",
     },
     {
       name: "Future fresh produce",
+      slug: "future-categories",
       image: "/images/category-produce.webp",
       alt: "Vegetables and fruit",
     },
@@ -81,4 +86,34 @@ export const productCategories = {
 export const partnership = {
   heading: "Looking for an Indian food product or a route to a new market?",
   text: "Tell us what you buy, sell or produce. We welcome enquiries from importers, distributors, retailers, food-service businesses, producers and emerging brands.",
+};
+
+/* ===========================================================================
+   Spice House redesign — new section data.
+   Copy below is either verbatim from the Content Pack or a plain restatement
+   of a fact already published on the site. Nothing here is a new claim.
+   =========================================================================== */
+
+/** Four facts under the hero. Each one is verifiable. */
+export const trustStrip = [
+  { icon: "company", label: "UK Registered Company" },
+  { icon: "sourcing", label: "Kerala Sourcing Partner" },
+  { icon: "product", label: "Six Product Lines" },
+  { icon: "partnership", label: "Bulk, Retail & Private Label" },
+];
+
+/**
+ * The Content Pack's "How we work" sequence (p. 5), promoted to the home page.
+ * Headings and text are verbatim.
+ */
+export const howWeWork = {
+  kicker: "How we work",
+  heading: "From first enquiry to long-term supply",
+  steps: [
+    { step: "01", heading: "Understand", text: "We learn about the required product, specification, volume, market and intended use." },
+    { step: "02", heading: "Identify", text: "We discuss suitable options with our partner and supplier network in India." },
+    { step: "03", heading: "Verify", text: "We gather the available product information, samples and documentation for buyer review." },
+    { step: "04", heading: "Connect", text: "We support direct commercial discussions on pricing, quantities, packaging and delivery." },
+    { step: "05", heading: "Develop", text: "Where there is a strong fit, we work towards a longer-term supply or market partnership." },
+  ],
 };

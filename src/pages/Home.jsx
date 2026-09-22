@@ -1,15 +1,21 @@
 import Seo from "../components/common/Seo";
 import Button from "../components/common/Button";
-import Img from "../components/common/Img";
+import SmartImage from "../components/common/SmartImage";
 import SectionHeading from "../components/common/SectionHeading";
 import FeatureCard from "../components/cards/FeatureCard";
+import { Grain, Divider } from "../components/common/Texture";
+import TrustStrip from "../components/sections/TrustStrip";
+import HowWeWork from "../components/sections/HowWeWork";
+import CategoryGallery from "../components/sections/CategoryGallery";
 import { pageSeo } from "../content/seo";
 import { ctaLabels } from "../content/site";
 import { site } from "../config/site";
 import {
   hero,
+  howWeWork,
   partnership,
   productCategories,
+  trustStrip,
   whatWeOffer,
   whoWeAre,
 } from "../content/home";
@@ -35,13 +41,19 @@ function Home() {
     <>
       <Seo {...pageSeo.home} jsonLd={organizationJsonLd} />
 
-      {/* --- Hero --- */}
-      <section className="home-hero">
-        <div className="container home-hero__inner">
-          <div>
-            <span className="home-hero__label">{hero.label}</span>
-            <h1>{hero.heading}</h1>
-            <p className="home-hero__text">{hero.text}</p>
+      {/* --- Hero ------------------------------------------------------------
+          The hero photograph is busy edge to edge, so the copy sits on a clean
+          ground beside it rather than on top of it. The image bleeds off the
+          right and overlaps the trust strip below. */}
+      <section className="hero has-grain">
+        <Grain opacity={0.35} />
+
+        <div className="container hero__inner">
+          <div className="hero__copy">
+            <span className="hero__label">{hero.label}</span>
+            <h1 className="hero__title">{hero.heading}</h1>
+            <p className="hero__text">{hero.text}</p>
+
             <div className="btn-row">
               <Button to="/products" variant="primary" size="lg">
                 {ctaLabels.exploreProducts}
@@ -52,16 +64,20 @@ function Home() {
             </div>
           </div>
 
-          <Img
-            src={hero.image}
-            alt={hero.imageAlt}
-            ratio="4-3"
-            illustrative={hero.illustrative}
-            loading="eager"
-            sizes="(max-width: 900px) 100vw, 45vw"
-          />
+          <div className="hero__media">
+            <SmartImage
+              src={hero.image}
+              alt={hero.imageAlt}
+              ratio="4-3"
+              sizes="(max-width: 960px) 100vw, 52vw"
+              priority
+              illustrative={hero.illustrative}
+            />
+          </div>
         </div>
       </section>
+
+      <TrustStrip items={trustStrip} />
 
       {/* --- Who we are --- */}
       <section className="section reveal">
@@ -76,20 +92,24 @@ function Home() {
             </div>
           </div>
 
-          <div className="split__media">
-            <Img
+          <div className="split__media framed">
+            <SmartImage
               src={whoWeAre.image}
               alt={whoWeAre.imageAlt}
               ratio="4-3"
+              sizes="(max-width: 860px) 100vw, 48vw"
               illustrative={whoWeAre.illustrative}
-              sizes="(max-width: 860px) 100vw, 45vw"
             />
           </div>
         </div>
       </section>
 
+      <div className="container">
+        <Divider />
+      </div>
+
       {/* --- What we offer --- */}
-      <section className="section section--alt reveal">
+      <section className="section section--surface reveal">
         <div className="container">
           <SectionHeading
             kicker={whatWeOffer.kicker}
@@ -104,6 +124,9 @@ function Home() {
         </div>
       </section>
 
+      {/* --- How we work --- */}
+      <HowWeWork {...howWeWork} />
+
       {/* --- Product categories --- */}
       <section className="section reveal">
         <div className="container">
@@ -114,21 +137,9 @@ function Home() {
             center
           />
 
-          <div className="category-grid">
-            {productCategories.labels.map((category) => (
-              <article className="category-tile" key={category.name}>
-                <Img
-                  src={category.image}
-                  alt={category.alt}
-                  ratio="1-1"
-                  sizes="(max-width: 700px) 50vw, 200px"
-                />
-                <h3 className="category-tile__name">{category.name}</h3>
-              </article>
-            ))}
-          </div>
+          <CategoryGallery categories={productCategories.labels} />
 
-          <div className="btn-row" style={{ justifyContent: "center" }}>
+          <div className="btn-row btn-row--center">
             <Button to="/products" variant="primary">
               {ctaLabels.exploreProducts}
             </Button>
@@ -137,7 +148,8 @@ function Home() {
       </section>
 
       {/* --- Partnership --- */}
-      <section className="section cta-band reveal">
+      <section className="section cta-band has-grain reveal">
+        <Grain opacity={0.18} />
         <div className="container cta-band__inner">
           <div className="cta-band__copy">
             <h2>{partnership.heading}</h2>
@@ -145,7 +157,7 @@ function Home() {
           </div>
 
           <div className="btn-row">
-            <Button to="/contact" variant="onDark" size="lg">
+            <Button to="/contact" variant="gold" size="lg">
               {ctaLabels.discussRequirements}
             </Button>
             <Button to="/for-business" variant="onDarkOutline" size="lg">

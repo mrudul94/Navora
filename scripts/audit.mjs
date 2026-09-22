@@ -240,21 +240,23 @@ section("Colour contrast (WCAG AA, 4.5:1)");
 
   const W = "#ffffff";
   const pairs = [
-    ["body text", t.ink, t.paper],
-    ["secondary text", t["ink-2"], t.paper],
-    ["muted on paper", t.muted, t.paper],
-    ["muted on surface-alt", t.muted, t["surface-alt"]],
-    ["kicker on paper", t["green-600"], t.paper],
-    ["kicker on surface-alt", t["green-600"], t["surface-alt"]],
-    ["primary button", W, t.green],
-    ["primary button hover", W, t["green-600"]],
-    ["link on white", t["green-600"], t.surface],
-    ["footer text on green", W, t.green],
-    ["footer heading on green", t["amber-on-dark"], t.green],
-    ["badge supplier", t.green, t["green-50"]],
-    ["badge coming-soon", t["amber-600"], t["amber-50"]],
-    ["badge future-category", t["ink-2"], t["surface-sunken"]],
-    ["step number", t["amber-600"], t.paper],
+    ["body text on rice", t.pepper, t.rice],
+    ["body text on jute", t.pepper, t.jute],
+    ["body text on jute-soft", t.pepper, t["jute-soft"]],
+    ["secondary text on rice", t["ink-2"], t.rice],
+    ["secondary text on jute", t["ink-2"], t.jute],
+    ["muted on rice", t.muted, t.rice],
+    ["eyebrow (turmeric-text) on rice", t["turmeric-text"], t.rice],
+    ["eyebrow (turmeric-text) on jute", t["turmeric-text"], t.jute],
+    ["terracotta text on rice", t["terracotta-text"], t.rice],
+    ["cardamom heading on rice", t.cardamom, t.rice],
+    ["link on rice", t["cardamom-600"], t.rice],
+    ["white on cardamom", W, t.cardamom],
+    ["white on cardamom-deep", W, t["cardamom-deep"]],
+    ["gold on cardamom", t["gold-on-dark"], t.cardamom],
+    ["gold on cardamom-deep", t["gold-on-dark"], t["cardamom-deep"]],
+    ["gold button label", "#1e1405", t.turmeric],
+    ["step number", t["turmeric-text"], t.jute],
     ["error text", t.danger, t["danger-50"]],
     ["success text", t.success, t["success-50"]],
   ];
@@ -270,6 +272,42 @@ section("Colour contrast (WCAG AA, 4.5:1)");
     }
   }
   if (!bad) pass(`${pairs.length} text pairs pass, lowest ${worst.toFixed(2)}:1`);
+
+  // --- Decorative-only guard ---------------------------------------------
+  // --turmeric is 2.76:1 on rice and --brass is 3.47:1 on cardamom. Both are
+  // fills and rules, never type. This is the trap the previous redesign fell
+  // into, so it is asserted rather than left to review.
+  const decorative = [
+    ["--turmeric", t.turmeric, t.rice],
+    ["--brass", t.brass, t.cardamom],
+  ];
+
+  for (const [name, colour, ground] of decorative) {
+    if (ratio(colour, ground) >= 4.5) {
+      console.log(`  note  ${name} now passes as text — the decorative-only rule can be relaxed`);
+    }
+  }
+
+  const cssFiles = walk("src/styles", (f) => f.endsWith(".css"));
+  const misuse = [];
+  const DECORATIVE = ["var(--turmeric)", "var(--brass)"];
+
+  for (const file of cssFiles) {
+    for (const rawLine of read(file).split(String.fromCharCode(10))) {
+      const line = rawLine.trim();
+      const isColourDecl =
+        line.startsWith("color:") || line.startsWith("-webkit-text-fill-color:");
+      if (isColourDecl && DECORATIVE.some((token) => line.includes(token))) {
+        misuse.push(`${file}: ${line}`);
+      }
+    }
+  }
+
+  if (misuse.length) {
+    for (const m of misuse) fail(`decorative colour used as text — ${m}`);
+  } else {
+    pass("--turmeric and --brass are never used as a text colour");
+  }
 }
 
 // --- 7. Housekeeping -------------------------------------------------------
