@@ -12,18 +12,46 @@ export const client = projectId
 
 const builder = client ? imageUrlBuilder(client) : null;
 
+/**
+ * Builds a delivery URL for a Sanity image.
+ *
+ * Always go through this rather than using `asset->url` directly: the raw asset
+ * URL is the ORIGINAL upload, so a full-size camera file would be served to
+ * every visitor untouched. This resizes on Sanity's CDN, negotiates WebP/AVIF
+ * per browser, and respects the hotspot the editor set in the Studio.
+ */
 export function getImageUrl(source, options = {}) {
   if (!source) return "";
   if (typeof source === "string") return source;
   if (!builder) return "";
 
-  let image = builder.image(source);
-  if (options.width) image = image.width(options.width);
-  if (options.height) image = image.height(options.height);
-  if (options.fit) image = image.fit(options.fit);
-  if (options.quality) image = image.quality(options.quality);
+  const { width = 1600, quality = 80, height, fit = "max" } = options;
+
+  let image = builder.image(source).width(width).quality(quality).fit(fit).auto("format");
+  if (height) image = image.height(height);
 
   return image.url();
+}
+
+/** Product images are displayed at 42vw at most; 1600px covers 2x displays. */
+const PRODUCT_IMAGE_WIDTH = 1600;
+
+/** Adds CDN-sized image URLs to a product record. */
+function withImageUrls(product) {
+  if (!product) return product;
+
+  return {
+    ...product,
+    imageUrl: getImageUrl(product.mainImage, { width: PRODUCT_IMAGE_WIDTH }),
+    gallery: Array.isArray(product.gallery)
+      ? product.gallery
+          .filter((item) => item?.asset)
+          .map((item) => ({
+            ...item,
+            url: getImageUrl(item, { width: PRODUCT_IMAGE_WIDTH }),
+          }))
+      : [],
+  };
 }
 
 /** Matches the product schema in navora-cms/schemaTypes/product.js. */
@@ -45,11 +73,13 @@ const productFields = `
   certifications[]{ name, scope, evidenceUrl },
   documentation,
   markets,
-  "imageUrl": mainImage.asset->url,
+  mainImage,
   "imageAlt": mainImage.alt,
   "imageIsIllustrative": mainImage.isIllustrative,
   gallery[]{
-    "url": asset->url,
+    asset,
+    hotspot,
+    crop,
     alt,
     isIllustrative
   },
@@ -92,7 +122,7 @@ export async function getProducts() {
   try {
     const products = await withTimeout(client.fetch(LIST_QUERY), "Product list query");
     return Array.isArray(products) && products.length > 0
-      ? products
+      ? products.map(withImageUrls)
       : fallbackProducts;
   } catch (error) {
     console.error("Could not load products from the CMS", error);
@@ -114,7 +144,7 @@ export async function getProductBySlug(slug) {
       client.fetch(SINGLE_QUERY, { slug }),
       "Product query"
     );
-    return product || fromFallback();
+    return product ? withImageUrls(product) : fromFallback();
   } catch (error) {
     console.error("Could not load the product from the CMS", error);
     return fromFallback();
