@@ -1,6 +1,5 @@
 import { createClient } from "@sanity/client";
 import imageUrlBuilder from "@sanity/image-url";
-import { fallbackProducts } from "../content/productsFallback";
 
 const projectId = import.meta.env.VITE_SANITY_PROJECT_ID;
 const dataset = import.meta.env.VITE_SANITY_DATASET || "production";
@@ -117,36 +116,29 @@ function withTimeout(promise, label) {
  * blank and never strands a visitor on a loading message.
  */
 export async function getProducts() {
-  if (!client) return fallbackProducts;
+  if (!client) return [];
 
   try {
     const products = await withTimeout(client.fetch(LIST_QUERY), "Product list query");
-    return Array.isArray(products) && products.length > 0
-      ? products.map(withImageUrls)
-      : fallbackProducts;
+    return Array.isArray(products) ? products.map(withImageUrls) : [];
   } catch (error) {
     console.error("Could not load products from the CMS", error);
-    return fallbackProducts;
+    return [];
   }
 }
 
-/** Returns one product by slug, falling back to the approved copy. */
+/** Returns one product by slug from Sanity CMS. */
 export async function getProductBySlug(slug) {
-  if (!slug) return null;
-
-  const fromFallback = () =>
-    fallbackProducts.find((product) => product.slug === slug) || null;
-
-  if (!client) return fromFallback();
+  if (!slug || !client) return null;
 
   try {
     const product = await withTimeout(
       client.fetch(SINGLE_QUERY, { slug }),
       "Product query"
     );
-    return product ? withImageUrls(product) : fromFallback();
+    return product ? withImageUrls(product) : null;
   } catch (error) {
     console.error("Could not load the product from the CMS", error);
-    return fromFallback();
+    return null;
   }
 }

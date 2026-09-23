@@ -15,14 +15,14 @@ export const site = {
   wordmarkSub: "GLOBAL LIMITED",
 
   // --- Contact -------------------------------------------------------------
-  email: "TODO_CONFIRM_PRIMARY_BUSINESS_EMAIL",
-  telephone: "TODO_CONFIRM_BUSINESS_TELEPHONE",
+  email: "info@navoraglobal.uk",
+  telephone: "+44 (0) 7880 119991",
   businessHours: "TODO_CONFIRM_BUSINESS_HOURS",
 
   // --- Registration --------------------------------------------------------
   companyNumber: "TODO_CONFIRM_COMPANY_NUMBER",
   jurisdiction: "England and Wales",
-  registeredOffice: "TODO_CONFIRM_REGISTERED_OFFICE",
+  registeredOffice: "29 Nightingale Road, South Croydon, CR2 8PS, United Kingdom",
 
   // --- Operating partner ---------------------------------------------------
   // Do not publish the partner's name until they have confirmed permission.
@@ -30,12 +30,24 @@ export const site = {
   keralaPartnerLocation: "Kerala, India",
 
   // --- Web -----------------------------------------------------------------
-  domain: "TODO_CONFIRM_DOMAIN",
-  origin: "https://www.navoraglobal.co.uk",
+  domain: "navoraglobal.uk",
+  origin: "https://www.navoraglobal.uk",
+  domains: {
+    primary: "navoraglobal.uk",
+    additional: ["navoraglobal.org", "navoraglobal.info"],
+  },
+
+  // --- Leadership & Founders ------------------------------------------------
+  albertEmail: "TODO_CONFIRM_ALBERT_EMAIL",
+  albertPhone: "TODO_CONFIRM_ALBERT_PHONE",
+  albertInstagram: "TODO_CONFIRM_ALBERT_INSTAGRAM",
+  abhinavEmail: "TODO_CONFIRM_ABHINAV_EMAIL",
+  abhinavPhone: "TODO_CONFIRM_ABHINAV_PHONE",
+  abhinavInstagram: "TODO_CONFIRM_ABHINAV_INSTAGRAM",
 
   // --- Legal ---------------------------------------------------------------
   legalLastReviewed: "21 September 2026",
-  copyrightYear: 2026,
+  copyrightYear: new Date().getFullYear(),
 };
 
 /** True when a value is still an unconfirmed placeholder. */

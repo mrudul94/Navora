@@ -1,3 +1,5 @@
+import { site } from "../config/site";
+
 /** About Us page copy. Source: Content Pack pp. 2, 4-5. */
 
 export const hero = {
@@ -105,6 +107,42 @@ export const howWeWork = {
       step: "05",
       heading: "Develop",
       text: "Where there is a strong fit, we work towards a longer-term supply or market partnership.",
+    },
+  ],
+};
+
+export const leadership = {
+  kicker: "Leadership & Founders",
+  heading: "The team behind Navora Global",
+  lead: "Founded on direct cross-continental partnership, connecting authentic Kerala agriculture with international markets.",
+  founders: [
+    {
+      name: "Albert Jose",
+      initials: "AJ",
+      role: "Co-Founder & Director",
+      location: "United Kingdom",
+      focus: "Global Markets & Trade Relations",
+      bio: "Overseeing international trade architecture, commercial buyer partnerships, and overseas distribution channels across the UK and international markets.",
+      email: site.albertEmail,
+      telephone: site.albertPhone,
+      instagram: site.albertInstagram,
+      fallbackEmail: "albert.jose@navoraglobal.co.uk",
+      fallbackPhone: "+44 (0) 7000 000000",
+      fallbackInstagram: "@albertjose",
+    },
+    {
+      name: "Abhinav R Kurup",
+      initials: "AK",
+      role: "Co-Founder & Chief Financial Officer",
+      location: "United Kingdom",
+      focus: "Financial Management & Corporate Strategy",
+      bio: "Leading financial governance, corporate strategy, commercial planning, and capital allocation to drive sustainable cross-border trade and partnerships for Navora Global.",
+      email: site.abhinavEmail,
+      telephone: site.abhinavPhone,
+      instagram: site.abhinavInstagram,
+      fallbackEmail: "abhinav.kurup@navoraglobal.co.uk",
+      fallbackPhone: "+44 (0) 7000 000000",
+      fallbackInstagram: "@abhinavrkurup",
     },
   ],
 };

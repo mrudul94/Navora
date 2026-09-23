@@ -11,8 +11,16 @@ import { isPlaceholder, placeholderLabel } from "../../config/site";
  * `as` controls how a confirmed value is linked: "email" and "tel" produce
  * mailto:/tel: links, anything else renders plain text.
  */
-function ConfirmValue({ value, as = "text", className }) {
+function ConfirmValue({ value, as = "text", className, fallback }) {
   if (isPlaceholder(value)) {
+    if (fallback) {
+      return (
+        <span className={`confirm-placeholder ${className || ""}`.trim()} title="Awaiting confirmation from Navora">
+          <span className="confirm-placeholder__value">{fallback}</span>
+          <span className="badge badge--todo">To confirm</span>
+        </span>
+      );
+    }
     return (
       <span className="badge badge--todo" title="Awaiting confirmation from Navora">
         To confirm: {placeholderLabel(value).toLowerCase()}
@@ -29,9 +37,24 @@ function ConfirmValue({ value, as = "text", className }) {
   }
 
   if (as === "tel") {
+    const dialNumber = value.replace(/\(0\)/g, "").replace(/[^+\d]/g, "");
     return (
-      <a className={className} href={`tel:${value.replace(/[^+\d]/g, "")}`}>
+      <a className={className} href={`tel:${dialNumber}`}>
         {value}
+      </a>
+    );
+  }
+
+  if (as === "instagram") {
+    const handle = String(value).replace(/^@/, "");
+    return (
+      <a
+        className={className}
+        href={`https://instagram.com/${handle}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {String(value).startsWith("@") ? value : `@${value}`}
       </a>
     );
   }

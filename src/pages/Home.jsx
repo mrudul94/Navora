@@ -5,6 +5,8 @@ import SmartImage from "../components/common/SmartImage";
 import SectionHeading from "../components/common/SectionHeading";
 import Icon from "../components/common/Icon";
 import CategoryGallery from "../components/sections/CategoryGallery";
+import ValueCard from "../components/cards/ValueCard";
+import { renderStaggeredWords } from "../components/common/TextReveal";
 import { pageSeo } from "../content/seo";
 import { ctaLabels } from "../content/site";
 import { site } from "../config/site";
@@ -45,17 +47,20 @@ function Home() {
       {/* --- Hero --- */}
       <section className="hero">
         <div className="container hero__inner">
-          <div>
-            <span className="tag-pill hero__label">{hero.label}</span>
+          <div className="reveal-text is-visible">
+            <span className="tag-pill hero__label hero__animate-label">{hero.label}</span>
 
-            <h1 className="hero__title">
-              Connecting Indian <span className="accent">food producers</span> with
-              global markets
+            <h1 className="hero__title hero__animate-title reveal-heading is-visible">
+              {renderStaggeredWords([
+                "Connecting Indian ",
+                <span className="accent" key="accent">food producers</span>,
+                " with global markets",
+              ])}
             </h1>
 
-            <p className="hero__text">{hero.text}</p>
+            <p className="hero__text hero__animate-text">{hero.text}</p>
 
-            <div className="btn-row">
+            <div className="btn-row hero__animate-cta">
               <Button to="/products" variant="primary" size="lg">
                 {ctaLabels.exploreProducts}
                 <Icon name="arrowRight" />
@@ -65,7 +70,7 @@ function Home() {
               </Button>
             </div>
 
-            <div className="hero__facts">
+            <div className="hero__facts hero__animate-facts">
               {heroFacts.map((fact) => (
                 <div key={fact.label}>
                   <span className="hero__fact-value">{fact.value}</span>
@@ -75,7 +80,7 @@ function Home() {
             </div>
           </div>
 
-          <div className="hero__panel">
+          <div className="hero__panel hero__animate-panel">
             <p className="hero__panel-caption">
               <Icon name="pin" />
               <span>{heroPanel.caption}</span>
@@ -101,42 +106,62 @@ function Home() {
         </div>
       </section>
 
-      {/* --- Who we are + the five values --- */}
-      <section className="section section--warm reveal">
-        <div className="container value-layout">
-          <div>
+      {/* --- Who we are (Narrative Bridge) --- */}
+      <section className="section section--warm">
+        <div className="container who-we-are-layout">
+          <div className="who-we-are__content reveal">
             <SectionHeading
-              kicker={values.kicker}
+              kicker={whoWeAre.kicker}
               heading={whoWeAre.heading}
               lead={whoWeAre.text}
             />
-            <Link className="btn btn--ghost" to="/about">
-              {ctaLabels.aboutNavora}
-              <Icon name="arrowRight" />
-            </Link>
+            <div className="btn-row">
+              <Link className="btn btn--ghost" to="/about">
+                {ctaLabels.aboutNavora}
+                <Icon name="arrowRight" />
+              </Link>
+            </div>
           </div>
 
-          <div className="value-grid">
-            {values.items.map((value) => (
-              <article className="value-card" key={value.name}>
-                <span className="value-card__icon">
-                  <Icon name={value.icon} />
-                </span>
-                <h3 className="value-card__name">{value.name}</h3>
-                <p className="value-card__text">{value.text}</p>
-                <p className="value-card__code">
-                  <span className="code">{value.code}</span>
-                </p>
-              </article>
+          <div className="who-we-are__media reveal reveal--delay-2 reveal--scale">
+            <SmartImage
+              src={whoWeAre.image}
+              alt={whoWeAre.imageAlt}
+              ratio="4-3"
+              illustrative={whoWeAre.illustrative}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* --- Operating Principles (5 Core Values) --- */}
+      <section className="section">
+        <div className="container">
+          <div className="section-head--center reveal">
+            <SectionHeading
+              kicker={values.kicker}
+              heading="Our Operating Principles"
+              lead="How we connect international buyers with Indian food producers through transparent, reliable trade relationships."
+            />
+          </div>
+
+          <div className="values-grid">
+            {values.items.map((value, index) => (
+              <ValueCard
+                value={value}
+                index={index}
+                key={value.name}
+                className={`reveal reveal--delay-${(index % 5) + 1}`}
+              />
             ))}
           </div>
         </div>
       </section>
 
       {/* --- What we offer --- */}
-      <section className="section reveal">
+      <section className="section">
         <div className="container">
-          <div className="capability-head">
+          <div className="capability-head reveal">
             <SectionHeading
               kicker="Commercial capabilities"
               heading={whatWeOffer.heading}
@@ -146,7 +171,10 @@ function Home() {
 
           <div className="capability-grid">
             {whatWeOffer.cards.map((card, index) => (
-              <article className="capability" key={card.heading}>
+              <article
+                className={`capability reveal reveal--delay-${(index % 4) + 1}`}
+                key={card.heading}
+              >
                 <div className="capability__head">
                   <span className="capability__icon">
                     <Icon name={card.icon} />
@@ -167,17 +195,19 @@ function Home() {
       </section>
 
       {/* --- Product categories --- */}
-      <section className="section section--warm reveal">
+      <section className="section section--warm">
         <div className="container">
-          <SectionHeading
-            kicker="Origin portfolio"
-            heading={productCategories.heading}
-            lead={productCategories.text}
-          />
+          <div className="reveal">
+            <SectionHeading
+              kicker="Origin portfolio"
+              heading={productCategories.heading}
+              lead={productCategories.text}
+            />
+          </div>
 
           <CategoryGallery categories={productCategories.labels} />
 
-          <div className="btn-row">
+          <div className="btn-row reveal reveal--delay-2">
             <Button to="/products" variant="primary">
               {ctaLabels.exploreProducts}
               <Icon name="arrowRight" />
@@ -187,9 +217,9 @@ function Home() {
       </section>
 
       {/* --- Partnership --- */}
-      <section className="section reveal">
+      <section className="section">
         <div className="container">
-          <div className="cta-band">
+          <div className="cta-band reveal reveal--scale">
             <div className="cta-band__inner">
               <span className="tag-pill">Direct trade gateway</span>
               <h2>{partnership.heading}</h2>

@@ -28,7 +28,9 @@ function srcSetFor(src) {
   if (!entry?.widths?.length) return undefined;
 
   const base = src.replace(/\.[^.]+$/, "");
-  return entry.widths.map((w) => `${base}-${w}.webp ${w}w`).join(", ");
+  return entry.widths
+    .map((w) => (w === entry.width ? `${src} ${w}w` : `${base}-${w}.webp ${w}w`))
+    .join(", ");
 }
 
 function SmartImage({

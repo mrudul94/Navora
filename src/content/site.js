@@ -9,12 +9,11 @@ export const navItems = [
   { label: "Products", path: "/products" },
   { label: "For Business", path: "/for-business" },
   { label: "Responsible Sourcing", path: "/responsible-sourcing" },
-  { label: "Contact", path: "/contact" },
 ];
 
 /** The header CTA sits alongside the nav, so it is not repeated in navItems. */
 export const headerCta = {
-  label: "Discuss Your Requirements",
+  label: "Contact Navora",
   path: "/contact",
 };
 

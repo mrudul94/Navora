@@ -2,24 +2,25 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import Button from "../components/common/Button";
 import Icon from "../components/common/Icon";
-import LogoMark from "../components/common/LogoMark";
 import { useFocusTrap } from "../lib/useFocusTrap";
 import { headerCta, navItems } from "../content/site";
 import { site } from "../config/site";
 
-function Brand({ onClick, tone }) {
+function Brand({ onClick }) {
   return (
     <Link
       to="/"
-      className="brand"
+      className="brand brand--logo"
       onClick={onClick}
       aria-label={`${site.legalName} home`}
     >
-      <LogoMark size={36} tone={tone} />
-      <span className="brand__text">
-        <span className="brand__name">{site.wordmark}</span>
-        <span className="brand__sub">Indian origins &middot; Global opportunities</span>
-      </span>
+      <img
+        src="/logo.png"
+        alt="Navora Global Limited"
+        className="brand__logo-img"
+        width="180"
+        height="87"
+      />
     </Link>
   );
 }
@@ -70,9 +71,6 @@ function Navbar() {
           ))}
         </nav>
 
-        {/* Both halves are factual: the company is UK-registered and works
-            with an operating partner in Kerala. */}
-        <span className="header-pill">UK Registered &middot; Kerala Partnered</span>
 
         <div className="site-header__cta">
           <Button to={headerCta.path} variant="primary" size="sm">

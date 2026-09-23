@@ -28,16 +28,22 @@ function ResponsibleSourcing() {
       />
 
       {/* --- Our approach --- */}
-      <section className="section reveal">
+      <section className="section">
         <div className="container">
-          <SectionHeading
-            kicker={approach.kicker}
-            heading={approach.heading}
-            center
-          />
+          <div className="reveal">
+            <SectionHeading
+              kicker={approach.kicker}
+              heading={approach.heading}
+              center
+            />
+          </div>
           <div className="grid grid--3">
-            {approach.items.map((item) => (
-              <FeatureCard key={item.heading} {...item} />
+            {approach.items.map((item, index) => (
+              <FeatureCard
+                key={item.heading}
+                {...item}
+                className={`reveal reveal--delay-${(index % 3) + 1}`}
+              />
             ))}
           </div>
         </div>
@@ -46,16 +52,16 @@ function ResponsibleSourcing() {
       {/* --- Accuracy statement ---
           Verbatim from the content pack. This is what allows the page to
           discuss sourcing without making unevidenced claims. Do not soften. */}
-      <section className="section section--alt reveal">
+      <section className="section section--alt">
         <div className="container split">
-          <div>
+          <div className="reveal">
             <div className="callout">
               <p className="callout__title">{accuracyStatement.heading}</p>
               <p>{accuracyStatement.text}</p>
             </div>
           </div>
 
-          <div className="split__media">
+          <div className="split__media reveal reveal--delay-2 reveal--scale">
             <SmartImage
               src={inspection.image}
               alt={inspection.imageAlt}

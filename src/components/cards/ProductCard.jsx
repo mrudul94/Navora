@@ -40,12 +40,12 @@ function actionFor(ownership) {
   return "Request product information";
 }
 
-function ProductCard({ product }) {
+function ProductCard({ product, className = "" }) {
   const { name, slug, ownership, shortDescription, imageUrl, imageAlt } = product;
   const rows = specRows(product);
 
   return (
-    <article className="product-card">
+    <article className={`product-card ${className}`.trim()}>
       <div className="product-card__media">
         <span className="product-card__badge">
           <StatusBadge ownership={ownership} />

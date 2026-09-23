@@ -16,19 +16,13 @@ export function useReveal() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    const elements = Array.from(document.querySelectorAll(".reveal"));
+    const query = ".reveal, .reveal-text, .reveal-paragraph";
+    const elements = Array.from(document.querySelectorAll(query));
     if (elements.length === 0) return undefined;
 
     const show = (el) => el.classList.add("is-visible");
 
-    // matchMedia is missing in some embedded webviews, so treat its absence as
-    // "no preference" rather than letting it throw and leave content hidden.
-    const reducedMotion =
-      typeof window.matchMedia === "function"
-        ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
-        : false;
-
-    if (reducedMotion || typeof IntersectionObserver === "undefined") {
+    if (typeof IntersectionObserver === "undefined") {
       elements.forEach(show);
       return undefined;
     }
@@ -42,17 +36,39 @@ export function useReveal() {
           }
         });
       },
-      { rootMargin: "0px 0px -10% 0px", threshold: 0.05 }
+      { rootMargin: "0px 0px -10% 0px", threshold: 0.1 }
     );
 
     elements.forEach((el) => {
-      if (el.getBoundingClientRect().top < window.innerHeight) {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.65 && rect.bottom > 0) {
         show(el);
       } else {
         observer.observe(el);
       }
     });
 
-    return () => observer.disconnect();
+    let mutationObserver;
+    if (typeof MutationObserver !== "undefined") {
+      mutationObserver = new MutationObserver(() => {
+        const unrevealed = Array.from(
+          document.querySelectorAll(".reveal:not(.is-visible), .reveal-text:not(.is-visible), .reveal-paragraph:not(.is-visible)")
+        );
+        unrevealed.forEach((el) => {
+          const rect = el.getBoundingClientRect();
+          if (rect.top < window.innerHeight * 0.65 && rect.bottom > 0) {
+            show(el);
+          } else {
+            observer.observe(el);
+          }
+        });
+      });
+      mutationObserver.observe(document.body, { childList: true, subtree: true });
+    }
+
+    return () => {
+      observer.disconnect();
+      if (mutationObserver) mutationObserver.disconnect();
+    };
   }, [pathname]);
 }

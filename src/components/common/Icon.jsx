@@ -1,5 +1,6 @@
 import {
   LuArrowRight,
+  LuAward,
   LuBadgeCheck,
   LuBuilding2,
   LuCheck,
@@ -11,11 +12,16 @@ import {
   LuGlobe,
   LuHandshake,
   LuImage,
+  LuInstagram,
   LuLeaf,
+  LuMail,
+  LuMapPin,
   LuMenu,
   LuPackage,
   LuPackageSearch,
+  LuPhone,
   LuSearch,
+  LuShieldCheck,
   LuShoppingBag,
   LuSprout,
   LuStore,
@@ -32,11 +38,17 @@ import {
  * (`icon: "sourcing"`) without importing from react-icons.
  */
 const icons = {
+  // Modern operating principles icons
+  trust: LuShieldCheck,
+  quality: LuAward,
+  partnership: LuHandshake,
+  access: LuGlobe,
+  growth: LuSprout,
+
   // What we offer
   sourcing: LuSprout,
   market: LuGlobe,
   product: LuPackage,
-  partnership: LuHandshake,
 
   // Who we work with
   import: LuTruck,
@@ -65,6 +77,10 @@ const icons = {
   image: LuImage,
   emptyProducts: LuPackageSearch,
   company: LuBuilding2,
+  mail: LuMail,
+  phone: LuPhone,
+  instagram: LuInstagram,
+  pin: LuMapPin,
 };
 
 function Icon({ name, className, ...rest }) {

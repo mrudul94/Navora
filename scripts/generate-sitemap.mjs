@@ -20,14 +20,39 @@ function extract(file, pattern) {
 
 const ORIGIN = extract("src/config/site.js", /origin:\s*"([^"]+)"/)[0];
 
+import { existsSync } from "node:fs";
+import { createClient } from "@sanity/client";
+
 // Static routes, taken from the SEO map (entries with a real path).
 const staticPaths = extract("src/content/seo.js", /path:\s*"([^"]+)"/);
 
-// Product detail routes.
-const productSlugs = extract(
-  "src/content/productsFallback.js",
-  /slug:\s*"([^"]+)"/
-);
+// Product detail routes from Sanity CMS.
+let projectId = process.env.VITE_SANITY_PROJECT_ID;
+let dataset = process.env.VITE_SANITY_DATASET || "production";
+if (!projectId && existsSync(resolve(root, ".env"))) {
+  const envContent = readFileSync(resolve(root, ".env"), "utf8");
+  const m = envContent.match(/VITE_SANITY_PROJECT_ID=([^\s]+)/);
+  if (m) projectId = m[1];
+}
+if (!projectId) projectId = "ltt6egj4";
+
+async function fetchProductSlugs() {
+  try {
+    const client = createClient({
+      projectId,
+      dataset,
+      apiVersion: "2025-01-01",
+      useCdn: true,
+    });
+    const slugs = await client.fetch('*[_type == "product" && isPublished == true].slug.current');
+    return Array.isArray(slugs) ? slugs.filter(Boolean) : [];
+  } catch (error) {
+    console.warn("Could not query Sanity for sitemap:", error.message);
+    return [];
+  }
+}
+
+const productSlugs = await fetchProductSlugs();
 
 const urls = [
   ...staticPaths.map((path) => ({

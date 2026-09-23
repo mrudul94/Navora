@@ -142,8 +142,12 @@ function Products() {
 
           {!loading && visible.length > 0 && (
             <div className="products-grid">
-              {visible.map((product) => (
-                <ProductCard key={product._id || product.slug} product={product} />
+              {visible.map((product, index) => (
+                <ProductCard
+                  key={product._id || product.slug}
+                  product={product}
+                  className={`reveal reveal--delay-${(index % 4) + 1}`}
+                />
               ))}
             </div>
           )}

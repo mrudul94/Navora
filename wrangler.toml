@@ -17,6 +17,10 @@ database_name = "navora-enquiries"
 database_id = "71685dfe-9d04-4a7c-ade3-2d6e33060783"
 
 [vars]
+VITE_SANITY_PROJECT_ID = "ltt6egj4"
+VITE_SANITY_DATASET = "production"
+VITE_SANITY_API_VERSION = "2025-01-01"
+
 # Where enquiry notifications are sent once email is switched on.
 # NOTIFY_EMAIL is safe to keep here; RESEND_API_KEY is a secret and must be set
 # with `npx wrangler pages secret put RESEND_API_KEY` instead.

@@ -191,7 +191,7 @@ function EnquiryForm({ config }) {
           const id = fieldId(field.name);
           const invalid = Boolean(errors[field.name]);
           const describedBy = invalid ? `${id}-error` : undefined;
-          const isWide = field.type === "textarea";
+          const isWide = field.type === "textarea" || field.name === "product";
 
           const shared = {
             id,

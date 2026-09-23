@@ -1,9 +1,9 @@
 import Icon from "../common/Icon";
 
 /** Icon + heading + body. Used by What we offer, Who we work with, Our approach. */
-function FeatureCard({ icon, heading, text }) {
+function FeatureCard({ icon, heading, text, className = "" }) {
   return (
-    <article className="card">
+    <article className={`card ${className}`.trim()}>
       {icon && (
         <span className="card__icon">
           <Icon name={icon} />

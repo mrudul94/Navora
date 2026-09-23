@@ -22,20 +22,23 @@ function ForBusiness() {
       />
 
       {/* --- Who we work with --- */}
-      <section className="section reveal">
+      <section className="section">
         <div className="container">
-          <SectionHeading
-            kicker={partnerTypes.kicker}
-            heading={partnerTypes.heading}
-            center
-          />
+          <div className="reveal">
+            <SectionHeading
+              kicker={partnerTypes.kicker}
+              heading={partnerTypes.heading}
+              center
+            />
+          </div>
           <div className="grid grid--3">
-            {partnerTypes.items.map((item) => (
+            {partnerTypes.items.map((item, index) => (
               <FeatureCard
                 key={item.name}
                 icon={item.icon}
                 heading={item.name}
                 text={item.text}
+                className={`reveal reveal--delay-${(index % 3) + 1}`}
               />
             ))}
           </div>

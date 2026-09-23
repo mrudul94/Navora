@@ -1,4 +1,5 @@
 import SmartImage from "./SmartImage";
+import { renderStaggeredWords } from "./TextReveal";
 
 /**
  * Standard page header: label, H1, lead, optional CTAs and optional media.
@@ -10,11 +11,11 @@ function PageHero({ label, heading, text, image, imageAlt, illustrative, childre
   return (
     <section className={`page-hero ${hasMedia ? "" : "page-hero--noMedia"}`.trim()}>
       <div className="container page-hero__inner">
-        <div>
-          {label && <span className="page-hero__label">{label}</span>}
-          <h1>{heading}</h1>
-          {text && <p className="page-hero__text">{text}</p>}
-          {children && <div className="btn-row">{children}</div>}
+        <div className="page-hero__content reveal-text is-visible">
+          {label && <span className="tag-pill page-hero__label kicker">{label}</span>}
+          <h1 className="page-hero__title reveal-heading">{renderStaggeredWords(heading)}</h1>
+          {text && <p className="page-hero__text reveal-paragraph">{text}</p>}
+          {children && <div className="btn-row hero__animate-cta">{children}</div>}
         </div>
 
         {hasMedia && (

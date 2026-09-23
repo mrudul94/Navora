@@ -13,7 +13,8 @@ function Seo({ title, description, path, image, noIndex = false, jsonLd }) {
   const resolvedTitle = title || defaultSeo.title;
   const resolvedDescription = description || defaultSeo.description;
   const canonical = path ? `${site.origin}${path}` : null;
-  const imageUrl = `${site.origin}${image || defaultSeo.image}`;
+  const rawImage = image || defaultSeo.image;
+  const imageUrl = /^https?:\/\//i.test(rawImage) ? rawImage : `${site.origin}${rawImage}`;
 
   return (
     <Helmet prioritizeSeoTags>

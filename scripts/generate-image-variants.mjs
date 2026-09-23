@@ -70,6 +70,12 @@ for (const file of sources) {
     savedKb += Math.round(statSync(out).size / 1024);
   }
 
+  const fullOut = `${outBase}-${meta.width}.webp`;
+  if (!existsSync(fullOut)) {
+    await sharp(file).webp({ quality: 78 }).toFile(fullOut);
+    written++;
+  }
+
   // Largest first is irrelevant to srcset, but keep it sorted for readability.
   manifest[publicPath] = {
     widths: [...usable, meta.width].sort((a, b) => a - b),

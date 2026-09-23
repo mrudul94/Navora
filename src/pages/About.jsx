@@ -6,12 +6,14 @@ import SectionHeading from "../components/common/SectionHeading";
 import Checklist from "../components/common/Checklist";
 import Stepper from "../components/common/Stepper";
 import Icon from "../components/common/Icon";
-import { Divider } from "../components/common/Texture";
+import ValueCard from "../components/cards/ValueCard";
+import FounderCard from "../components/cards/FounderCard";
 import { pageSeo } from "../content/seo";
 import { ctaLabels } from "../content/site";
 import {
   hero,
   howWeWork,
+  leadership,
   missionVision,
   model,
   purpose,
@@ -33,39 +35,44 @@ function About() {
       />
 
       {/* --- Our story --- */}
-      <section className="section reveal">
-        <div className="container split split--reverse">
-          <div>
+      <section className="section section--warm">
+        <div className="container about-story-layout">
+          <div className="about-story__content reveal">
             <SectionHeading kicker={story.kicker} heading={story.heading} />
             {story.paragraphs.map((paragraph) => (
-              <p
-                key={paragraph.slice(0, 40)}
-                className="lead"
-                style={{ marginBottom: "var(--sp-4)" }}
-              >
+              <p key={paragraph.slice(0, 40)} className="about-story__para">
                 {paragraph}
               </p>
             ))}
           </div>
 
-          <div className="split__media">
-            <SmartImage
-              src={story.image}
-              alt={story.imageAlt}
-              ratio="4-3"
-              illustrative={story.illustrative}
-              sizes="(max-width: 860px) 100vw, 45vw"
-            />
+          <div className="about-story__media reveal reveal--delay-2 reveal--scale">
+            <div className="about-image-card">
+              <SmartImage
+                src={story.image}
+                alt={story.imageAlt}
+                ratio="4-3"
+                illustrative={story.illustrative}
+                sizes="(max-width: 860px) 100vw, 45vw"
+              />
+              <div className="about-image-card__badge">
+                <Icon name="source" />
+                <span>Smallholder farming network &middot; India</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* --- Mission and vision --- */}
-      <section className="section section--surface reveal">
+      <section className="section">
         <div className="container">
           <div className="grid grid--2">
             {missionVision.map((item, index) => (
-              <article className="pillar" key={item.heading}>
+              <article
+                className={`pillar reveal reveal--delay-${index + 1}`}
+                key={item.heading}
+              >
                 <span className="pillar__icon">
                   <Icon name={index === 0 ? "sourcing" : "market"} />
                 </span>
@@ -77,63 +84,101 @@ function About() {
         </div>
       </section>
 
-      {/* --- What makes our model different --- */}
-      <section className="section reveal">
+      {/* --- What makes our model different & Purpose --- */}
+      <section className="section section--warm">
         <div className="container split">
-          <div>
+          <div className="reveal">
             <SectionHeading kicker={model.kicker} heading={model.heading} />
             <Checklist items={model.points} />
           </div>
 
-          <div className="split__media">
-            <SectionHeading kicker={purpose.kicker} heading={purpose.heading} />
-            <p className="lead">{purpose.text}</p>
+          <div className="reveal reveal--delay-2">
+            <div className="purpose-card">
+              <span className="tag-pill">{purpose.kicker}</span>
+              <h3 className="purpose-card__title">{purpose.heading}</h3>
+              <p className="purpose-card__text">{purpose.text}</p>
+              <div className="purpose-card__badge">
+                <Icon name="verified" />
+                <span>Transparent communication &middot; Realistic commitments</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* --- Values --- */}
-      <section className="section section--jute reveal">
+      <section className="section">
         <div className="container">
-          <SectionHeading kicker={values.kicker} heading={values.heading} />
+          <div className="reveal">
+            <SectionHeading kicker={values.kicker} heading={values.heading} />
+          </div>
 
-          <dl className="deflist">
-            {values.items.map((value) => (
-              <div className="deflist__row" key={value.name}>
-                <dt className="deflist__term">{value.name}</dt>
-                <dd className="deflist__desc">{value.text}</dd>
-              </div>
+          <div className="values-grid">
+            {values.items.map((value, index) => (
+              <ValueCard
+                value={value}
+                index={index}
+                key={value.name}
+                className={`reveal reveal--delay-${(index % 5) + 1}`}
+              />
             ))}
-          </dl>
+          </div>
         </div>
       </section>
 
-      <div className="container">
-        <Divider />
-      </div>
-
       {/* --- How we work --- */}
-      <section className="section reveal">
+      <section className="section section--warm">
         <div className="container">
-          <SectionHeading kicker={howWeWork.kicker} heading={howWeWork.heading} />
-          <Stepper steps={howWeWork.steps} />
+          <div className="reveal">
+            <SectionHeading kicker={howWeWork.kicker} heading={howWeWork.heading} />
+          </div>
+          <div className="stepper-wrap reveal reveal--delay-1">
+            <Stepper steps={howWeWork.steps} />
+          </div>
+        </div>
+      </section>
+
+      {/* --- Leadership & Founders --- */}
+      <section className="section" id="leadership">
+        <div className="container">
+          <div className="section-head--center reveal">
+            <SectionHeading
+              kicker={leadership.kicker}
+              heading={leadership.heading}
+              lead={leadership.lead}
+            />
+          </div>
+
+          <div className="founders-grid">
+            {leadership.founders.map((founder, index) => (
+              <FounderCard
+                key={founder.name}
+                founder={founder}
+                className={`reveal reveal--delay-${index + 1}`}
+              />
+            ))}
+          </div>
         </div>
       </section>
 
       {/* --- CTA --- */}
-      <section className="section section--tight cta-band reveal">
-        <div className="container cta-band__inner">
-          <div className="cta-band__copy">
-            <h2>Ready to talk about your requirement?</h2>
-            <p>
-              Tell us what you buy, sell or produce and we will confirm what our
-              supplier network can currently offer.
-            </p>
-          </div>
-          <div className="btn-row">
-            <Button to="/contact" variant="gold" size="lg">
-              {ctaLabels.discussRequirements}
-            </Button>
+      <section className="section">
+        <div className="container">
+          <div className="cta-band reveal reveal--scale">
+            <div className="cta-band__inner">
+              <span className="tag-pill">Get in touch</span>
+              <h2>Ready to talk about your requirement?</h2>
+              <p>
+                Tell us what you buy, sell or produce and we will confirm what our
+                supplier network can currently offer.
+              </p>
+
+              <div className="btn-row">
+                <Button to="/contact" variant="onDark" size="lg">
+                  {ctaLabels.discussRequirements}
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
