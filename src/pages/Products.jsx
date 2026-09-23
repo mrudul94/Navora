@@ -121,13 +121,8 @@ function Products() {
         </div>
       </section>
 
-      {/* --- At a glance --- */}
-      <AtAGlance {...glance} id="products-glance-heading" />
-
-      {/* --- The offer, defined --- */}
-      <QaSection {...offerExplained} id="products-offer-heading" />
-
-      {/* --- Catalogue --- */}
+      {/* --- Catalogue: first after the header, so visitors see products
+          straight away. The summary under the H1 stays above it. --- */}
       <section className="section section--warm" aria-labelledby="range-heading">
         <div className="container">
           <SectionHeading
@@ -193,8 +188,14 @@ function Products() {
         </div>
       </section>
 
+      {/* --- At a glance --- */}
+      <AtAGlance {...glance} id="products-glance-heading" />
+
       {/* --- Category comparison --- */}
       {!loading && <CategoryComparison {...comparison} filters={filters} products={products} />}
+
+      {/* --- The offer, defined --- */}
+      <QaSection {...offerExplained} id="products-offer-heading" />
 
       {/* --- What Navora can actually say about assurance --- */}
       <section className="section section--tight">
