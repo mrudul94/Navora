@@ -1,5 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-label="Navora">
-  <rect width="32" height="32" rx="7" fill="#1b4332"/>
-  <path d="M9 23V9h3.5l7 9.6V9H23v14h-3.5l-7-9.6V23H9Z" fill="#faf8f4"/>
-  <rect x="9" y="25" width="14" height="2" rx="1" fill="#c98a25"/>
-</svg>
