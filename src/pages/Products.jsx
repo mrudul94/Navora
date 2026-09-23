@@ -19,6 +19,8 @@ import {
   filters,
   glance,
   hero,
+  heroSummary,
+  offerExplained,
   productFaq,
   rangeHeading,
 } from "../content/products";
@@ -26,6 +28,9 @@ import AtAGlance from "../components/sections/AtAGlance";
 import FaqSection from "../components/sections/FaqSection";
 import CategoryComparison from "../components/sections/CategoryComparison";
 import { faqPage } from "../lib/structuredData";
+import QaSection from "../components/sections/QaSection";
+import ProofSection from "../components/sections/ProofSection";
+import { proofFacts, proofIntro } from "../content/proof";
 
 const validFilters = new Set(filters.map((f) => f.id));
 
@@ -92,6 +97,7 @@ function Products() {
 
           <div className="page-head">
             <h1>{hero.heading}</h1>
+            <p className="page-head__summary">{heroSummary}</p>
             <p className="lead">{hero.text}</p>
           </div>
 
@@ -117,6 +123,9 @@ function Products() {
 
       {/* --- At a glance --- */}
       <AtAGlance {...glance} id="products-glance-heading" />
+
+      {/* --- The offer, defined --- */}
+      <QaSection {...offerExplained} id="products-offer-heading" />
 
       {/* --- Catalogue --- */}
       <section className="section section--warm" aria-labelledby="range-heading">
@@ -224,6 +233,22 @@ function Products() {
           </div>
         </div>
       </section>
+
+      {/* --- Verifiable facts --- */}
+      <ProofSection
+        {...proofIntro}
+        heading="What you can check before you buy"
+        items={[
+          proofFacts.catalogue,
+          proofFacts.labels,
+          proofFacts.documents,
+          proofFacts.accuracy,
+          proofFacts.registered,
+          proofFacts.writtenTerms,
+        ]}
+        id="products-proof-heading"
+        warm
+      />
 
       {/* --- FAQ --- */}
       <FaqSection {...productFaq} id="products-faq-heading" />

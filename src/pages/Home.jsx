@@ -13,10 +13,14 @@ import { pageSeo } from "../content/seo";
 import { faq } from "../content/faq";
 import { faqPage } from "../lib/structuredData";
 import { ctaLabels } from "../content/site";
+import QaSection from "../components/sections/QaSection";
+import ProofSection from "../components/sections/ProofSection";
+import { proofFacts, proofIntro } from "../content/proof";
 import {
   atAGlance,
   capabilityIntro,
   capabilityMeta,
+  fitForBusiness,
   hero,
   heroFacts,
   heroPanel,
@@ -42,9 +46,11 @@ function Home() {
               {renderStaggeredWords([
                 "Connecting Indian ",
                 <span className="accent" key="accent">food producers</span>,
-                " with global markets",
+                " with UK and global markets",
               ])}
             </h1>
+
+            <p className="hero__summary hero__animate-text">{hero.summary}</p>
 
             <p className="hero__text hero__animate-text">{hero.text}</p>
 
@@ -207,6 +213,25 @@ function Home() {
         </div>
       </section>
 
+      {/* --- Who Navora is for: audience, use cases, decision context --- */}
+      <QaSection {...fitForBusiness} id="home-fit-heading" />
+
+      {/* --- Verifiable facts --- */}
+      <ProofSection
+        {...proofIntro}
+        heading="What you can check about Navora today"
+        items={[
+          proofFacts.registered,
+          proofFacts.founders,
+          proofFacts.partner,
+          proofFacts.catalogue,
+          proofFacts.accuracy,
+          proofFacts.writtenTerms,
+        ]}
+        id="home-proof-heading"
+        warm
+      />
+
       {/* --- FAQ --- */}
       <FaqSection
         kicker={faq.kicker}
@@ -222,6 +247,7 @@ function Home() {
             <div className="cta-band__inner">
               <span className="tag-pill">Direct trade gateway</span>
               <h2>{partnership.heading}</h2>
+              <p className="cta-band__answer"><strong>{partnership.answer}</strong></p>
               <p>{partnership.text}</p>
 
               <div className="btn-row">

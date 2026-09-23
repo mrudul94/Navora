@@ -1,4 +1,5 @@
 import { site } from "../config/site";
+import { sources } from "./sources";
 
 /**
  * Frequently asked questions, shown on the Home page and published as
@@ -67,14 +68,7 @@ export const faq = {
       short: "UK food law applies, with extra border checks for some high-risk foods.",
       answer:
         "Food imported into Great Britain must meet UK food law, and some food of non-animal origin is classed as high-risk and needs extra border checks. The Food Standards Agency publishes the current requirements. On the Indian side, APEDA promotes agricultural and processed food exports and the Spices Board India supports spice exports. Navora discusses the documentation your market requires as part of each enquiry.",
-      sources: [
-        {
-          label: "Food Standards Agency: importing high-risk food of non-animal origin",
-          href: "https://www.food.gov.uk/business-guidance/importing-high-risk-food-and-feed-of-non-animal-origin-hrfnao-into-great-britain",
-        },
-        { label: "APEDA (India)", href: "https://apeda.gov.in/" },
-        { label: "Spices Board India", href: "https://www.indianspices.com/" },
-      ],
+      sources: [sources.hrfnao, sources.apeda, sources.spicesBoard],
     },
     {
       question: "How do I start an enquiry with Navora?",

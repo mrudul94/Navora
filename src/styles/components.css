@@ -665,130 +665,202 @@ select.field__control {
   }
 }
 
-/* --- Founders & Leadership Cards ------------------------------------------ */
+/* --- Founders & Leadership Cards ------------------------------------------
+   A green header band with the initials medallion sitting on its edge, the
+   name set large in the display face, the bio under a gold rule, and the
+   contact rows as quiet tiles. Styling only — the markup is unchanged. */
 
 .founders-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
   gap: clamp(var(--sp-5), 3.5vw, var(--sp-7));
   margin-top: var(--sp-6);
 }
 
 .founder-card {
+  --band: 72px;
+  position: relative;
+  isolation: isolate;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   background: var(--card);
   border: 1px solid var(--line-strong);
-  border-radius: var(--r-md);
-  padding: clamp(var(--sp-5), 4vw, var(--sp-7));
-  box-shadow: var(--shadow-1);
+  border-radius: var(--r-lg);
+  padding: calc(var(--band) - 40px) clamp(var(--sp-5), 3.5vw, var(--sp-6)) clamp(var(--sp-5), 3.5vw, var(--sp-6));
+  box-shadow: var(--shadow-2);
   transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+
+/* Header band */
+.founder-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: var(--band);
+  z-index: -1;
+  background:
+    radial-gradient(circle at 88% -40%, rgba(184, 147, 90, 0.35), transparent 55%),
+    linear-gradient(135deg, var(--green-deep), var(--green));
+}
+
+/* Gold hairline under the band */
+.founder-card::after {
+  content: "";
+  position: absolute;
+  top: var(--band);
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), rgba(184, 147, 90, 0));
+  z-index: -1;
 }
 
 .founder-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-3);
-  border-color: var(--line-active);
+  border-color: var(--gold);
 }
 
 .founder-card__header {
   display: flex;
-  align-items: center;
-  gap: var(--sp-4);
-  margin-bottom: var(--sp-3);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-2);
 }
 
+/* Initials medallion, centred on the band's lower edge */
 .founder-card__avatar {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 60px;
-  height: 60px;
-  border-radius: var(--r-full);
-  background: linear-gradient(135deg, #1B4332, #2d5a45);
-  box-shadow: 0 0 0 2px rgba(201, 138, 37, 0.35);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #2d5a45, var(--green-deep));
+  border: 4px solid var(--card);
+  box-shadow: 0 0 0 1px var(--gold), var(--shadow-2);
   flex-shrink: 0;
+  transition: transform var(--dur) var(--ease);
+}
+
+.founder-card:hover .founder-card__avatar {
+  transform: scale(1.04);
 }
 
 .founder-card__initials {
   font-family: var(--font-display);
-  font-size: var(--fs-md);
+  font-size: 1.6rem;
   font-weight: 600;
   color: #fff;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
 }
 
 .founder-card__identity {
   display: flex;
   flex-direction: column;
+  gap: 6px;
   min-width: 0;
 }
 
-.founder-card__role {
+/* Role as a quiet gold eyebrow rather than a pill */
+.founder-card__role.tag-pill {
   align-self: flex-start;
-  margin-bottom: 4px;
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: var(--track-meta);
+  text-transform: uppercase;
+  color: var(--gold-text);
+}
+
+.founder-card__role.tag-pill::before {
+  width: 18px;
+  height: 2px;
+  border-radius: 0;
+  background: var(--gold);
+  animation: none;
 }
 
 .founder-card__name {
   font-family: var(--font-display);
-  font-size: var(--fs-lg);
+  font-size: clamp(1.45rem, 2.2vw, 1.75rem);
   font-weight: 600;
   color: var(--ink);
-  line-height: 1.2;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
   margin: 0;
 }
 
 .founder-card__focus {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  font-size: var(--fs-2xs);
-  color: var(--muted);
-  font-weight: 600;
-  letter-spacing: var(--track-meta);
-  text-transform: uppercase;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-self: flex-start;
   margin-top: 4px;
+  padding: 5px 10px;
+  border-radius: var(--r-pill);
+  background: var(--green-soft);
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--green);
 }
 
 .founder-card__focus svg {
   width: 12px;
   height: 12px;
-  color: var(--orange-text);
+  color: var(--green);
 }
 
 .founder-card__bio {
+  position: relative;
   color: var(--ink-2);
-  font-size: var(--fs-sm);
-  line-height: 1.6;
-  margin-block: var(--sp-4);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-block: var(--sp-4) var(--sp-5);
+  padding-left: var(--sp-4);
+  border-left: 2px solid var(--gold);
   flex-grow: 1;
 }
 
 .founder-card__contacts {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-3);
-  padding-top: var(--sp-5);
-  border-top: 1px solid var(--line);
+  display: grid;
+  gap: var(--sp-2);
 }
 
 .founder-contact-item {
   display: flex;
   align-items: center;
   gap: var(--sp-3);
+  padding: var(--sp-3);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--cream);
   font-size: var(--fs-sm);
+  transition: border-color var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+
+.founder-contact-item:hover {
+  border-color: var(--orange);
+  background: var(--orange-soft);
 }
 
 .founder-contact-item__icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
-  border-radius: var(--r-sm);
-  background: var(--cream-deep);
-  border: 1px solid var(--line);
-  color: var(--orange-text);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--green);
+  color: #fff;
   flex-shrink: 0;
 }
 
@@ -800,6 +872,7 @@ select.field__control {
 .founder-contact-item__details {
   display: flex;
   flex-direction: column;
+  gap: 3px;
   min-width: 0;
 }
 
@@ -810,20 +883,29 @@ select.field__control {
   text-transform: uppercase;
   color: var(--muted);
   line-height: 1;
-  margin-bottom: 2px;
 }
 
 .founder-contact-item__link {
-  font-size: var(--fs-xs);
+  font-size: var(--fs-sm);
   font-weight: 600;
   color: var(--ink);
   text-decoration: none;
-  word-break: break-all;
+  overflow-wrap: anywhere;
 }
 
-.founder-contact-item__link:hover {
+.founder-contact-item__link:hover,
+.founder-contact-item__link:focus-visible {
   color: var(--orange-text);
   text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .founder-card,
+  .founder-card:hover,
+  .founder-card:hover .founder-card__avatar {
+    transform: none;
+  }
 }
 
 .confirm-placeholder {

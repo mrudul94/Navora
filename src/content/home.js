@@ -1,8 +1,11 @@
 /** Home page copy. Source: Content Pack pp. 3-4. */
+import { sources } from "./sources";
 
 export const hero = {
   label: "UK REGISTERED · CONNECTED TO INDIA",
-  heading: "Connecting Indian food producers with global markets",
+  heading: "Connecting Indian food producers with UK and global markets",
+  summary:
+    "Navora Global helps UK and international food businesses source products from India, including spices, honey, millets and rice. It works with importers, wholesalers, distributors, retailers, food brands and hospitality buyers, and with the Indian producers who supply them. Use Navora when you need an Indian food product, a new supplier, or a route to private label.",
   text: "Navora Global works with farmers, producers and food brands in India to help quality products reach buyers in the UK and international markets. From established ingredients to new consumer products, we create practical connections built on trust, product knowledge and long-term partnership.",
 };
 
@@ -124,6 +127,8 @@ export const productCategories = {
 
 export const partnership = {
   heading: "Looking for an Indian food product or a route to a new market?",
+  answer:
+    "Navora can help with both: sourcing from India for buyers, and routes to new markets for Indian producers and brands.",
   text: "Tell us what you buy, sell or produce. We welcome enquiries from importers, distributors, retailers, food-service businesses, producers and emerging brands.",
 };
 
@@ -220,3 +225,48 @@ export const capabilityMeta = [
 
 export const capabilityIntro =
   "Sourcing, market introductions, Navora-branded products and flexible partnership routes — from first enquiry through to commercial discussion.";
+
+/* ===========================================================================
+   Answer-first additions: audience, industries, use cases and when to get in
+   touch. Restates approved copy; import facts carry dated official sources.
+   =========================================================================== */
+
+export const fitForBusiness = {
+  kicker: "Who Navora is for",
+  heading: "Is Navora right for your business?",
+  lead: "Navora is built for businesses that buy, sell or serve food commercially, and for the Indian producers who supply them.",
+  items: [
+    {
+      question: "Which industries does Navora serve?",
+      answer:
+        "Food import and distribution, wholesale and retail, food service and hospitality, and food brands that use Indian ingredients.",
+      points: [
+        "Importers and distributors building an Indian range",
+        "Wholesalers and retailers, including own-brand ranges",
+        "Hotels, restaurants, caterers and ingredient buyers",
+        "Food brands exploring private label",
+        "Indian farmers, producers and emerging brands",
+      ],
+    },
+    {
+      question: "What do businesses use Navora for?",
+      answer:
+        "To source a named Indian food product, find a new supplier for an existing specification, explore private label, or take an Indian product or brand to a new market.",
+      link: { to: "/for-business", label: "Compare wholesale, distribution and private label" },
+    },
+    {
+      question: "When is the right time to contact Navora?",
+      answer:
+        "Once you know the product, an approximate quantity and the destination market, even if the specification is not final.",
+      detail:
+        "UK import rules still apply to every order: each product needs a commodity code, and some high-risk food of non-animal origin needs extra border checks.",
+      sources: [sources.importSteps, sources.tradeTariff, sources.hrfnao],
+    },
+    {
+      question: "What does Navora need from you to help?",
+      answer: "The product, required format, approximate quantity, destination market and timeline.",
+      detail: "Missing details are fine at the start; Navora will ask for what it needs to confirm an option.",
+      link: { to: "/contact", label: "Start an enquiry" },
+    },
+  ],
+};

@@ -23,7 +23,13 @@ export const site = {
   businessHours: "Monday to Saturday, 9:00 am – 5:00 pm",
 
   // --- Registration --------------------------------------------------------
-  companyNumber: "TODO_CONFIRM_COMPANY_NUMBER",
+  // Verified on the Companies House register on 24 September 2026: NAVORA
+  // GLOBAL LIMITED, active, incorporated 8 February 2026, registered office
+  // matching the address below.
+  companyNumber: "17019079",
+  incorporated: "8 February 2026",
+  companiesHouseUrl:
+    "https://find-and-update.company-information.service.gov.uk/company/17019079",
   jurisdiction: "England and Wales",
   registeredOffice: "29 Nightingale Road, South Croydon, CR2 8PS, United Kingdom",
 
@@ -34,7 +40,11 @@ export const site = {
 
   // --- Web -----------------------------------------------------------------
   domain: "navoraglobal.uk",
-  origin: "https://www.navoraglobal.uk",
+  // The deployed address. navoraglobal.uk currently shows a parked registrar
+  // page marked noindex, so canonicals, Open Graph URLs, schema IDs and the
+  // sitemap point here until the domain is connected to the Pages project.
+  // Then change this to "https://www.navoraglobal.uk" and rebuild.
+  origin: "https://navora-global.pages.dev",
   domains: {
     primary: "navoraglobal.uk",
     additional: ["navoraglobal.org", "navoraglobal.info"],
@@ -44,7 +54,9 @@ export const site = {
   // Business Profile…). Published as schema.org sameAs so search engines and
   // AI assistants can tell this Navora apart from others with a similar name.
   // Add full https:// URLs only for profiles Navora controls.
-  sameAs: [],
+  // Companies House is the only official profile found so far; no LinkedIn
+  // or Google Business Profile for this company was located.
+  sameAs: ["https://find-and-update.company-information.service.gov.uk/company/17019079"],
 
   // --- Leadership & Founders ------------------------------------------------
   albertEmail: "albert@navoraglobal.uk",

@@ -1,4 +1,5 @@
 import SectionHeading from "../common/SectionHeading";
+import SourceLinks from "../common/SourceLinks";
 
 /**
  * Questions with their answers always visible, each answer directly after
@@ -20,21 +21,7 @@ function FaqSection({ kicker, heading, lead, items, id = "faq-heading" }) {
               <h3 className="faq__question">{item.question}</h3>
               {item.short && <p className="faq__short">{item.short}</p>}
               <p className="faq__answer">{item.answer}</p>
-              {item.sources?.length > 0 && (
-                <p className="faq__sources">
-                  <span>Sources:</span>
-                  {item.sources.map((source) => (
-                    <a
-                      key={source.href}
-                      href={source.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {source.label}
-                    </a>
-                  ))}
-                </p>
-              )}
+              <SourceLinks sources={item.sources} />
             </article>
           ))}
         </div>

@@ -27,12 +27,23 @@ function Seo({
   breadcrumbs,
   noIndex = false,
   jsonLd,
+  ogImage,
+  ogImageAlt,
 }) {
   const resolvedTitle = title || defaultSeo.title;
   const resolvedDescription = description || defaultSeo.description;
   const canonical = path ? `${site.origin}${path}` : null;
+  const absolute = (url) => (/^https?:\/\//i.test(url) ? url : `${site.origin}${url}`);
   const rawImage = image || defaultSeo.image;
-  const imageUrl = /^https?:\/\//i.test(rawImage) ? rawImage : `${site.origin}${rawImage}`;
+  const imageUrl = absolute(rawImage);
+
+  // Social share card. Kept apart from `imageUrl` so a page's share image
+  // never changes its structured data. A page `image` (products) wins; the
+  // local cards (`ogImage`, the default) are all 1200x630 JPEG, so their size
+  // is declared and previews render on the first share.
+  const localCard = !image;
+  const shareUrl = image ? imageUrl : absolute(ogImage || defaultSeo.image);
+  const shareAlt = ogImageAlt || (image || ogImage ? resolvedTitle : defaultSeo.imageAlt);
 
   const trail = breadcrumbs || (name && path && path !== "/" ? [{ name, path }] : null);
   const extra = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
@@ -73,15 +84,19 @@ function Seo({
       <meta property="og:site_name" content={site.legalName} />
       <meta property="og:title" content={resolvedTitle} />
       <meta property="og:description" content={resolvedDescription} />
-      <meta property="og:image" content={imageUrl} />
-      <meta property="og:image:alt" content={resolvedTitle} />
+      <meta property="og:image" content={shareUrl} />
+      {localCard && <meta property="og:image:type" content={defaultSeo.imageType} />}
+      {localCard && <meta property="og:image:width" content={String(defaultSeo.imageWidth)} />}
+      {localCard && <meta property="og:image:height" content={String(defaultSeo.imageHeight)} />}
+      <meta property="og:image:alt" content={shareAlt} />
       {canonical && <meta property="og:url" content={canonical} />}
       <meta property="og:locale" content="en_GB" />
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={resolvedTitle} />
       <meta name="twitter:description" content={resolvedDescription} />
-      <meta name="twitter:image" content={imageUrl} />
+      <meta name="twitter:image" content={shareUrl} />
+      <meta name="twitter:image:alt" content={shareAlt} />
 
       {structuredData && (
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>

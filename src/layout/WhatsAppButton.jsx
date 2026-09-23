@@ -28,7 +28,6 @@ function WhatsAppButton() {
       onClick={withPageContext}
     >
       <FaWhatsapp aria-hidden="true" />
-      <span className="whatsapp-fab__label">Chat on WhatsApp</span>
     </a>
   );
 }

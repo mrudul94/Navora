@@ -1,4 +1,5 @@
 import { faq as homeFaq } from "./faq";
+import { sources } from "./sources";
 
 /** Products page copy. Source: Content Pack pp. 5-7. */
 
@@ -162,5 +163,55 @@ export const productFaq = {
         "The full Navora product catalogue is available as a PDF from the top of this page, and each product page has its own one-page product sheet. Both are generated from the same information as this website, so they stay up to date.",
     },
     ...(importRules ? [importRules] : []),
+  ],
+};
+
+/* ===========================================================================
+   Answer-first additions. Restates approved copy; trade facts carry dated
+   official sources.
+   =========================================================================== */
+
+/** 2-3 sentence answer directly under the H1. */
+export const heroSummary =
+  "Navora supplies Indian spices (ginger and green cardamom), honey, millets and rice to business buyers, alongside its own Navora Honey Shot. This page is for importers, distributors, wholesalers, retailers, food-service buyers and food brands in the UK and international markets. Use it to compare categories, download product sheets and request specifications, samples or prices.";
+
+export const offerExplained = {
+  kicker: "The offer, in plain language",
+  heading: "What Navora's product sourcing means for your business",
+  items: [
+    {
+      question: "What is Navora's food-product sourcing offer?",
+      answer:
+        "You tell Navora which Indian food product you need; Navora finds a suitable supplier in its network, gathers the product information and documents, and supports the commercial discussion until terms are agreed in writing.",
+      detail:
+        "Supplier products are made by partner suppliers in India. Navora Brand products, such as Navora Honey Shot, are developed and marketed by Navora itself.",
+    },
+    {
+      question: "How can businesses use these products?",
+      answer:
+        "As bulk ingredients, as retail or own-label lines, or on food-service menus, depending on the product, format and supplier.",
+      points: [
+        "Importers and distributors: add Indian lines to a range",
+        "Wholesalers and retailers: bulk or retail-ready formats",
+        "Food service and hospitality: ingredients for kitchens and menus",
+        "Food brands: private label, where a capable supplier is identified",
+      ],
+      link: { to: "/for-business", label: "Compare wholesale, distribution and private label" },
+    },
+    {
+      question: "What decides the price and availability?",
+      answer:
+        "Specification, volume, packing, destination and delivery terms, so prices are quoted per enquiry rather than listed.",
+      detail:
+        "Who pays for carriage and insurance, and where risk passes, is commonly set using the International Chamber of Commerce's Incoterms® rules, agreed as part of the commercial terms.",
+      sources: [sources.incoterms],
+    },
+    {
+      question: "What will I need to bring these products into the UK?",
+      answer:
+        "A commodity code for each product, and compliance with UK food law, including labelling; some high-risk food of non-animal origin also needs extra border checks.",
+      sources: [sources.tradeTariff, sources.labelling, sources.hrfnao],
+      link: { to: "/responsible-sourcing", label: "Questions to ask before sourcing" },
+    },
   ],
 };

@@ -18,4 +18,4 @@ User-agent: Bingbot
 Allow: /
 Disallow: /api/
 
-Sitemap: https://www.navoraglobal.uk/sitemap.xml
+Sitemap: https://navora-global.pages.dev/sitemap.xml

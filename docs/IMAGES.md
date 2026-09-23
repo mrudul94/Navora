@@ -43,6 +43,15 @@ Aim for 200–400 KB per image; nothing here needs to be larger.
 | `about-story-origin.webp` | Spice and produce harvest in an agro-forestry farm in Kerala | 4:3 | 1400 |
 | `category-produce.webp` | Mixed vegetables and fruit | 1:1 | 900 |
 | `og-default.jpg` | Social share card — the hero image works well | 1.91:1 | 1200 |
+| `og-about.jpg` | Share card for About — crop of `about-partnership.webp` | 1.91:1 | 1200 |
+| `og-products.jpg` | Share card for Products — crop of `category-spices.webp` | 1.91:1 | 1200 |
+| `og-for-business.jpg` | Share card for For Business — crop of `business-trade.webp` | 1.91:1 | 1200 |
+| `og-responsible-sourcing.jpg` | Share card for Responsible Sourcing — crop of `sourcing-farm.webp` | 1.91:1 | 1200 |
+| `og-contact.jpg` | Share card for Contact — crop of `contact-desk.webp` | 1.91:1 | 1200 |
+
+Share cards must be exactly 1200×630 JPEG: `Seo.jsx` declares that size in
+`og:image:width` / `og:image:height`. If a hero photo is replaced, re-crop its
+card to match (sharp: `resize(1200, 630, { fit: "cover", position: "attention" })`).
 
 ### Commissioning a photographer instead
 

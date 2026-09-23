@@ -870,7 +870,8 @@
   outline-offset: 3px;
 }
 
-/* --- WhatsApp chat button ---------------------------------------------------- */
+/* --- WhatsApp chat button ----------------------------------------------------
+   Round, icon-only button. The accessible name comes from aria-label. */
 
 .whatsapp-fab {
   position: fixed;
@@ -879,28 +880,26 @@
   z-index: 950; /* above the header, under the mobile drawer and cookie banner */
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  height: 56px;
-  padding: 0 20px 0 16px;
-  border-radius: var(--r-pill);
-  background: #1f8f4e; /* WhatsApp green, darkened for 4.5:1 white text */
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  padding: 0;
+  border-radius: 50%;
+  background: #1f8f4e; /* WhatsApp green, darkened for contrast with white */
   color: #fff;
-  font-weight: 700;
-  font-size: 0.9375rem;
-  text-decoration: none;
   box-shadow: 0 10px 24px rgba(20, 60, 35, 0.28), 0 2px 6px rgba(0, 0, 0, 0.12);
   transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), background var(--dur) var(--ease);
 }
 
 .whatsapp-fab svg {
-  width: 26px;
-  height: 26px;
+  width: 32px;
+  height: 32px;
   flex: none;
 }
 
 .whatsapp-fab:hover {
   background: #197a42;
-  transform: translateY(-3px);
+  transform: translateY(-3px) scale(1.04);
   box-shadow: 0 14px 30px rgba(20, 60, 35, 0.34), 0 2px 6px rgba(0, 0, 0, 0.12);
 }
 
@@ -909,22 +908,22 @@
   outline-offset: 3px;
 }
 
-/* Icon only on small screens so it never covers content */
 @media (max-width: 640px) {
   .whatsapp-fab {
     right: var(--sp-4);
     bottom: var(--sp-4);
-    width: 56px;
-    padding: 0;
-    justify-content: center;
+    width: 54px;
+    height: 54px;
   }
-  .whatsapp-fab__label {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
+  .whatsapp-fab svg {
+    width: 29px;
+    height: 29px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .whatsapp-fab:hover {
+    transform: none;
   }
 }
 

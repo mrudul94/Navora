@@ -4,17 +4,36 @@ import SectionHeading from "../components/common/SectionHeading";
 import FeatureCard from "../components/cards/FeatureCard";
 import Checklist from "../components/common/Checklist";
 import EnquiryForm from "../components/common/EnquiryForm";
+import QaSection from "../components/sections/QaSection";
+import DecisionTable from "../components/sections/DecisionTable";
+import ProofSection from "../components/sections/ProofSection";
+import FaqSection from "../components/sections/FaqSection";
 import { pageSeo } from "../content/seo";
 import { businessEnquiryForm } from "../content/forms";
-import { hero, formSection, partnerTypes, whatToExpect } from "../content/forBusiness";
+import { proofFacts, proofIntro } from "../content/proof";
+import { faqPage } from "../lib/structuredData";
+import {
+  businessFaq,
+  definitions,
+  formSection,
+  hero,
+  heroLabel,
+  heroSummary,
+  partnerTypes,
+  routeComparison,
+  suitability,
+  whatToExpect,
+} from "../content/forBusiness";
 
 function ForBusiness() {
   return (
     <>
-      <Seo {...pageSeo.forBusiness} />
+      <Seo {...pageSeo.forBusiness} jsonLd={faqPage(businessFaq.items)} />
 
       <PageHero
+        label={heroLabel}
         heading={hero.heading}
+        summary={heroSummary}
         text={hero.text}
         image={hero.image}
         imageAlt={hero.imageAlt}
@@ -45,6 +64,15 @@ function ForBusiness() {
         </div>
       </section>
 
+      {/* --- Definitions --- */}
+      <QaSection {...definitions} id="business-definitions-heading" warm />
+
+      {/* --- Wholesale vs distribution vs private label --- */}
+      <DecisionTable {...routeComparison} id="business-compare-heading" />
+
+      {/* --- Suitability checklists --- */}
+      <QaSection {...suitability} id="business-fit-heading" warm />
+
       {/* --- What to expect --- */}
       <section className="section section--alt reveal">
         <div className="container split">
@@ -68,6 +96,24 @@ function ForBusiness() {
           </div>
         </div>
       </section>
+
+      {/* --- Verifiable facts --- */}
+      <ProofSection
+        {...proofIntro}
+        heading="What a business buyer can verify"
+        items={[
+          proofFacts.registered,
+          proofFacts.partner,
+          proofFacts.documents,
+          proofFacts.labels,
+          proofFacts.catalogue,
+          proofFacts.writtenTerms,
+        ]}
+        id="business-proof-heading"
+      />
+
+      {/* --- FAQ --- */}
+      <FaqSection {...businessFaq} id="business-faq-heading" />
 
       {/* --- Enquiry form --- */}
       <section className="section reveal" id="enquiry">

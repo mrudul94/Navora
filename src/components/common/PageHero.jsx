@@ -2,10 +2,12 @@ import SmartImage from "./SmartImage";
 import { renderStaggeredWords } from "./TextReveal";
 
 /**
- * Standard page header: label, H1, lead, optional CTAs and optional media.
+ * Standard page header: label, H1, summary, lead, optional CTAs and media.
+ * `summary` is the 2-3 sentence answer to "what is this page about, for whom"
+ * and sits directly under the H1, where answer engines look for it.
  * Without `image` it falls back to a single-column, text-only layout.
  */
-function PageHero({ label, heading, text, image, imageAlt, illustrative, children }) {
+function PageHero({ label, heading, summary, text, image, imageAlt, illustrative, children }) {
   const hasMedia = Boolean(image);
 
   return (
@@ -14,6 +16,7 @@ function PageHero({ label, heading, text, image, imageAlt, illustrative, childre
         <div className="page-hero__content reveal-text is-visible">
           {label && <span className="tag-pill page-hero__label kicker">{label}</span>}
           <h1 className="page-hero__title reveal-heading">{renderStaggeredWords(heading)}</h1>
+          {summary && <p className="page-hero__summary">{summary}</p>}
           {text && <p className="page-hero__text reveal-paragraph">{text}</p>}
           {children && <div className="btn-row hero__animate-cta">{children}</div>}
         </div>

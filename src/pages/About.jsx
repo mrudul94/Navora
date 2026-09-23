@@ -8,11 +8,23 @@ import Stepper from "../components/common/Stepper";
 import Icon from "../components/common/Icon";
 import ValueCard from "../components/cards/ValueCard";
 import FounderCard from "../components/cards/FounderCard";
+import SourceLinks from "../components/common/SourceLinks";
+import QaSection from "../components/sections/QaSection";
+import ProofSection from "../components/sections/ProofSection";
+import FaqSection from "../components/sections/FaqSection";
 import { pageSeo } from "../content/seo";
 import { ctaLabels } from "../content/site";
+import { sources } from "../content/sources";
+import { proofFacts, proofIntro } from "../content/proof";
+import { faqPage } from "../lib/structuredData";
 import {
+  aboutFaq,
+  fit,
   hero,
+  heroLabel,
+  heroSummary,
   howWeWork,
+  inBrief,
   leadership,
   missionVision,
   model,
@@ -24,15 +36,20 @@ import {
 function About() {
   return (
     <>
-      <Seo {...pageSeo.about} />
+      <Seo {...pageSeo.about} jsonLd={faqPage(aboutFaq.items)} />
 
       <PageHero
+        label={heroLabel}
         heading={hero.heading}
+        summary={heroSummary}
         text={hero.text}
         image={hero.image}
         imageAlt={hero.imageAlt}
         illustrative={hero.illustrative}
       />
+
+      {/* --- In brief: conversational questions, answered first --- */}
+      <QaSection {...inBrief} id="about-brief-heading" />
 
       {/* --- Our story --- */}
       <section className="section section--warm">
@@ -44,6 +61,10 @@ function About() {
                 {paragraph}
               </p>
             ))}
+            <SourceLinks
+              label="On India's food exports"
+              sources={[sources.apeda, sources.spicesBoard]}
+            />
           </div>
 
           <div className="about-story__media reveal reveal--delay-2 reveal--scale">
@@ -138,6 +159,9 @@ function About() {
         </div>
       </section>
 
+      {/* --- Decision support --- */}
+      <QaSection {...fit} id="about-fit-heading" />
+
       {/* --- Leadership & Founders --- */}
       <section className="section" id="leadership">
         <div className="container">
@@ -160,6 +184,25 @@ function About() {
           </div>
         </div>
       </section>
+
+      {/* --- Verifiable facts --- */}
+      <ProofSection
+        {...proofIntro}
+        heading="Facts you can check about Navora"
+        items={[
+          proofFacts.registered,
+          proofFacts.partner,
+          proofFacts.accuracy,
+          proofFacts.writtenTerms,
+          proofFacts.labels,
+          proofFacts.catalogue,
+        ]}
+        id="about-proof-heading"
+        warm
+      />
+
+      {/* --- FAQ --- */}
+      <FaqSection {...aboutFaq} id="about-faq-heading" />
 
       {/* --- CTA --- */}
       <section className="section">

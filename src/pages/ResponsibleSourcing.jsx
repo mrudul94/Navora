@@ -4,31 +4,47 @@ import SmartImage from "../components/common/SmartImage";
 import PageHero from "../components/common/PageHero";
 import SectionHeading from "../components/common/SectionHeading";
 import FeatureCard from "../components/cards/FeatureCard";
+import QaSection from "../components/sections/QaSection";
+import ProofSection from "../components/sections/ProofSection";
+import FaqSection from "../components/sections/FaqSection";
 import { pageSeo } from "../content/seo";
 import { ctaLabels } from "../content/site";
+import { proofFacts, proofIntro } from "../content/proof";
+import { faqPage } from "../lib/structuredData";
 import {
   accuracyStatement,
   approach,
+  buyerChecklist,
   callToAction,
+  considerations,
   hero,
+  heroLabel,
+  heroSummary,
   inspection,
+  meaning,
+  sourcingFaq,
 } from "../content/responsibleSourcing";
 
 function ResponsibleSourcing() {
   return (
     <>
-      <Seo {...pageSeo.responsibleSourcing} />
+      <Seo {...pageSeo.responsibleSourcing} jsonLd={faqPage(sourcingFaq.items)} />
 
       <PageHero
+        label={heroLabel}
         heading={hero.heading}
+        summary={heroSummary}
         text={hero.text}
         image={hero.image}
         imageAlt={hero.imageAlt}
         illustrative={hero.illustrative}
       />
 
+      {/* --- Definition and scope --- */}
+      <QaSection {...meaning} id="sourcing-meaning-heading" />
+
       {/* --- Our approach --- */}
-      <section className="section">
+      <section className="section section--warm">
         <div className="container">
           <div className="reveal">
             <SectionHeading
@@ -48,6 +64,9 @@ function ResponsibleSourcing() {
           </div>
         </div>
       </section>
+
+      {/* --- Practical considerations --- */}
+      <QaSection {...considerations} id="sourcing-considerations-heading" />
 
       {/* --- Accuracy statement ---
           Verbatim from the content pack. This is what allows the page to
@@ -72,6 +91,28 @@ function ResponsibleSourcing() {
           </div>
         </div>
       </section>
+
+      {/* --- Buyer checklist --- */}
+      <QaSection {...buyerChecklist} id="sourcing-checklist-heading" />
+
+      {/* --- How Navora applies this today --- */}
+      <ProofSection
+        {...proofIntro}
+        heading="How Navora applies this today"
+        items={[
+          proofFacts.documents,
+          proofFacts.accuracy,
+          proofFacts.labels,
+          proofFacts.writtenTerms,
+          proofFacts.partner,
+          proofFacts.registered,
+        ]}
+        id="sourcing-proof-heading"
+        warm
+      />
+
+      {/* --- FAQ --- */}
+      <FaqSection {...sourcingFaq} id="sourcing-faq-heading" />
 
       {/* --- CTA --- */}
       <section className="section section--tight cta-band reveal">

@@ -1597,3 +1597,111 @@
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+
+/* --- Summary under the H1 ---------------------------------------------------
+   The 2-3 sentence "what, for whom, when" answer. Set apart from the lead by
+   weight and a rule, not by size, so the hero keeps its hierarchy. */
+
+.page-hero__summary,
+.hero__summary,
+.page-head__summary {
+  margin: 0 0 var(--sp-4);
+  padding-left: var(--sp-4);
+  border-left: 3px solid var(--orange);
+  font-size: var(--fs-base, 1rem);
+  font-weight: 500;
+  line-height: 1.65;
+  color: var(--ink);
+  max-width: 60ch;
+}
+
+.hero__summary {
+  margin-bottom: var(--sp-5);
+}
+
+.page-head__summary {
+  margin: 0;
+}
+
+/* --- Question-led blocks ---------------------------------------------------- */
+
+.qa-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--sp-5);
+  margin-top: var(--sp-6);
+}
+
+.qa {
+  padding: clamp(var(--sp-5), 3vw, var(--sp-6));
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+}
+
+.qa__question {
+  margin: 0 0 var(--sp-3);
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 1.4vw, 1.25rem);
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+.qa__points {
+  margin-top: var(--sp-4);
+}
+
+.qa__points .checklist {
+  gap: var(--sp-3);
+  font-size: 0.95rem;
+}
+
+.qa__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-top: var(--sp-4);
+  font-weight: 600;
+  color: var(--orange-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.qa__link svg {
+  width: 16px;
+  height: 16px;
+}
+
+.proof {
+  display: flex;
+  flex-direction: column;
+}
+
+.proof .qa__link {
+  margin-top: auto;
+  padding-top: var(--sp-4);
+}
+
+.source-date {
+  font-size: 0.8em;
+  color: var(--muted);
+}
+
+.decision-table td {
+  color: var(--ink-2);
+  line-height: 1.6;
+}
+
+.decision-table__note {
+  margin: var(--sp-4) 0 0;
+  font-size: var(--fs-sm);
+  color: var(--muted);
+  max-width: 70ch;
+}
+
+@media (max-width: 760px) {
+  .qa-grid {
+    grid-template-columns: 1fr;
+  }
+}

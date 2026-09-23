@@ -15,28 +15,40 @@ export const defaultSeo = {
   description:
     "Navora connects Indian farmers, food producers and brands with importers, distributors and business buyers in the UK and international markets.",
   image: "/images/og-default.jpg",
+  imageAlt:
+    "Jute sacks of Indian spices, including green cardamom, dried red chillies, cinnamon and cloves",
+  // Every local share card (og-default.jpg, og-*.jpg) is exported at this
+  // size and type. Keep new cards the same so the declared size stays true.
+  imageType: "image/jpeg",
+  imageWidth: 1200,
+  imageHeight: 630,
 };
 
 export const pageSeo = {
   home: {
-    title: "Indian Food Producers to UK & Global Markets | Navora Global",
+    title: "Source Indian Food Products for UK & Global Markets | Navora",
     description:
       "UK-registered Navora Global connects Indian farmers, producers and brands with importers, distributors and business buyers. Spices, honey, millets and rice.",
     path: "/",
   },
   about: {
-    title: "About Navora Global | UK and India Food Trade Connections",
+    title: "About Navora Global | UK-Registered Food Trade with India",
     description:
       "Learn how UK-registered Navora Global works with a partner in Kerala to connect Indian food producers and brands with international markets.",
     path: "/about",
+    ogImage: "/images/og-about.jpg",
+    ogImageAlt: "Two people discussing produce samples at a table in a spice sorting room",
     name: "About",
     pageType: "AboutPage",
   },
   products: {
-    title: "Indian Food Products for Business: Spices & Honey | Navora",
+    title: "Indian Spices, Honey, Millets & Rice for Business | Navora",
     description:
       "Source ginger, cardamom, honey, millets and rice from India, plus Navora Honey Shot. Request specifications, samples and commercial information.",
     path: "/products",
+    ogImage: "/images/og-products.jpg",
+    ogImageAlt:
+      "Green cardamom, nutmeg and dried chillies in wooden bowls beside a brass mortar and pestle",
     name: "Products",
     pageType: "CollectionPage",
   },
@@ -45,20 +57,26 @@ export const pageSeo = {
     description:
       "For importers, distributors, retailers and food-service buyers: discuss sourcing, wholesale, private-label and market-entry opportunities with Navora Global.",
     path: "/for-business",
+    ogImage: "/images/og-for-business.jpg",
+    ogImageAlt: "Cartons and jute sacks of ginger and cardamom stacked on pallets for export",
     name: "For Business",
   },
   responsibleSourcing: {
-    title: "Responsible Food Sourcing | Navora Global",
+    title: "Responsible Food Sourcing from India | Navora Global",
     description:
-      "Read how Navora is developing transparent supply relationships with Indian farmers, producers, suppliers and food brands.",
+      "How Navora approaches responsible food sourcing from India: origin, traceability, documents and a buyer checklist of what to ask before you source.",
     path: "/responsible-sourcing",
+    ogImage: "/images/og-responsible-sourcing.jpg",
+    ogImageAlt: "Crops growing on a smallholder farm in India",
     name: "Responsible Sourcing",
   },
   contact: {
-    title: "Contact Navora Global | Product and Partnership Enquiries",
+    title: "Contact Navora Global | Indian Food Sourcing Enquiries",
     description:
-      "Contact Navora Global about food sourcing, distribution, supplier, brand and Navora product opportunities.",
+      "Send Navora your Indian food sourcing, wholesale, private-label or partnership enquiry and get a clear answer on what our supplier network can offer.",
     path: "/contact",
+    ogImage: "/images/og-contact.jpg",
+    ogImageAlt: "Office desk with a notebook, briefcase and a labelled jar of green cardamom",
     name: "Contact",
     pageType: "ContactPage",
   },

@@ -45,7 +45,7 @@ function walk(dir, out = []) {
     else if (
       SOURCES.has(extname(entry).toLowerCase()) &&
       !/-\d+\.webp$/.test(entry) &&
-      entry !== "og-default.jpg"
+      !entry.startsWith("og-")
     ) {
       out.push(full);
     }
