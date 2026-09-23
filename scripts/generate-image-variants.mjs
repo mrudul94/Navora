@@ -28,7 +28,9 @@ try {
       "  Install with `npm i -D sharp` to cut the image payload.\n" +
       "  The site works without it; images are served at full size."
   );
-  if (!existsSync(manifestPath)) writeFileSync(manifestPath, "{}\n");
+  // Never keep a manifest pointing at variants that were not generated — a
+  // stale srcset makes browsers request 404s and show broken images.
+  writeFileSync(manifestPath, "{}\n");
   process.exit(0);
 }
 

@@ -48,10 +48,11 @@
   "/images/category-produce.webp": {
     "widths": [
       640,
-      900
+      960,
+      1254
     ],
-    "width": 900,
-    "height": 900
+    "width": 1254,
+    "height": 1254
   },
   "/images/category-rice.webp": {
     "widths": [
