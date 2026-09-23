@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState, useSyncExternalStore } from "react";
 import { Link } from "react-router-dom";
 import Button from "../components/common/Button";
 import Icon from "../components/common/Icon";
@@ -13,6 +13,9 @@ import {
   setConsent,
 } from "../lib/consent";
 
+/** Stored consent only changes through this component, so nothing to subscribe to. */
+const subscribeNever = () => () => {};
+
 /**
  * Cookie banner and preferences dialog.
  *
@@ -21,9 +24,12 @@ import {
  * restyle one to lead the other.
  */
 function CookieConsent() {
-  // Read storage once during initialisation rather than in an effect, so the
-  // banner never flashes in and out on first paint.
-  const [showBanner, setShowBanner] = useState(() => needsConsentChoice());
+  // Pages are prerendered without access to storage. The server snapshot
+  // (false) is used for the prerender and for hydration, then React re-reads
+  // storage on the client — so the HTML and first client render always agree.
+  const needsChoice = useSyncExternalStore(subscribeNever, needsConsentChoice, () => false);
+  const [dismissed, setDismissed] = useState(false);
+  const showBanner = needsChoice && !dismissed;
   const [dialogOpen, setDialogOpen] = useState(false);
   const [draft, setDraft] = useState(deniedConsent);
 
@@ -45,7 +51,7 @@ function CookieConsent() {
 
   const commit = (prefs) => {
     setConsent(prefs);
-    setShowBanner(false);
+    setDismissed(true);
     setDialogOpen(false);
   };
 

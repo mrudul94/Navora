@@ -5,7 +5,7 @@ export const hero = {
   text: "Whether you are looking for a product, exploring a distribution opportunity or introducing your food business, send us the relevant details. We will review your enquiry and respond as soon as reasonably possible.",
   image: "/images/contact-desk.webp",
   imageAlt: "A desk prepared for a business discussion",
-  illustrative: true,
+  illustrative: false,
 };
 
 /** Enquiry categories, also used as the options of the Enquiry type field. */

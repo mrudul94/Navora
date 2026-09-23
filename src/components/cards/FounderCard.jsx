@@ -12,9 +12,6 @@ function FounderCard({ founder, className = "" }) {
     email,
     telephone,
     instagram,
-    fallbackEmail,
-    fallbackPhone,
-    fallbackInstagram,
   } = founder;
 
   return (
@@ -44,41 +41,42 @@ function FounderCard({ founder, className = "" }) {
             <ConfirmValue
               value={email}
               as="email"
-              fallback={fallbackEmail}
               className="founder-contact-item__link"
             />
           </div>
         </div>
 
-        <div className="founder-contact-item">
-          <span className="founder-contact-item__icon">
-            <Icon name="phone" />
-          </span>
-          <div className="founder-contact-item__details">
-            <span className="founder-contact-item__label">Direct Contact</span>
-            <ConfirmValue
-              value={telephone}
-              as="tel"
-              fallback={fallbackPhone}
-              className="founder-contact-item__link"
-            />
+        {telephone && (
+          <div className="founder-contact-item">
+            <span className="founder-contact-item__icon">
+              <Icon name="phone" />
+            </span>
+            <div className="founder-contact-item__details">
+              <span className="founder-contact-item__label">Direct Contact</span>
+              <ConfirmValue
+                value={telephone}
+                as="tel"
+                className="founder-contact-item__link"
+              />
+            </div>
           </div>
-        </div>
+        )}
 
-        <div className="founder-contact-item">
-          <span className="founder-contact-item__icon">
-            <Icon name="instagram" />
-          </span>
-          <div className="founder-contact-item__details">
-            <span className="founder-contact-item__label">Instagram</span>
-            <ConfirmValue
-              value={instagram}
-              as="instagram"
-              fallback={fallbackInstagram}
-              className="founder-contact-item__link"
-            />
+        {instagram && (
+          <div className="founder-contact-item">
+            <span className="founder-contact-item__icon">
+              <Icon name="instagram" />
+            </span>
+            <div className="founder-contact-item__details">
+              <span className="founder-contact-item__label">Instagram</span>
+              <ConfirmValue
+                value={instagram}
+                as="instagram"
+                className="founder-contact-item__link"
+              />
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </article>
   );

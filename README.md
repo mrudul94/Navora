@@ -48,6 +48,8 @@ link goes nowhere, or if a colour pair drops below WCAG AA.
 The site runs without a Sanity connection: `src/lib/sanity.js` falls back to the
 approved product copy in `src/content/productsFallback.js`.
 
+For in-depth architecture details and coding conventions, see [`DEVELOPER_GUIDE.md`](./DEVELOPER_GUIDE.md).
+
 ## Layout
 
 ```
@@ -71,6 +73,8 @@ scripts/        sitemap and CMS seed generators
 | Address, email, phone, company number | `src/config/site.js` |
 | Navigation or footer links | `src/content/site.js` |
 | Page titles and meta descriptions | `src/content/seo.js` |
+| FAQ (Home page and FAQ schema) | `src/content/faq.js` |
+| Structured data (schema.org) | `src/lib/structuredData.js` |
 | Enquiry form fields | `src/content/forms.js` **and** `index.html` |
 | Cookies listed in the Cookie Notice | `src/config/cookies.js` |
 | Colours, spacing, type scale | `src/styles/tokens.css` |
@@ -97,6 +101,35 @@ replaced.
 The pack's own test: *every statement should let Navora explain who made the
 product, what Navora's role is, what evidence supports the claim, and who can
 respond if a buyer asks for details.*
+
+## Search and AI visibility
+
+`npm run build` runs `scripts/prerender.mjs` after Vite. It renders every
+route, including each product, to static HTML, so search engines, AI
+crawlers and link previews get the real content without running JavaScript.
+It also writes `dist/sitemap.xml` and `dist/llms.txt` from the same routes.
+
+- Every page publishes Organization and WebSite JSON-LD, plus a
+  BreadcrumbList; Home adds FAQPage and product pages add Product.
+- The build also generates `dist/downloads/navora-product-catalogue.pdf` and
+  one sheet per product (`scripts/catalogue.mjs`), from the same data. They
+  exist only in a production build, so the download buttons 404 under
+  `npm run dev`.
+- There is no SPA catch-all in `public/_redirects`: unknown paths are served
+  `404.html` with a 404 status.
+- **A product added in Sanity has no page until the site is rebuilt.** Set a
+  Sanity webhook to a Cloudflare Pages deploy hook so publishing triggers a
+  build.
+
+## WhatsApp and analytics
+
+- **WhatsApp:** `whatsapp` in `src/config/site.js` powers the floating chat
+  button and the Contact page link. Set it to `""` to hide both.
+- **Analytics:** Cloudflare Web Analytics, off until `VITE_CF_ANALYTICS_TOKEN`
+  is set in `.env`, and then loaded only after the visitor accepts Analytics
+  in the cookie banner. Use the manual (JS snippet) setup in the Cloudflare
+  dashboard — never "automatic setup", which bypasses consent. The Cookie
+  Notice and Privacy Notice update themselves when the token is set.
 
 ## Cookies
 

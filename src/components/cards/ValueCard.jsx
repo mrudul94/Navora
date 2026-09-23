@@ -19,8 +19,10 @@ function iconFor(name) {
 
 function ValueCard({ value, index = 0, className = "" }) {
   const num = String(index + 1).padStart(2, "0");
-  const iconName = iconFor(value.name);
-  const tagLabel = value.code ? value.code.split("/")[1]?.trim() : value.name;
+  const iconName = value.icon || iconFor(value.name);
+  const tag = value.code?.split("/")[1]?.trim();
+  // Only show the eyebrow tag when it adds something beyond the title.
+  const showTag = tag && tag.toLowerCase() !== value.name.toLowerCase();
 
   return (
     <article className={`value-tile ${className}`.trim()}>
@@ -28,19 +30,16 @@ function ValueCard({ value, index = 0, className = "" }) {
         <div className="value-tile__icon-box">
           <Icon name={iconName} />
         </div>
-        <span className="value-tile__code">
-          <span className="value-tile__num">{num}</span>
-          <span className="value-tile__sep">/</span>
-          <span className="value-tile__tag">{tagLabel}</span>
+        <span className="value-tile__num" aria-hidden="true">
+          {num}
         </span>
       </div>
 
+      {showTag && <p className="value-tile__tag">{tag}</p>}
       <h3 className="value-tile__title">{value.name}</h3>
       <p className="value-tile__text">{value.text}</p>
 
-      <div className="value-tile__foot" aria-hidden="true">
-        <span className="value-tile__bar" />
-      </div>
+      <span className="value-tile__bar" aria-hidden="true" />
     </article>
   );
 }

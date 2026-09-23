@@ -6,11 +6,15 @@ import SectionHeading from "../components/common/SectionHeading";
 import Icon from "../components/common/Icon";
 import CategoryGallery from "../components/sections/CategoryGallery";
 import ValueCard from "../components/cards/ValueCard";
+import FaqSection from "../components/sections/FaqSection";
+import AtAGlance from "../components/sections/AtAGlance";
 import { renderStaggeredWords } from "../components/common/TextReveal";
 import { pageSeo } from "../content/seo";
+import { faq } from "../content/faq";
+import { faqPage } from "../lib/structuredData";
 import { ctaLabels } from "../content/site";
-import { site } from "../config/site";
 import {
+  atAGlance,
   capabilityIntro,
   capabilityMeta,
   hero,
@@ -23,26 +27,10 @@ import {
   whoWeAre,
 } from "../content/home";
 
-const organizationJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: site.legalName,
-  url: site.origin,
-  description: pageSeo.home.description,
-  areaServed: "Worldwide",
-  knowsAbout: [
-    "Indian food sourcing",
-    "Spices",
-    "Honey products",
-    "Millets and grains",
-    "Rice",
-  ],
-};
-
 function Home() {
   return (
     <>
-      <Seo {...pageSeo.home} jsonLd={organizationJsonLd} />
+      <Seo {...pageSeo.home} jsonLd={faqPage(faq.items)} />
 
       {/* --- Hero --- */}
       <section className="hero">
@@ -106,6 +94,9 @@ function Home() {
         </div>
       </section>
 
+      {/* --- At a glance --- */}
+      <AtAGlance {...atAGlance} />
+
       {/* --- Who we are (Narrative Bridge) --- */}
       <section className="section section--warm">
         <div className="container who-we-are-layout">
@@ -140,8 +131,8 @@ function Home() {
           <div className="section-head--center reveal">
             <SectionHeading
               kicker={values.kicker}
-              heading="Our Operating Principles"
-              lead="How we connect international buyers with Indian food producers through transparent, reliable trade relationships."
+              heading={values.heading || "Our Sourcing & Trade Pillars"}
+              lead={values.lead}
             />
           </div>
 
@@ -215,6 +206,14 @@ function Home() {
           </div>
         </div>
       </section>
+
+      {/* --- FAQ --- */}
+      <FaqSection
+        kicker={faq.kicker}
+        heading={faq.heading}
+        lead={faq.lead}
+        items={faq.items}
+      />
 
       {/* --- Partnership --- */}
       <section className="section">

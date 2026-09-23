@@ -11,9 +11,12 @@ import { isPlaceholder, placeholderLabel } from "../../config/site";
  * `as` controls how a confirmed value is linked: "email" and "tel" produce
  * mailto:/tel: links, anything else renders plain text.
  */
-function ConfirmValue({ value, as = "text", className, fallback }) {
+function ConfirmValue({ value, as = "text", className, fallback, showBadge = true }) {
   if (isPlaceholder(value)) {
     if (fallback) {
+      if (!showBadge) {
+        return <span className={className}>{fallback}</span>;
+      }
       return (
         <span className={`confirm-placeholder ${className || ""}`.trim()} title="Awaiting confirmation from Navora">
           <span className="confirm-placeholder__value">{fallback}</span>

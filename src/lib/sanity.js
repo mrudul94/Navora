@@ -1,5 +1,6 @@
 import { createClient } from "@sanity/client";
 import imageUrlBuilder from "@sanity/image-url";
+import { fallbackProducts } from "../content/productsFallback";
 
 const projectId = import.meta.env.VITE_SANITY_PROJECT_ID;
 const dataset = import.meta.env.VITE_SANITY_DATASET || "production";
@@ -112,33 +113,52 @@ function withTimeout(promise, label) {
  * Returns published products.
  *
  * Falls back to the approved copy in src/content/productsFallback.js when the
- * CMS is unconfigured, empty or unreachable, so the Products page is never
- * blank and never strands a visitor on a loading message.
+ * CMS is unconfigured, empty or unreachable, and supplements any categories
+ * not yet populated in the CMS so the Products page is never blank.
  */
 export async function getProducts() {
-  if (!client) return [];
+  if (!client) return fallbackProducts;
 
   try {
     const products = await withTimeout(client.fetch(LIST_QUERY), "Product list query");
-    return Array.isArray(products) ? products.map(withImageUrls) : [];
+    const sanityProducts = Array.isArray(products) ? products.map(withImageUrls) : [];
+    if (sanityProducts.length === 0) return fallbackProducts;
+
+    // Supplement Sanity products with fallback products not yet in Sanity.
+    // A fallback is also treated as covered when a Sanity product in the same
+    // category contains its name (e.g. "Green Cardamom" covers "Cardamom"),
+    // so a renamed CMS product does not appear twice under two URLs.
+    const existingSlugs = new Set(sanityProducts.map((p) => p.slug));
+    const isCovered = (fallback) =>
+      existingSlugs.has(fallback.slug) ||
+      sanityProducts.some(
+        (p) =>
+          p.category === fallback.category &&
+          p.name?.toLowerCase().includes(fallback.name.toLowerCase())
+      );
+    const supplemental = fallbackProducts.filter((p) => !isCovered(p));
+    return [...sanityProducts, ...supplemental];
   } catch (error) {
     console.error("Could not load products from the CMS", error);
-    return [];
+    return fallbackProducts;
   }
 }
 
-/** Returns one product by slug from Sanity CMS. */
+/** Returns one product by slug from Sanity CMS, falling back to approved copy. */
 export async function getProductBySlug(slug) {
-  if (!slug || !client) return null;
+  if (!slug) return null;
 
-  try {
-    const product = await withTimeout(
-      client.fetch(SINGLE_QUERY, { slug }),
-      "Product query"
-    );
-    return product ? withImageUrls(product) : null;
-  } catch (error) {
-    console.error("Could not load the product from the CMS", error);
-    return null;
+  if (client) {
+    try {
+      const product = await withTimeout(
+        client.fetch(SINGLE_QUERY, { slug }),
+        "Product query"
+      );
+      if (product) return withImageUrls(product);
+    } catch (error) {
+      console.error("Could not load the product from the CMS", error);
+    }
   }
+
+  return fallbackProducts.find((p) => p.slug === slug) || null;
 }

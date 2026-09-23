@@ -1,8 +1,8 @@
 # Cloudflare Pages redirects. Rules are matched top to bottom and the first
-# match wins, so the SPA fallback MUST stay last.
+# match wins, so keep specific rules above general ones.
 #
 # /api/* is handled by functions/ and is excluded from this file by
-# _routes.json, so the fallback below never intercepts the enquiry endpoint.
+# _routes.json.
 
 # Legacy paths from the previous site.
 /sustainability     /responsible-sourcing   301
@@ -13,6 +13,7 @@
 # The blank route reported before handover.
 /c                  /                       301
 
-# SPA fallback — every other path is served index.html so React Router can
-# resolve it. Keep this last.
-/*                  /index.html             200
+# No SPA catch-all: every route is prerendered to its own HTML file
+# (scripts/prerender.mjs), and Cloudflare Pages always applies _redirects
+# before static files, so a "/* /index.html 200" rule would serve the Home
+# page markup for every URL. Unknown paths get dist/404.html with a 404.

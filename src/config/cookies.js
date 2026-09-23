@@ -8,8 +8,19 @@
  * a tag anywhere else bypasses consent and breaks UK PECR compliance.
  */
 
-/** Bump when categories change — forces a fresh prompt for existing visitors. */
-export const CONSENT_VERSION = 1;
+/**
+ * Cloudflare Web Analytics site token (manual setup). Empty = analytics off,
+ * and the banner and Cookie Notice say no analytics is used. See
+ * src/lib/analytics.js.
+ */
+export const analyticsToken = import.meta.env?.VITE_CF_ANALYTICS_TOKEN || "";
+
+/**
+ * Bump when categories change — forces a fresh prompt for existing visitors.
+ * Switching analytics on counts as a change, so anyone who chose before it
+ * existed is asked again.
+ */
+export const CONSENT_VERSION = analyticsToken ? 2 : 1;
 
 /** Consent records older than this are treated as expired (ICO guidance). */
 export const CONSENT_MAX_AGE_DAYS = 365;
@@ -47,9 +58,20 @@ export const categories = [
     required: false,
     description:
       "These would help us understand how visitors use the website so we can improve it. Nothing is loaded unless you turn this on.",
-    // Empty at launch. The content pack requires that analytics is added only
-    // after privacy and consent requirements are addressed.
-    items: [],
+    // Listed only when a Cloudflare Web Analytics token is configured. It is
+    // loaded through registerConsentedScript, so it never runs before consent.
+    items: analyticsToken
+      ? [
+          {
+            name: "Cloudflare Web Analytics",
+            provider: "Cloudflare",
+            purpose:
+              "Counts page views and measures page speed so we can improve the site. Sets no cookies, stores nothing on your device and does not identify you; we see only aggregate figures such as page views, referring sites and countries.",
+            duration: "Nothing stored on your device",
+            type: "Script",
+          },
+        ]
+      : [],
   },
   {
     id: "marketing",

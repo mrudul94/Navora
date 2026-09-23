@@ -8,6 +8,7 @@ import {
   LuCircleAlert,
   LuCircleCheck,
   LuClipboardList,
+  LuDownload,
   LuFileText,
   LuGlobe,
   LuHandshake,
@@ -62,6 +63,7 @@ const icons = {
   source: LuSearch,
   spec: LuClipboardList,
   evidence: LuFileText,
+  download: LuDownload,
   support: LuUsers,
   improve: LuTrendingUp,
 

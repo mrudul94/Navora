@@ -670,6 +670,19 @@
   min-width: 118px;
 }
 
+/* Narrow screens: the button row takes the banner width and wraps, so no
+   button is pushed past the edge (Accept all was cut off at 390px). */
+@media (max-width: 860px) {
+  .cookie-banner__actions {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+  .cookie-banner__actions .btn {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+}
+
 @media (min-width: 861px) {
   .cookie-banner {
     left: auto;
@@ -855,4 +868,68 @@
 .switch input:focus-visible + .switch__track {
   outline: 2px solid var(--orange);
   outline-offset: 3px;
+}
+
+/* --- WhatsApp chat button ---------------------------------------------------- */
+
+.whatsapp-fab {
+  position: fixed;
+  right: var(--sp-5);
+  bottom: var(--sp-5);
+  z-index: 950; /* above the header, under the mobile drawer and cookie banner */
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 56px;
+  padding: 0 20px 0 16px;
+  border-radius: var(--r-pill);
+  background: #1f8f4e; /* WhatsApp green, darkened for 4.5:1 white text */
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  text-decoration: none;
+  box-shadow: 0 10px 24px rgba(20, 60, 35, 0.28), 0 2px 6px rgba(0, 0, 0, 0.12);
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+
+.whatsapp-fab svg {
+  width: 26px;
+  height: 26px;
+  flex: none;
+}
+
+.whatsapp-fab:hover {
+  background: #197a42;
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(20, 60, 35, 0.34), 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.whatsapp-fab:focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 3px;
+}
+
+/* Icon only on small screens so it never covers content */
+@media (max-width: 640px) {
+  .whatsapp-fab {
+    right: var(--sp-4);
+    bottom: var(--sp-4);
+    width: 56px;
+    padding: 0;
+    justify-content: center;
+  }
+  .whatsapp-fab__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}
+
+@media print {
+  .whatsapp-fab {
+    display: none;
+  }
 }

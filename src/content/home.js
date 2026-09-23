@@ -4,18 +4,57 @@ export const hero = {
   label: "UK REGISTERED · CONNECTED TO INDIA",
   heading: "Connecting Indian food producers with global markets",
   text: "Navora Global works with farmers, producers and food brands in India to help quality products reach buyers in the UK and international markets. From established ingredients to new consumer products, we create practical connections built on trust, product knowledge and long-term partnership.",
-  image: "/images/hero-sourcing.webp",
-  imageAlt: "Indian agricultural produce prepared for export",
-  illustrative: true,
+};
+
+/**
+ * Short summary directly under the hero: one plain-language definition, who
+ * it is for, what is supplied and how an enquiry runs. Search engines and AI
+ * assistants extract this kind of block as the page's answer. Restates copy
+ * from elsewhere on the site only.
+ */
+export const atAGlance = {
+  kicker: "Navora at a glance",
+  heading: "What Navora Global does, in brief",
+  summary:
+    "Navora Global Limited is a UK-registered food trading and market-access company. It helps importers, distributors, retailers and food-service buyers source food products from India, and helps Indian farmers, producers and food brands reach buyers in the UK and international markets.",
+  columns: [
+    {
+      heading: "Who it is for",
+      items: [
+        "Importers and distributors",
+        "Retailers and wholesalers",
+        "Food-service and ingredient buyers",
+        "Indian farmers, producers and emerging brands",
+      ],
+    },
+    {
+      heading: "What we supply",
+      items: [
+        "Spices: ginger and cardamom",
+        "Honey and Navora Honey Shot",
+        "Millets and rice",
+        "Private label, where a capable supplier is identified",
+      ],
+    },
+  ],
+  steps: {
+    heading: "How an enquiry works",
+    items: [
+      "Share the product, format, approximate quantity and destination market.",
+      "Navora confirms whether it has a relevant option or needs to explore one.",
+      "Review product information, samples or documents where available.",
+      "Agree specification, price, packing and delivery terms in writing.",
+    ],
+  },
 };
 
 export const whoWeAre = {
   kicker: "Who we are",
   heading: "A bridge between trusted origins and new markets",
   text: "Navora Global Limited is registered in the United Kingdom and works closely with a partner company in Kerala. Together, we connect international buyers with a developing network of Indian farmers, suppliers and food brands. Our role is to understand each market requirement, identify suitable products and support clear communication from initial enquiry to commercial discussion.",
-  image: "/images/about-partnership.webp",
-  imageAlt: "Two people reviewing produce samples together",
-  illustrative: true,
+  image: "/images/who-we-are-bridge.webp",
+  imageAlt: "Agricultural trade and produce review in Kerala",
+  illustrative: false,
 };
 
 export const whatWeOffer = {
@@ -78,7 +117,7 @@ export const productCategories = {
       name: "Future fresh produce",
       slug: "future-categories",
       image: "/images/category-produce.webp",
-      alt: "Vegetables and fruit",
+      alt: "Fresh vegetables and fruit in harvest crate",
     },
   ],
 };
@@ -120,8 +159,8 @@ export const heroFacts = [
 /** Small panel beside the hero. Labels only, no claims. */
 export const heroPanel = {
   caption: "Kerala, India · Malabar Coast",
-  image: "/images/sourcing-farm.webp",
-  imageAlt: "Farmland in Kerala",
+  image: "/images/hero-sourcing.webp",
+  imageAlt: "Indian agricultural produce prepared for export",
   items: [
     { icon: "source", label: "Known origin" },
     { icon: "partnership", label: "Direct network" },
@@ -130,41 +169,43 @@ export const heroPanel = {
 };
 
 /**
- * The Content Pack's five values (p. 2), shown as a card grid.
- * Names and descriptions are verbatim; the icon and sequence label are design.
+ * Five Sourcing & Trade Pillars for commercial partners.
+ * Differentiated from About Us corporate values.
  */
 export const values = {
   kicker: "Cross-continental trade architecture",
+  heading: "Our Sourcing & Trade Pillars",
+  lead: "How we connect international buyers with Indian food producers through structured, transparent, and compliant supply chains.",
   items: [
     {
-      name: "Trust",
-      icon: "verified",
-      code: "01 / Foundation",
-      text: "We communicate clearly about products, origin, documentation, availability and commercial terms.",
+      name: "Direct Origin Network",
+      icon: "sourcing",
+      code: "01 / Sourcing",
+      text: "Direct relationships with verified farmers, producers, and processing partners across India with an operating partner in Kerala.",
     },
     {
-      name: "Quality",
-      icon: "spec",
-      code: "02 / Standard",
-      text: "We work with suppliers who can meet agreed product specifications and buyer requirements.",
+      name: "Specification & Standards",
+      icon: "quality",
+      code: "02 / Standards",
+      text: "Rigorous alignment with UK and international food standards, batch documentation, and buyer technical requirements.",
     },
     {
-      name: "Partnership",
+      name: "Commercial Transparency",
+      icon: "trust",
+      code: "03 / Integrity",
+      text: "Clear communication about products, verified origin, availability, pricing structures, and realistic supply timelines.",
+    },
+    {
+      name: "Market Access Bridge",
+      icon: "access",
+      code: "04 / Market",
+      text: "Connecting emerging agricultural producers and unique regional foods with established international wholesale and retail channels.",
+    },
+    {
+      name: "Flexible Procurement",
       icon: "partnership",
-      code: "03 / Synergy",
-      text: "We aim to build lasting relationships with farmers, producers, brands and buyers.",
-    },
-    {
-      name: "Access",
-      icon: "market",
-      code: "04 / Route",
-      text: "We help smaller and medium-scale businesses reach opportunities that may otherwise be difficult to enter.",
-    },
-    {
-      name: "Responsible growth",
-      icon: "improve",
-      code: "05 / Stewardship",
-      text: "We expand carefully and avoid claims or commitments that cannot be supported.",
+      code: "05 / Flexibility",
+      text: "Agile commercial models supporting container-load supply, custom packaging formats, or Navora-branded product lines.",
     },
   ],
 };

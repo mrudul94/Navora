@@ -40,7 +40,11 @@ function walk(dir, out = []) {
   for (const entry of readdirSync(dir)) {
     const full = join(dir, entry);
     if (statSync(full).isDirectory()) walk(full, out);
-    else if (SOURCES.has(extname(entry).toLowerCase()) && !/-\d+\.webp$/.test(entry)) {
+    else if (
+      SOURCES.has(extname(entry).toLowerCase()) &&
+      !/-\d+\.webp$/.test(entry) &&
+      entry !== "og-default.jpg"
+    ) {
       out.push(full);
     }
   }

@@ -171,7 +171,7 @@ section("Images");
   }
 
   const manifest = new Set(
-    [...read("docs/IMAGES.md").matchAll(/`([a-z0-9-]+\.(?:webp|jpg|png))`/g)].map(
+    [...read("docs/IMAGES.md").matchAll(/`([a-zA-Z0-9_-]+\.(?:webp|jpg|png))`/g)].map(
       (m) => `/images/${m[1]}`
     )
   );

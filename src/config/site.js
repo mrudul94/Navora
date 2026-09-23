@@ -16,8 +16,11 @@ export const site = {
 
   // --- Contact -------------------------------------------------------------
   email: "info@navoraglobal.uk",
-  telephone: "+44 (0) 7880 119991",
-  businessHours: "TODO_CONFIRM_BUSINESS_HOURS",
+  telephone: "+44 7880 119991",
+  // WhatsApp Business number, international format. Powers the floating chat
+  // button and the Contact page link. Set to "" to hide WhatsApp everywhere.
+  whatsapp: "+44 7880 119991",
+  businessHours: "Monday to Saturday, 9:00 am – 5:00 pm",
 
   // --- Registration --------------------------------------------------------
   companyNumber: "TODO_CONFIRM_COMPANY_NUMBER",
@@ -37,13 +40,15 @@ export const site = {
     additional: ["navoraglobal.org", "navoraglobal.info"],
   },
 
+  // Official profiles (LinkedIn company page, Companies House entry, Google
+  // Business Profile…). Published as schema.org sameAs so search engines and
+  // AI assistants can tell this Navora apart from others with a similar name.
+  // Add full https:// URLs only for profiles Navora controls.
+  sameAs: [],
+
   // --- Leadership & Founders ------------------------------------------------
-  albertEmail: "TODO_CONFIRM_ALBERT_EMAIL",
-  albertPhone: "TODO_CONFIRM_ALBERT_PHONE",
-  albertInstagram: "TODO_CONFIRM_ALBERT_INSTAGRAM",
-  abhinavEmail: "TODO_CONFIRM_ABHINAV_EMAIL",
-  abhinavPhone: "TODO_CONFIRM_ABHINAV_PHONE",
-  abhinavInstagram: "TODO_CONFIRM_ABHINAV_INSTAGRAM",
+  albertEmail: "albert@navoraglobal.uk",
+  abhinavEmail: "abhinav@navoraglobal.uk",
 
   // --- Legal ---------------------------------------------------------------
   legalLastReviewed: "21 September 2026",

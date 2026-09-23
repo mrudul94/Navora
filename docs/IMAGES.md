@@ -39,6 +39,8 @@ Aim for 200–400 KB per image; nothing here needs to be larger.
 | `category-honey.webp` | Honey — jar, comb or pouring | 1:1 | 900 |
 | `category-millets.webp` | Millets, loose grain | 1:1 | 900 |
 | `category-rice.webp` | Rice grains, loose | 1:1 | 900 |
+| `who-we-are-bridge.webp` | Agricultural trade and produce review in Kerala | 4:3 | 1400 |
+| `about-story-origin.webp` | Spice and produce harvest in an agro-forestry farm in Kerala | 4:3 | 1400 |
 | `category-produce.webp` | Mixed vegetables and fruit | 1:1 | 900 |
 | `og-default.jpg` | Social share card — the hero image works well | 1.91:1 | 1200 |
 

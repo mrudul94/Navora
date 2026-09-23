@@ -24,5 +24,5 @@ VITE_SANITY_API_VERSION = "2025-01-01"
 # Where enquiry notifications are sent once email is switched on.
 # NOTIFY_EMAIL is safe to keep here; RESEND_API_KEY is a secret and must be set
 # with `npx wrangler pages secret put RESEND_API_KEY` instead.
-NOTIFY_EMAIL = ""
-NOTIFY_FROM = ""
+NOTIFY_EMAIL = "info@navoraglobal.uk"
+NOTIFY_FROM = "enquiries@navoraglobal.uk"

@@ -16,7 +16,7 @@ import "./styles/pages.css";
 
 import ScrollToTop from "./components/ScrollToTop";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+const app = (
   <React.StrictMode>
     <HelmetProvider>
       <BrowserRouter>
@@ -26,3 +26,12 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     </HelmetProvider>
   </React.StrictMode>
 );
+
+// Prerendered pages (scripts/prerender.mjs) ship real markup, so hydrate it;
+// in dev the root is empty and is rendered from scratch.
+const root = document.getElementById("root");
+if (root.hasChildNodes()) {
+  ReactDOM.hydrateRoot(root, app);
+} else {
+  ReactDOM.createRoot(root).render(app);
+}

@@ -8,6 +8,9 @@ import StatusBadge from "../components/common/StatusBadge";
 import EmptyState from "../components/common/EmptyState";
 import SectionHeading from "../components/common/SectionHeading";
 import { getProductBySlug } from "../lib/sanity";
+import { getPrefetchedProduct } from "../lib/prefetch";
+import { ids } from "../lib/structuredData";
+import { productSheetPath } from "../lib/downloads";
 import { site } from "../config/site";
 import { ctaLabels } from "../content/site";
 import { detailCopy, ownershipLabels, specLabels } from "../content/products";
@@ -42,14 +45,15 @@ function SpecRow({ label, value }) {
 
 function ProductDetail() {
   const { slug } = useParams();
-  const [product, setProduct] = useState(undefined); // undefined = loading
+  // undefined = loading. Prerendered pages start with the build-time record.
+  const [product, setProduct] = useState(() => getPrefetchedProduct(slug));
 
   // Reset to the loading state during render when the slug changes, so a
   // previous product is never shown briefly under a new URL.
   const [renderedSlug, setRenderedSlug] = useState(slug);
   if (slug !== renderedSlug) {
     setRenderedSlug(slug);
-    setProduct(undefined);
+    setProduct(getPrefetchedProduct(slug));
   }
 
   useEffect(() => {
@@ -129,17 +133,22 @@ function ProductDetail() {
     documentation,
   } = product;
 
+  const path = `/products/${product.slug}`;
+
+  // Brand is stated only for Navora-owned products: supplier products are
+  // not made by Navora and must not be presented as Navora-branded.
   const jsonLd = {
-    "@context": "https://schema.org",
     "@type": "Product",
+    "@id": `${site.origin}${path}#product`,
     name,
     description: shortDescription || description,
+    url: `${site.origin}${path}`,
     ...(imageUrl ? { image: imageUrl } : {}),
+    ...(product.category ? { category: product.category.replace(/-/g, " ") } : {}),
     ...(product.origin ? { countryOfOrigin: product.origin } : {}),
-    brand: {
-      "@type": "Brand",
-      name: ownership === "navora-brand" ? "Navora" : "Supplier product",
-    },
+    ...(ownership === "navora-brand"
+      ? { brand: { "@type": "Brand", name: "Navora" }, manufacturer: { "@id": ids.organization } }
+      : {}),
   };
 
   return (
@@ -147,8 +156,14 @@ function ProductDetail() {
       <Seo
         title={`${name} | Navora Global`}
         description={shortDescription || description}
-        path={`/products/${product.slug}`}
+        path={path}
         image={imageUrl}
+        type="product"
+        pageType="ItemPage"
+        breadcrumbs={[
+          { name: "Products", path: "/products" },
+          { name, path },
+        ]}
         jsonLd={jsonLd}
       />
 
@@ -295,6 +310,10 @@ function ProductDetail() {
           <div className="btn-row">
             <Button to="/contact" variant="onDark" size="lg">
               {ctaLabels.requestProductInfo}
+            </Button>
+            <Button href={productSheetPath(product.slug)} variant="onDarkOutline" size="lg" download>
+              <Icon name="download" />
+              Product sheet (PDF)
             </Button>
           </div>
         </div>

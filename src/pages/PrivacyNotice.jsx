@@ -4,6 +4,8 @@ import LegalLayout from "../components/common/LegalLayout";
 import ConfirmValue from "../components/common/ConfirmValue";
 import { pageSeo } from "../content/seo";
 import { site } from "../config/site";
+import { analyticsToken } from "../config/cookies";
+import { whatsappEnabled } from "../lib/whatsapp";
 
 const sections = [
   { id: "who-we-are", title: "Who we are" },
@@ -40,7 +42,12 @@ function PrivacyNotice() {
           <p>
             Registered office: <ConfirmValue value={site.registeredOffice} />
             <br />
-            Company number: <ConfirmValue value={site.companyNumber} />
+            Company number:{" "}
+            <ConfirmValue
+              value={site.companyNumber}
+              fallback="Available upon commercial request"
+              showBadge={false}
+            />
             <br />
             Contact for privacy matters:{" "}
             <ConfirmValue value={site.email} as="email" />
@@ -77,6 +84,24 @@ function PrivacyNotice() {
             your enquiry. We keep only the country it indicates, and a one-way
             coded value that lets us detect repeated automated submissions.
           </p>
+          {analyticsToken && (
+            <p>
+              If you switch on Analytics in our cookie settings, we use
+              Cloudflare Web Analytics to count visits and measure page speed.
+              It sets no cookies, stores nothing on your device and does not
+              identify you: we see only aggregate figures, such as page views,
+              referring websites and the countries visits come from. It does
+              not run unless you turn it on.
+            </p>
+          )}
+          {whatsappEnabled && (
+            <p>
+              If you message us on WhatsApp, we receive your name, phone number
+              and anything you send, and use them in the same way as a form
+              enquiry. WhatsApp is operated by WhatsApp Ireland Limited (part of
+              Meta), which handles your messages under its own privacy policy.
+            </p>
+          )}
           <p>
             We do not operate a newsletter, and we do not collect personal
             information for marketing purposes through this website.
@@ -112,6 +137,8 @@ function PrivacyNotice() {
             our business, and on taking steps at your request before entering
             into a contract. Where we ask for your consent on a form, we rely on
             that consent, and you may withdraw it at any time.
+            {analyticsToken &&
+              " Analytics runs only with your consent, which you can withdraw through the Cookie preferences link in the footer."}
           </p>
         </section>
 
@@ -128,9 +155,9 @@ function PrivacyNotice() {
             </li>
             <li>
               our service providers, who process information on our instructions:
-              Cloudflare (website hosting, security and the database in which
-              enquiries are stored) and Sanity (content management for product
-              records);
+              Cloudflare (website hosting, security, the database in which
+              enquiries are stored{analyticsToken ? " and, if you allow it, website analytics" : ""})
+              and Sanity (content management for product records);
             </li>
             <li>
               professional advisers, such as accountants or lawyers, where

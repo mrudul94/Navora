@@ -9,6 +9,16 @@
     "width": 2000,
     "height": 1500
   },
+  "/images/about-story-origin.webp": {
+    "widths": [
+      640,
+      960,
+      1400,
+      2000
+    ],
+    "width": 2000,
+    "height": 1500
+  },
   "/images/business-trade.webp": {
     "widths": [
       640,
@@ -79,15 +89,6 @@
     "width": 2000,
     "height": 1500
   },
-  "/images/og-default.jpg": {
-    "widths": [
-      640,
-      960,
-      1200
-    ],
-    "width": 1200,
-    "height": 630
-  },
   "/images/sourcing-farm.webp": {
     "widths": [
       640,
@@ -99,6 +100,16 @@
     "height": 1500
   },
   "/images/sourcing-inspection.webp": {
+    "widths": [
+      640,
+      960,
+      1400,
+      2000
+    ],
+    "width": 2000,
+    "height": 1500
+  },
+  "/images/who-we-are-bridge.webp": {
     "widths": [
       640,
       960,

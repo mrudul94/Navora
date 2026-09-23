@@ -7,7 +7,8 @@ import ConfirmValue from "../components/common/ConfirmValue";
 import Icon from "../components/common/Icon";
 import { pageSeo } from "../content/seo";
 import { contactEnquiryForm } from "../content/forms";
-import { site, isPlaceholder } from "../config/site";
+import { site } from "../config/site";
+import { defaultWhatsappMessage, whatsappEnabled, whatsappUrl } from "../lib/whatsapp";
 import {
   detailsSection,
   enquiryCategories,
@@ -56,6 +57,18 @@ function Contact() {
               <ConfirmValue value={site.telephone} as="tel" />
             </Detail>
 
+            {whatsappEnabled && (
+              <Detail label="WhatsApp">
+                <a
+                  href={whatsappUrl(defaultWhatsappMessage)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Chat with us on WhatsApp
+                </a>
+              </Detail>
+            )}
+
             <Detail label="Business hours">
               <ConfirmValue value={site.businessHours} />
             </Detail>
@@ -64,21 +77,6 @@ function Contact() {
               <ConfirmValue value={site.registeredOffice} />
             </Detail>
 
-            <Detail label="Operating partner">
-              {isPlaceholder(site.keralaPartner) ? (
-                <>
-                  <ConfirmValue value={site.keralaPartner} />
-                  <span
-                    className="field__hint"
-                    style={{ display: "block", marginTop: "6px" }}
-                  >
-                    Our operating partner is based in {site.keralaPartnerLocation}.
-                  </span>
-                </>
-              ) : (
-                `${site.keralaPartner} · ${site.keralaPartnerLocation}`
-              )}
-            </Detail>
 
             <div style={{ marginTop: "var(--sp-6)" }}>
               <h3

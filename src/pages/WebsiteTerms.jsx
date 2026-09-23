@@ -34,8 +34,8 @@ function WebsiteTerms() {
           <h2>About these terms</h2>
           <p>
             This website is operated by {site.legalName}, a company registered in{" "}
-            {site.jurisdiction} (company number{" "}
-            <ConfirmValue value={site.companyNumber} />). By using this website
+            {site.jurisdiction} (company registration details{" "}
+            <ConfirmValue value={site.companyNumber} fallback="available upon commercial request" showBadge={false} />). By using this website
             you accept these terms. If you do not accept them, please do not use
             the site.
           </p>

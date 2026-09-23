@@ -8,9 +8,24 @@ import Icon from "../components/common/Icon";
 import ProductCard from "../components/cards/ProductCard";
 import ProductCardSkeleton from "../components/cards/ProductCardSkeleton";
 import { getProducts } from "../lib/sanity";
+import { getPrefetched } from "../lib/prefetch";
+import { CATALOGUE_PATH } from "../lib/downloads";
 import { pageSeo } from "../content/seo";
 import { ctaLabels } from "../content/site";
-import { catalogueCta, emptyState, filters, hero } from "../content/products";
+import {
+  catalogueCta,
+  comparison,
+  emptyState,
+  filters,
+  glance,
+  hero,
+  productFaq,
+  rangeHeading,
+} from "../content/products";
+import AtAGlance from "../components/sections/AtAGlance";
+import FaqSection from "../components/sections/FaqSection";
+import CategoryComparison from "../components/sections/CategoryComparison";
+import { faqPage } from "../lib/structuredData";
 
 const validFilters = new Set(filters.map((f) => f.id));
 
@@ -22,7 +37,7 @@ function ownBrandFirst(a, b) {
 }
 
 function Products() {
-  const [products, setProducts] = useState(null);
+  const [products, setProducts] = useState(() => getPrefetched("products") ?? null);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const requested = searchParams.get("category");
@@ -62,7 +77,7 @@ function Products() {
 
   return (
     <>
-      <Seo {...pageSeo.products} />
+      <Seo {...pageSeo.products} jsonLd={faqPage(productFaq.items)} />
 
       {/* --- Page header --- */}
       <section className="section section--tight">
@@ -80,6 +95,13 @@ function Products() {
             <p className="lead">{hero.text}</p>
           </div>
 
+          <div className="btn-row" style={{ marginTop: 0, marginBottom: "var(--sp-5)" }}>
+            <Button href={CATALOGUE_PATH} variant="secondary" download>
+              <Icon name="download" />
+              Download product catalogue (PDF)
+            </Button>
+          </div>
+
           {/* Verbatim from the Content Pack: what is provided, without
               claiming any certification Navora has not evidenced. */}
           <div className="notice">
@@ -93,9 +115,17 @@ function Products() {
         </div>
       </section>
 
+      {/* --- At a glance --- */}
+      <AtAGlance {...glance} id="products-glance-heading" />
+
       {/* --- Catalogue --- */}
-      <section className="section section--warm">
+      <section className="section section--warm" aria-labelledby="range-heading">
         <div className="container">
+          <SectionHeading
+            kicker={rangeHeading.kicker}
+            heading={rangeHeading.heading}
+            id="range-heading"
+          />
           <div className="catalogue-bar">
             <div className="filters" role="group" aria-label="Filter products by category">
               {filters.map((filter) => (
@@ -154,6 +184,9 @@ function Products() {
         </div>
       </section>
 
+      {/* --- Category comparison --- */}
+      {!loading && <CategoryComparison {...comparison} filters={filters} products={products} />}
+
       {/* --- What Navora can actually say about assurance --- */}
       <section className="section section--tight">
         <div className="container assurance">
@@ -192,6 +225,9 @@ function Products() {
         </div>
       </section>
 
+      {/* --- FAQ --- */}
+      <FaqSection {...productFaq} id="products-faq-heading" />
+
       {/* --- Catalogue CTA --- */}
       <section className="section section--tight">
         <div className="container">
@@ -207,6 +243,10 @@ function Products() {
                 </Button>
                 <Button to="/for-business" variant="onDarkOutline" size="lg">
                   {ctaLabels.discussRequirements}
+                </Button>
+                <Button href={CATALOGUE_PATH} variant="onDarkOutline" size="lg" download>
+                  <Icon name="download" />
+                  Catalogue (PDF)
                 </Button>
               </div>
             </div>
