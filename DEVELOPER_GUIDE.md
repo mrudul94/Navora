@@ -25,8 +25,6 @@ This guide is written for any engineer maintaining, updating, or fixing bugs in 
                   │
                   ▼
             [ Sanity CMS Studio ] (navora-cms/)
-                  │
-                  └── (Offline Fallback: src/content/productsFallback.js)
 ```
 
 ---
@@ -83,10 +81,10 @@ Maintain strict separation between **presentation**, **data/content**, and **con
 * The serverless backend (`functions/api/enquiry.js`) imports the exact same file to perform server-side validation.
 * **Never create a separate field list in the backend.** Adding or editing a field in `src/content/forms.js` automatically updates both client UI and server validation.
 
-### D. Zero Downtime Sanity Fallback
-* When fetching products, the client calls `src/lib/sanity.js`.
-* If the Sanity CMS API is unreachable or not yet configured, it seamlessly falls back to `src/content/productsFallback.js`.
-* When updating offline fallback products, run `npm run seed` to keep the Sanity seed dataset in sync.
+### D. Sanity Is the Only Product Source
+* When fetching products, the client calls `src/lib/sanity.js`, which returns only products published in Sanity.
+* If the CMS is unreachable or not configured, queries time out after 8 seconds and the Products page shows its empty state.
+* Prerendered product pages, the sitemap and the PDF catalogue are built from Sanity at build time, so rebuild after publishing a product.
 
 ---
 

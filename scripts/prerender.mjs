@@ -209,7 +209,7 @@ try {
 
   // --- sitemap.xml ----------------------------------------------------------
   // Written from the routes actually prerendered, so it always matches the
-  // pages that exist — including fallback products when the CMS is empty.
+  // pages that exist: the products published in Sanity.
   // Replaces the copy generated into public/ by scripts/generate-sitemap.mjs.
   const legal = new Set(["/privacy-notice", "/cookie-notice", "/website-terms"]);
   const today = new Date().toISOString().slice(0, 10);

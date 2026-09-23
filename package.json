@@ -14,7 +14,6 @@
     "smoke:render": "node scripts/smoke-render.mjs",
     "smoke:client": "node scripts/smoke-client.mjs",
     "smoke": "npm run smoke:render && npm run smoke:client",
-    "seed": "node scripts/generate-seed.mjs",
     "audit": "node scripts/audit.mjs",
     "verify": "npm run lint && npm run audit && npm run smoke && npm run build",
     "db:migrate": "wrangler d1 migrations apply navora-enquiries --remote",

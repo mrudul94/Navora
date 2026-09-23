@@ -15,20 +15,12 @@ npm run dev              # Studio at http://localhost:3333
 The React site needs the same project id in the root `.env` as
 `VITE_SANITY_PROJECT_ID`. Neither `.env` is committed.
 
-## Load the approved products
+## Adding products
 
-```bash
-cd navora-cms
-npx sanity dataset import seed/products.ndjson production --replace
-```
-
-This imports the eight products approved in the content pack. Seven are
-published; **Navora Honey Shot is imported hidden** until its label data is
-confirmed — see HANDOVER.md.
-
-`seed/products.ndjson` is generated from `src/content/productsFallback.js`.
-Edit that file and run `node scripts/generate-seed.mjs` rather than editing the
-NDJSON by hand, so the seed and the site's offline fallback stay identical.
+Create each product in the Studio and turn on **Show on the website**. It shows
+on the Products page straight away; push to `main` (which rebuilds) to add its
+prerendered page, sitemap entry and PDF sheet. There is no seed file or
+hardcoded product list.
 
 ## The product record
 
@@ -51,6 +43,6 @@ Fields that carry legal weight:
 
 ## If the CMS is unreachable
 
-`src/lib/sanity.js` falls back to `src/content/productsFallback.js`, so the
-Products page always renders. A CMS outage degrades to the approved copy rather
-than an empty page or a stuck loading message.
+Queries time out after 8 seconds and the Products page shows "Product
+information is being updated" rather than a stuck loading message. There is no
+offline copy of the products.

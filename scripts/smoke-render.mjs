@@ -17,7 +17,7 @@ import React from "react";
 // scripts/smoke-client.mjs instead.
 const dataDrivenRoutes = new Set([
   "/products/ginger",
-  "/products/navora-honey-shot",
+  "/products/green-cardamom",
   "/products/does-not-exist",
 ]);
 
@@ -26,7 +26,7 @@ const routes = [
   "/about",
   "/products",
   "/products/ginger",
-  "/products/navora-honey-shot",
+  "/products/green-cardamom",
   "/products/does-not-exist",
   "/for-business",
   "/responsible-sourcing",

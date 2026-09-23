@@ -45,8 +45,10 @@ npm run dev
 reappears, if a form field drifts out of sync with `index.html`, if an internal
 link goes nowhere, or if a colour pair drops below WCAG AA.
 
-The site runs without a Sanity connection: `src/lib/sanity.js` falls back to the
-approved product copy in `src/content/productsFallback.js`.
+Sanity is the only source of products. A product published in the Studio shows
+on the Products page straight away; push to `main` (which rebuilds) to add its
+prerendered page, sitemap entry and PDF sheet. With no CMS connection the
+Products page shows an empty state.
 
 For in-depth architecture details and coding conventions, see [`DEVELOPER_GUIDE.md`](./DEVELOPER_GUIDE.md).
 

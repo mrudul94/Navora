@@ -94,19 +94,13 @@ record in local storage. They are accurate, but they are not a substitute for ad
 
 ## Loading the product data
 
-Seven approved products are ready to import:
+Products are added and published in the Sanity Studio (`navora-cms/`). There
+is no hardcoded product list or seed file. A published product shows on the
+Products page straight away; push to `main` (which rebuilds) to add its
+prerendered page, sitemap entry and PDF sheet.
 
-```bash
-cd navora-cms
-cp .env.example .env          # add SANITY_STUDIO_PROJECT_ID
-npx sanity dataset import seed/products.ndjson production --replace
-```
-
-Once imported, the CMS becomes the source of truth. Until then — and any time
-the CMS is unreachable — the site serves the same copy from
-`src/content/productsFallback.js`, so the Products page is never empty.
-
-Regenerate the seed after editing that file with `node scripts/generate-seed.mjs`.
+If the CMS is unreachable, the Products page shows "Product information is
+being updated" and asks visitors to send their requirement.
 
 ---
 
