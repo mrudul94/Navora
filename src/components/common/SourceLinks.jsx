@@ -11,9 +11,6 @@ function SourceLinks({ sources, label = "Sources" }) {
       {sources.map((source) => (
         <a key={source.href} href={source.href} target="_blank" rel="noopener noreferrer">
           {source.label}
-          {source.accessed && (
-            <small className="source-date"> (accessed {source.accessed})</small>
-          )}
         </a>
       ))}
     </p>

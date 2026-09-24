@@ -610,43 +610,45 @@
 .cookie-banner {
   position: fixed;
   left: 50%;
-  bottom: var(--sp-5);
+  bottom: var(--sp-4);
   transform: translateX(-50%);
   z-index: 1100;
-  width: min(100% - (var(--sp-5) * 2), 860px);
+  width: min(100% - (var(--sp-3) * 2), 640px);
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--sp-5);
-  padding: var(--sp-5) var(--sp-6);
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding: 14px 18px;
   background: var(--card);
   border: 1px solid var(--line-strong);
   border-top: 3px solid var(--orange);
   border-radius: var(--r-md);
   box-shadow: var(--shadow-3);
-  animation: cookieUp 0.35s var(--ease);
+  animation: cookieUp 0.3s var(--ease);
 }
 
 @keyframes cookieUp {
   from {
     opacity: 0;
-    transform: translate(-50%, 16px);
+    transform: translate(-50%, 12px);
   }
 }
 
 .cookie-banner__copy {
-  flex: 1 1 320px;
+  margin: 0;
 }
 
 .cookie-banner__title {
-  font-size: var(--fs-sm);
+  font-size: var(--fs-xs);
   font-weight: 700;
-  margin-bottom: var(--sp-2);
+  letter-spacing: var(--track-meta);
+  text-transform: uppercase;
+  margin-bottom: 4px;
   color: var(--ink);
 }
 
 .cookie-banner__text {
-  font-size: var(--fs-sm);
+  font-size: 0.8125rem;
+  line-height: 1.45;
   color: var(--ink-2);
   margin: 0;
 }
@@ -654,7 +656,7 @@
 .cookie-banner__text a {
   color: var(--orange-text);
   text-decoration: underline;
-  text-underline-offset: 3px;
+  text-underline-offset: 2px;
 }
 
 /* Accept and Reject are deliberately equal in weight — refusing must be as
@@ -662,47 +664,45 @@
 .cookie-banner__actions {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--sp-3);
-  flex: none;
+  gap: var(--sp-2);
+  align-items: center;
 }
 
 .cookie-banner__actions .btn {
-  min-width: 118px;
-}
-
-/* Narrow screens: the button row takes the banner width and wraps, so no
-   button is pushed past the edge (Accept all was cut off at 390px). */
-@media (max-width: 860px) {
-  .cookie-banner__actions {
-    flex: 1 1 100%;
-    min-width: 0;
-  }
-  .cookie-banner__actions .btn {
-    flex: 1 1 auto;
-    min-width: 0;
-  }
+  flex: 1 1 0;
+  min-width: 85px;
+  min-height: 36px;
+  padding: 0 var(--sp-3);
+  font-size: var(--fs-2xs);
+  letter-spacing: var(--track-meta);
 }
 
 @media (min-width: 861px) {
   .cookie-banner {
     left: auto;
-    right: var(--sp-5);
+    right: var(--sp-4);
     transform: none;
-    width: min(400px, calc(100vw - 48px));
-    flex-direction: column;
-    align-items: stretch;
+    width: min(440px, calc(100vw - 32px));
+    padding: 16px 20px;
+    gap: 12px;
   }
 
   @keyframes cookieUp {
     from {
       opacity: 0;
-      transform: translateY(16px);
+      transform: translateY(12px);
     }
   }
 
+  .cookie-banner__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.15fr;
+    gap: 8px;
+  }
+
   .cookie-banner__actions .btn {
-    flex: 1 1 auto;
     min-width: 0;
+    width: 100%;
   }
 }
 

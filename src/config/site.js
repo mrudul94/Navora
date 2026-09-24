@@ -35,7 +35,7 @@ export const site = {
 
   // --- Operating partner ---------------------------------------------------
   // Do not publish the partner's name until they have confirmed permission.
-  keralaPartner: "TODO_CONFIRM_PARTNER_COMPANY_NAME",
+  keralaPartner: "",
   keralaPartnerLocation: "Kerala, India",
 
   // --- Web -----------------------------------------------------------------

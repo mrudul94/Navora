@@ -4,6 +4,7 @@
 # Deploy: npm run deploy  (or connect the repo in the Cloudflare dashboard)
 
 name = "navora-global"
+account_id = "d16e89d5fe7a1f44d724b96e20f73d84"
 compatibility_date = "2026-09-21"
 pages_build_output_dir = "dist"
 
@@ -14,7 +15,7 @@ pages_build_output_dir = "dist"
 [[d1_databases]]
 binding = "DB"
 database_name = "navora-enquiries"
-database_id = "71685dfe-9d04-4a7c-ade3-2d6e33060783"
+database_id = "520188d3-209f-4600-abc2-bab17a17ff97"
 
 [vars]
 VITE_SANITY_PROJECT_ID = "ltt6egj4"
@@ -25,4 +26,4 @@ VITE_SANITY_API_VERSION = "2025-01-01"
 # NOTIFY_EMAIL is safe to keep here; RESEND_API_KEY is a secret and must be set
 # with `npx wrangler pages secret put RESEND_API_KEY` instead.
 NOTIFY_EMAIL = "info@navoraglobal.uk"
-NOTIFY_FROM = "enquiries@navoraglobal.uk"
+NOTIFY_FROM = "info@navoraglobal.uk"
