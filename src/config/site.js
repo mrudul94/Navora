@@ -40,11 +40,7 @@ export const site = {
 
   // --- Web -----------------------------------------------------------------
   domain: "navoraglobal.uk",
-  // The deployed address. navoraglobal.uk currently shows a parked registrar
-  // page marked noindex, so canonicals, Open Graph URLs, schema IDs and the
-  // sitemap point here until the domain is connected to the Pages project.
-  // Then change this to "https://www.navoraglobal.uk" and rebuild.
-  origin: "https://navora-global.pages.dev",
+  origin: "https://navoraglobal.uk",
   domains: {
     primary: "navoraglobal.uk",
     additional: ["navoraglobal.org", "navoraglobal.info"],
