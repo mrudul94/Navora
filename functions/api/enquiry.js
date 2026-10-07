@@ -26,6 +26,9 @@ const json = (data, status = 200) =>
     headers: {
       "Content-Type": "application/json; charset=utf-8",
       "Cache-Control": "no-store",
+      // Crawlable (robots.txt allows /api/) so Google can see this and drop
+      // the URL; a robots.txt block left it "Indexed, though blocked".
+      "X-Robots-Tag": "noindex",
     },
   });
 

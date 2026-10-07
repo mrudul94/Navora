@@ -1,7 +1,8 @@
 # Search engines and AI assistants are welcome to crawl and cite this site.
+# /api/ is deliberately not disallowed: the enquiry endpoint sends
+# X-Robots-Tag: noindex, which crawlers can only see if they may fetch it.
 User-agent: *
 Allow: /
-Disallow: /api/
 
 # AI search and answer engines, listed explicitly so the intent is clear.
 User-agent: GPTBot
@@ -16,6 +17,5 @@ User-agent: Google-Extended
 User-agent: Applebot-Extended
 User-agent: Bingbot
 Allow: /
-Disallow: /api/
 
 Sitemap: https://navoraglobal.uk/sitemap.xml
